@@ -33,8 +33,8 @@ export default function Home() {
         <button type="submit">Submit</button>
       </Form>
       <ul>
-        {audioFiles.map((file, idx) => (
-          <li key={idx}>
+        {audioFiles.map((file, id) => (
+          <li key={id}>
             {file.name}
             <audio controls src={file.data} />
           </li>
