@@ -1,3 +1,4 @@
+import UserProvider from '@/providers/UserProvider';
 import SupabaseProvider from '@/providers/SupabaseProvider';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SupabaseProvider>
-        <body className={`${inter.variable} antialiased`}>
-            {children}
-        </body>
+        <UserProvider>
+          <body className={`${inter.variable} antialiased`}>
+              {children}
+          </body>
+        </UserProvider>
       </SupabaseProvider>
     </html>
   );
