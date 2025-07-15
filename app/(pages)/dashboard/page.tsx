@@ -28,7 +28,8 @@ export default function DashboardPage() {
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-screen">
+    <h1>Dashboard page</h1>
       <Form onSubmit={handleSubmit}>
         <InputFile name="audio" accept='/audio/*'/>
         <button type="submit">Submit</button>
@@ -41,6 +42,6 @@ export default function DashboardPage() {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

@@ -17,11 +17,15 @@ export default function HomePage() {
   }, [session, router]);
 
   return (
-    <Auth
-      supabaseClient={supabaseClient}
-      appearance={{ theme: ThemeSupa }}
-      providers={["google", "github"]}
-      theme="dark"
-    />
+    <div className="flex h-screen w-full items-center justify-center">
+      <div className="w-full max-w-sm">
+        <Auth
+          supabaseClient={supabaseClient}
+          appearance={{ theme: ThemeSupa }}
+          providers={["google"]}
+          theme="dark"
+        />
+      </div>
+    </div>
   );
 }
