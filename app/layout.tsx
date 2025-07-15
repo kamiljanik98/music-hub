@@ -1,3 +1,5 @@
+import UserProvider from '@/providers/UserProvider';
+import SupabaseProvider from '@/providers/SupabaseProvider';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -17,9 +19,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
-          {children}
-      </body>
+      <SupabaseProvider>
+        <UserProvider>
+          <body className={`${inter.variable} antialiased`}>
+              {children}
+          </body>
+        </UserProvider>
+      </SupabaseProvider>
     </html>
   );
 }

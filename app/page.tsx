@@ -1,45 +1,31 @@
 'use client';
-import InputFile from "@/components/forms/inputs/InputFile";
-import Form from "@/components/forms/Form";
-import { useState, useEffect } from "react";
 
-export default function Home() {
-  const [audioFiles, setAudioFiles] = useState<{ name: string, data: string }[]>([]);
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { useSessionContext } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function HomePage() {
+  const { supabaseClient, session } = useSessionContext();
+  const router = useRouter();
 
   useEffect(() => {
-    const files = JSON.parse(localStorage.getItem('audio_files') || '[]');
-    setAudioFiles(files);
-  }, []);
-
-  const handleSubmit = (data: any) => {
-    const file = data.audio;
-    if (file && file.name) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const base64 = e.target?.result as string;
-        const files = JSON.parse(localStorage.getItem('audio_files') || '[]');
-        files.push({ name: file.name, data: base64 });
-        localStorage.setItem('audio_files', JSON.stringify(files));
-        setAudioFiles(files);
-      };
-      reader.readAsDataURL(file);
+    if (session) {
+      router.push('/dashboard');
     }
-  };
+  }, [session, router]);
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <InputFile name="audio" accept='/audio/*'/>
-        <button type="submit">Submit</button>
-      </Form>
-      <ul>
-        {audioFiles.map((file, id) => (
-          <li key={id}>
-            {file.name}
-            <audio controls src={file.data} />
-          </li>
-        ))}
-      </ul>
-    </>
+    <div className="flex h-screen w-full items-center justify-center">
+      <div className="w-full max-w-sm">
+        <Auth
+          supabaseClient={supabaseClient}
+          appearance={{ theme: ThemeSupa }}
+          providers={["google"]}
+          theme="dark"
+        />
+      </div>
+    </div>
   );
 }
