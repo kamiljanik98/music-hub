@@ -1,45 +1,16 @@
-'use client';
-import InputFile from "@/components/forms/inputs/InputFile";
-import Form from "@/components/forms/Form";
-import { useState, useEffect } from "react";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { useSessionContext } from "@supabase/auth-helpers-react";
 
-export default function Home() {
-  const [audioFiles, setAudioFiles] = useState<{ name: string, data: string }[]>([]);
-
-  useEffect(() => {
-    const files = JSON.parse(localStorage.getItem('audio_files') || '[]');
-    setAudioFiles(files);
-  }, []);
-
-  const handleSubmit = (data: any) => {
-    const file = data.audio;
-    if (file && file.name) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const base64 = e.target?.result as string;
-        const files = JSON.parse(localStorage.getItem('audio_files') || '[]');
-        files.push({ name: file.name, data: base64 });
-        localStorage.setItem('audio_files', JSON.stringify(files));
-        setAudioFiles(files);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+export default function HomePage() {
+  const { supabaseClient } = useSessionContext();
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <InputFile name="audio" accept='/audio/*'/>
-        <button type="submit">Submit</button>
-      </Form>
-      <ul>
-        {audioFiles.map((file, id) => (
-          <li key={id}>
-            {file.name}
-            <audio controls src={file.data} />
-          </li>
-        ))}
-      </ul>
-    </>
+    <Auth
+      supabaseClient={supabaseClient}
+      appearance={{ theme: ThemeSupa }}
+      providers={["google", "github"]} // or []
+      theme="dark"
+    />
   );
 }

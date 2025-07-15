@@ -1,3 +1,5 @@
+'use client';
+
 import { User, useSessionContext, useUser as useSupaUser } from "@supabase/auth-helpers-react";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
