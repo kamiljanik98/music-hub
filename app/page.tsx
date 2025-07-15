@@ -2,7 +2,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 
-export default function HomePage() {
+export default function H() {
   const { supabaseClient } = useSessionContext();
 
   return (
