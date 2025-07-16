@@ -1,66 +1,73 @@
 'use client';
 
-import { User, useSessionContext, useUser as useSupaUser } from "@supabase/auth-helpers-react";
+import { useSessionContext } from "@supabase/auth-helpers-react";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
-type UserDetails = {
+// UserDetails now includes email, which is assumed to be present in the profiles table
+export type UserDetails = {
   id: string;
-  full_name: string;
+  nickname: string;
   avatar_url: string;
+  role: string;
   email: string;
-}
+  created_at: string;
+  updated_at: string;
+};
 
 type UserContextType = {
   accessToken: string | null;
-  user: User,
   userDetails: UserDetails | null;
-}
+};
+
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const MyUserContextProvider = (props: any) => {
-  const [userDetails, setUserDetails] = useState<any>(null)
-  const user = useSupaUser();
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const { session, supabaseClient } = useSessionContext();
-  const accessToken = session?.access_token ?? null
+  const accessToken = session?.access_token ?? null;
+  const userId = session?.user?.id ?? null;
 
-  const getUserDetails = async () => supabaseClient
-    .from('profiles')
-    .select('*')
-    .eq('id', user?.id)
-    .single();
+  const getUserDetails = async () => {
+    if (!userId) return { data: null };
+    return supabaseClient
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+  };
 
-    const router = useRouter();
-    const pathname = usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
 
-    useEffect(() => {
-      if (!user && pathname.startsWith('/dashboard')) {
-        router.push('/');
-      }
-    }, [user,pathname]);
-
-    useEffect(() => {
-      if (user && !userDetails) {
-        getUserDetails().then((result: any) => {
-          setUserDetails(result.data);
-        });
-      } else {
-        setUserDetails(null);
-      }
-    }, [user]);
-
-    const value = {
-      accessToken,
-      user,
-      userDetails
+  useEffect(() => {
+    if (!userId && pathname.startsWith('/dashboard')) {
+      router.push('/');
     }
+  }, [userId, pathname]);
 
-    return <UserContext.Provider value={value} {...props} />
-}
+  useEffect(() => {
+    if (userId && !userDetails) {
+      getUserDetails().then((result: any) => {
+        setUserDetails(result.data);
+      });
+    } else if (!userId) {
+      setUserDetails(null);
+    }
+  }, [userId]);
+
+  const value = {
+    accessToken,
+    userDetails,
+  };
+
+  return <UserContext.Provider value={value} {...props} />;
+};
 
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === undefined) {
-    throw new Error('useUser must be used withi a UserProvider');
+    throw new Error('useUser must be used within a UserProvider');
   }
-}
+  return context;
+};

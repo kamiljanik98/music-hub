@@ -11,10 +11,25 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (session) {
-      router.push('/dashboard');
+    if (session?.user) {
+      supabaseClient
+        .from('profiles')
+        .upsert({
+          id: session.user.id,
+          email: session.user.email,
+          nickname: session.user.email?.split('@')[0] || '',
+          role: 'user',
+        })
+        .then(({ error }) => {
+          if (error) {
+            console.error('Failed to upsert profile:', error);
+          } else {
+            router.push('/dashboard');
+          }
+        });
     }
-  }, [session, router]);
+  }, [session, supabaseClient, router]);
+  
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
