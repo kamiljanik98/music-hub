@@ -5,7 +5,12 @@ const AdminGuard = ({ children }: { children: React.ReactNode }) => {
   const { userDetails } = useUser();
 
   if (userDetails && userDetails.role !== "admin") {
-    return <div>Not authorized</div>;
+    // Full-size flex container to center the message
+    return (
+      <div className="flex w-full bg-neutral-900 p-4 rounded-lg h-full items-center justify-center">
+        <span className="text-white text-lg font-semibold">Not authorized</span>
+      </div>
+    );
   }
   return <>{children}</>;
 };

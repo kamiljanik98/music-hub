@@ -4,7 +4,6 @@ import { useSessionContext } from "@supabase/auth-helpers-react";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
-// UserDetails now includes email, which is assumed to be present in the profiles table
 export type UserDetails = {
   id: string;
   nickname: string;
