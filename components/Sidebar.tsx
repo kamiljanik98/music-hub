@@ -1,7 +1,6 @@
 'use client';
 
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useUser } from "@/hooks/useUser";
 import { useState } from "react";
 import UploadButton from "./UploadButton";
 import LogoutButton from "./LogoutButton";
