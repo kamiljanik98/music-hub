@@ -1,29 +1,14 @@
 'use client';
 
-import Link from "next/link";
-import Block from "./common/Block";
-import { FaPlus, FaSearch } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { useUser } from "@/hooks/useUser";
-import Button from "./common/Button";
-import { FaGear } from "react-icons/fa6";
-import { FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import { useState } from "react";
-import UploadModal from "@/components/UploadModal"; // adjust path as needed
-import { useSessionContext } from "@supabase/auth-helpers-react";
-import { usePathname } from "next/navigation";
-import UserInfo from "./UserInfo";
-import RouteLinks from "./RouteLinks";
 import UploadButton from "./UploadButton";
 import LogoutButton from "./LogoutButton";
 import Menu from "./Menu";
 
 const Sidebar = () => {
-  const { userDetails } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const { supabaseClient } = useSessionContext();
-  const pathname = usePathname();
   
   return (
     <div className="bg-neutral-900 rounded-lg shadow-lg p-4 md:p-4 h-auto md:h-full w-full md:w-56 flex flex-row md:flex-col items-center md:items-start justify-between md:justify-start gap-2 md:gap-4 relative">

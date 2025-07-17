@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { FaHome, FaSearch } from "react-icons/fa"
 import { usePathname } from "next/navigation"
-import Button from "./common/Button";
 import { FaGear } from "react-icons/fa6";
 
 const RouteLinks = ({ collapsed = false }) => {
