@@ -7,7 +7,7 @@ const Library = () => {
         <Header title="Recent Uploads" />
         <div className="flex  flex-col gap-y-2 md:gap-y-2">
           {[1,2,3,4,5,6,7,8,9,10,11,12,13,14].map((i) => (
-            <Item i={i}></Item>
+            <Item i={i} key={i} />
           ))}
         </div>
       </div>

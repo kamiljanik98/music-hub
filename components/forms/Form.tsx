@@ -3,7 +3,7 @@ import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
 
 type FormProps = {
   children: React.ReactNode;
-  onSubmit: SubmitHandler<any>;
+  onSubmit: SubmitHandler<unknown>;
 };
 
 const Form: FC<FormProps> = ({ children, onSubmit }) => {
