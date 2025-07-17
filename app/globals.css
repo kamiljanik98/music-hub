@@ -8,3 +8,9 @@ body,
   background-color: #050505;
   overflow-x: hidden;
 }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff #23272a;
+}
+
