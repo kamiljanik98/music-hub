@@ -1,13 +1,17 @@
 import Block from "../common/Block";
 import Button from "../common/Button";
 import { FaPlay, FaDownload } from "react-icons/fa6";
+import Image from "next/image";
 
-const Item = ({ i }: {i: any}) => {
+const Item = ({ i }: {i: number}) => {
   return (
-    <Block key={i} className="md:min-w-full bg-neutral-800 p-3 md:p-4 rounded-lg flex items-center gap-x-4 md:gap-x-4 md:w-fit">
-      <img
-        className="w-12 h-12 md:w-10 md:h-10 rounded-md object-cover" 
-        src="https://images.squarespace-cdn.com/content/v1/5f2db84743c1761f87232471/1612901490539-DH9SKPMUIYW3N8B2Z4GJ/So+You+Fell+In+Love+v3.jpg" alt="Song Image"
+    <Block key={i} className="md:min-w-full bg-neutral-950/50 p-3 md:p-4 rounded-lg flex items-center gap-x-4 md:gap-x-4 md:w-fit">
+      <Image
+        className="w-12 h-12 md:w-10 md:h-10 rounded-md object-cover"
+        src="https://images.squarespace-cdn.com/content/v1/5f2db84743c1761f87232471/1612901490539-DH9SKPMUIYW3N8B2Z4GJ/So+You+Fell+In+Love+v3.jpg"
+        alt="Song Image"
+        width={48}
+        height={48}
       />
       <div className="flex items-center justify-between w-full gap-x-2 md:gap-x-4">
         <div>

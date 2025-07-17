@@ -1,11 +1,12 @@
-import { FaBackward, FaForward, FaPlay, FaVolumeLow, FaDownload } from "react-icons/fa6";
+import { FaBackward, FaForward, FaPlay, FaVolumeLow } from "react-icons/fa6";
 import Button from "../common/Button";
+import Image from "next/image";
 
 const Player = () => {
   return (
     <div className="flex items-center w-full bg-neutral-900 rounded-lg p-4 md:pr-6 md:p-3 shadow-lg bottom-0 left-0  justify-between">
       <div className="rounded-lg flex gap-2 items-center">
-        <img src="https://images.squarespace-cdn.com/content/v1/5f2db84743c1761f87232471/1612901490539-DH9SKPMUIYW3N8B2Z4GJ/So+You+Fell+In+Love+v3.jpg" alt="Current Song" className="w-10 h-10 md:w-10 md:h-10 rounded-lg mr-2 md:mr-3 object-cover" />
+        <Image src="https://images.squarespace-cdn.com/content/v1/5f2db84743c1761f87232471/1612901490539-DH9SKPMUIYW3N8B2Z4GJ/So+You+Fell+In+Love+v3.jpg" alt="Current Song" className="w-10 h-10 md:w-10 md:h-10 rounded-lg mr-2 md:mr-3 object-cover" width={40} height={40} />
         <div>
           <div className="text-xs md:text-sm text-neutral-400">Artist Name</div>
           <div className="text-sm md:text-lg text-white font-semibold leading-tight">Song Name</div>
