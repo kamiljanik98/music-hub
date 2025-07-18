@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     domains: [
       'pwfxluewdlealedfbwgd.supabase.co',
       'images.squarespace-cdn.com',
+      'www.vibe.com'
     ],
   },
   /* config options here */
