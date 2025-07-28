@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSessionContext } from "@supabase/auth-helpers-react";
-import { AudioFile } from "./getAudioFiles";
+import { AudioFile, usePlayer } from "../usePlayer";
 
-export function useAudioUrls(audioFiles: AudioFile[]) {
-  const [audioUrls, setAudioUrls] = useState<{ file: AudioFile; url: string | null }[]>([]);
+export function getAudioUrls(audioFiles: AudioFile[]) {
+  const setAudioUrls = usePlayer((state) => state.setAudioUrls);
   const { supabaseClient } = useSessionContext();
 
   useEffect(() => {
@@ -21,7 +21,5 @@ export function useAudioUrls(audioFiles: AudioFile[]) {
     });
 
     setAudioUrls(urls);
-  }, [audioFiles, supabaseClient]);
-
-  return audioUrls;
+  }, [audioFiles, supabaseClient, setAudioUrls]);
 } 
