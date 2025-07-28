@@ -3,7 +3,6 @@ import SupabaseProvider from '@/providers/SupabaseProvider';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import PlayerProvider from '@/providers/PlayerProvider';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -22,11 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <SupabaseProvider>
         <UserProvider>
-            <PlayerProvider>
-              <body className={`${inter.variable} antialiased`}>
-                {children}
-              </body>
-            </PlayerProvider>
+            <body className={`${inter.variable} antialiased`}>
+              {children}
+            </body>
         </UserProvider>
       </SupabaseProvider>
     </html>
