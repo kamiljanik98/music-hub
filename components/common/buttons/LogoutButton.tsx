@@ -1,4 +1,4 @@
-import Button from "./common/Button";
+import Button from "../Button";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 

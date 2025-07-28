@@ -1,6 +1,6 @@
-import UserInfo from "./UserInfo";
+import UserInfo from "../UserInfo";
 import RouteLinks from "./RouteLinks";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "@/components/common/buttons/LogoutButton";
 
 const Menu = ({ collapsed = false }) => (
   <>

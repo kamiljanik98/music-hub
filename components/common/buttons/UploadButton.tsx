@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from "react";
-import UploadModal from "./UploadModal";
-import Button from "./common/Button";
+import UploadModal from "../../UploadModal";
+import Button from "../Button";
 import { FaPlus } from "react-icons/fa";
 
 const UploadButton = () => {
