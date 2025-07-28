@@ -1,12 +1,11 @@
 import { useUser } from "@/hooks/useUser";
-import Block from "./common/Block";
 import Image from "next/image";
 
 const UserInfo = ({ collapsed = false }) => {
   const { userDetails } = useUser();
   return (
     <div className="hidden md:block w-full mt-2">
-      <Block className="cursor-pointer md:p-2 md:w-full rounded-lg flex items-center gap-3">
+      <div className="cursor-pointer md:p-2 md:w-full rounded-lg flex items-center gap-3">
         {userDetails?.avatar_url ? (
           <Image
             src={userDetails.avatar_url}
@@ -28,7 +27,7 @@ const UserInfo = ({ collapsed = false }) => {
             </p>
           </div>
         )}
-      </Block>
+      </div>
     </div>
   )
 }

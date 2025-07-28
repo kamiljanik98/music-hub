@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <SupabaseProvider>
         <UserProvider>
-          <body className={`${inter.variable} antialiased`}>
+            <body className={`${inter.variable} antialiased`}>
               {children}
-          </body>
+            </body>
         </UserProvider>
       </SupabaseProvider>
     </html>

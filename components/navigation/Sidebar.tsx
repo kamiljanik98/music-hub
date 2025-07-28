@@ -2,8 +2,8 @@
 
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useState } from "react";
-import UploadButton from "./UploadButton";
-import LogoutButton from "./LogoutButton";
+import UploadButton from "../common/buttons/UploadButton";
+import LogoutButton from "../common/buttons/LogoutButton";
 import Menu from "./Menu";
 
 const Sidebar = () => {
