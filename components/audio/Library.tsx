@@ -12,14 +12,14 @@ interface LibraryProps {
 const Library: FC<LibraryProps> = ({ songs }) => {
   const onPlay = useOnPlay(songs);
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center justify-between px-5 pt-4">
-        <div className="inline-flex items-center gap-x-2">
+    <div className="flex flex-col gap-2 mr-2">
+      <div className="flex items-center justify-between ">
+        <div className="inline-flex items-center gap-x-2 top-2 bg-neutral-900 z-1 w-full p-4 rounded-lg">
           <TbPlaylist className="text-neutral-400" size={26} />
           <p className="text-neutral-400 font-medium text-md">Your Library</p>
         </div>
       </div>
-      <div className="flex flex-col gap-y-2 mt-4 px-3">
+      <div className="flex flex-col gap-y-2">
         {songs.map((song) => (
           <MediaItem key={song.id} data={song} onClick={() => onPlay(String(song.id))} />
         ))}
