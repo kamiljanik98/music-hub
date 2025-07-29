@@ -6,7 +6,7 @@ import MediaItem from "./MediaItem";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerXMark, HiSpeakerWave } from "react-icons/hi2";
-// import Slider from "./Slider";
+import Slider from "./Slider";
 import usePlayer from "@/hooks/usePlayer";
 import useSound from "use-sound";
 
@@ -127,10 +127,7 @@ const PlayerContent: FC<PlayerContentProps> = ({ song, songUrl }) => {
       <div className="hidden md:flex w-full justify-end pr-2">
         <div className="flex items-center gap-x-2 w-[120px]">
           <VolumeIcon onClick={toggleMute} className="cursor-pointer" size={34} />
-          {/* <Slider 
-            value={volume}
-            onChange={(value) => setVolume(value)}
-          /> */}
+          <Slider value={volume} onChange={(value) => setVolume(value)} />
         </div>
       </div>
     </div>
