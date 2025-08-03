@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { Song } from '@/types';
-import { FC } from 'react';
-import Image from 'next/image';
+import { Song } from "@/types";
+import { FC } from "react";
+import Image from "next/image";
+import { truncateText } from "@/utils/truncate";
 
 interface MediaItemProps {
   data: Song;
@@ -24,13 +25,13 @@ const MediaItem: FC<MediaItemProps> = ({ data, onClick }) => {
         <Image
           fill
           className="w-12 h-12 md:w-10 md:h-10 rounded-md object-cover"
-          src={data.image_path || '/default-cover.jpg'}
+          src={data.image_path || "/default-cover.jpg"}
           alt="Song Image"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
-        <p className="text-white truncate">{data.title}</p>
-        <p className="text-neutral-400 text-sm truncate">{data.uploaded_by}</p>
+        <p className="text-white truncate">{truncateText(data.title, 35)}</p>
+        <p className="text-neutral-400 text-sm truncate">{truncateText(data.uploaded_by, 10)}</p>
       </div>
     </div>
   );
