@@ -1,72 +1,58 @@
-'use client';
-
-import { useSessionContext } from "@supabase/auth-helpers-react";
-import { usePathname, useRouter } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
-
-export type UserDetails = {
-  id: string;
-  nickname: string;
-  avatar_url: string;
-  role: string;
-  email: string;
-  created_at: string;
-  updated_at: string;
-};
+import { User } from "@supabase/auth-helpers-nextjs";
+import { UserDetails } from "@/types";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useSessionContext, useUser as useSupaUser } from "@supabase/auth-helpers-react";
 
 type UserContextType = {
   accessToken: string | null;
+  user: User | null;
   userDetails: UserDetails | null;
+  isLoading: boolean;
 };
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const MyUserContextProvider = (props: any) => {
-  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-  const { session, supabaseClient } = useSessionContext();
+export const MyUserContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const { session, isLoading: isLoadingUser, supabaseClient: supabase } = useSessionContext();
+  const user = useSupaUser();
   const accessToken = session?.access_token ?? null;
-  const userId = session?.user?.id ?? null;
+  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
 
-  const getUserDetails = async () => {
-    if (!userId) return { data: null };
-    return supabaseClient
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-  };
-
-  const router = useRouter();
-  const pathname = usePathname();
+  const getUserDetails = () => supabase.from("profiles").select("*").single();
 
   useEffect(() => {
-    if (!userId && pathname.startsWith('/dashboard')) {
-      router.push('/');
-    }
-  }, [userId, pathname]);
+    if (user && !isLoadingData && !userDetails) {
+      setIsLoadingData(true);
+      Promise.allSettled([getUserDetails()]).then((results) => {
+        const userDetailsPromise = results[0];
 
-  useEffect(() => {
-    if (userId && !userDetails) {
-      getUserDetails().then((result: any) => {
-        setUserDetails(result.data);
+        if (userDetailsPromise.status === "fulfilled") {
+          setUserDetails(userDetailsPromise.value.data as UserDetails);
+        }
+
+        setIsLoadingData(false);
       });
-    } else if (!userId) {
+    } else if (!user && !isLoadingUser && !isLoadingData) {
       setUserDetails(null);
     }
-  }, [userId]);
+  }, [user, isLoadingUser]);
 
   const value = {
     accessToken,
+    user,
     userDetails,
+    isLoading: isLoadingUser || isLoadingData,
   };
 
-  return <UserContext.Provider value={value} {...props} />;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error("useUser must be used within a UserProvider");
   }
+
   return context;
 };
