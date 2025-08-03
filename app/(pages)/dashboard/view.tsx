@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import Player from "@/components/audio/Player";
-import Library from "@/components/audio/Library";
-import useGetSongs from "@/hooks/useGetSongs";
+import React from 'react';
+import Player from '@/components/audio/Player';
+import Library from '@/components/audio/Library';
+import useGetSongs from '@/hooks/useGetSongs';
 
 export default function View() {
   const { songs } = useGetSongs();

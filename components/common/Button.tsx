@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC } from 'react';
 
 const Button: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, ...props }) => {
   return (
@@ -8,7 +8,7 @@ const Button: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, .
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
 export default Button;

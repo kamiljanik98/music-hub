@@ -1,9 +1,9 @@
-"use client";
-import { TbPlaylist } from "react-icons/tb";
-import { Song } from "@/types";
-import { FC } from "react";
-import MediaItem from "./MediaItem";
-import useOnPlay from "@/hooks/useOnPlay";
+'use client';
+import { TbPlaylist } from 'react-icons/tb';
+import { Song } from '@/types';
+import { FC } from 'react';
+import MediaItem from './MediaItem';
+import useOnPlay from '@/hooks/useOnPlay';
 
 interface LibraryProps {
   songs: Song[];

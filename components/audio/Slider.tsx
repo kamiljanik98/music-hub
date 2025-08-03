@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import * as RadixSlider from "@radix-ui/react-slider";
-import { FC } from "react";
+import * as RadixSlider from '@radix-ui/react-slider';
+import { FC } from 'react';
 
 type SliderProps = {
   value: number;

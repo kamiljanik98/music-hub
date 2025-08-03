@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
     "check": "npm run lint && npm run type-check"
   },
   "dependencies": {
@@ -36,6 +37,7 @@
     "eslint-config-next": "15.3.5",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

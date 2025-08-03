@@ -1,5 +1,5 @@
-import Sidebar from "@/components/navigation/Sidebar";
-import View from "./view";
+import Sidebar from '@/components/navigation/Sidebar';
+import View from './view';
 
 export default function DashboardPage() {
   return (

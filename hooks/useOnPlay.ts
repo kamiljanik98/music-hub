@@ -1,6 +1,6 @@
-import usePlayer from "./usePlayer";
+import usePlayer from './usePlayer';
 // import { useUser } from "../useUser";
-import { Song } from "@/types";
+import { Song } from '@/types';
 
 const useOnPlay = (songs: Song[]) => {
   const player = usePlayer();

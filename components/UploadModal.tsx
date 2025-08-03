@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { useSessionContext } from "@supabase/auth-helpers-react";
+import { useRef } from 'react';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 
 export default function UploadModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -8,7 +8,7 @@ export default function UploadModal({ open, onClose }: { open: boolean; onClose:
   const handleUpload = async () => {
     const file = fileInputRef.current?.files?.[0];
     if (!file) return;
-    await supabaseClient.storage.from("audio").upload(file.name, file);
+    await supabaseClient.storage.from('audio').upload(file.name, file);
     onClose();
   };
 

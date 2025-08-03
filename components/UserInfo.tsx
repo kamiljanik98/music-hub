@@ -1,5 +1,5 @@
-import { useUser } from "@/hooks/useUser";
-import Image from "next/image";
+import { useUser } from '@/hooks/useUser';
+import Image from 'next/image';
 
 const UserInfo = ({ collapsed = false }) => {
   const { userDetails } = useUser();
@@ -19,17 +19,15 @@ const UserInfo = ({ collapsed = false }) => {
         )}
         {!collapsed && (
           <div>
-            <p className="text-sm font-bold text-white">
-              {userDetails?.nickname || 'No name'}
-            </p>
+            <p className="text-sm font-bold text-white">{userDetails?.nickname || 'No name'}</p>
             <p className="text-xs text-neutral-400 hidden md:block">
-              {userDetails?.role || 'unidentified' }
+              {userDetails?.role || 'unidentified'}
             </p>
           </div>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default UserInfo;

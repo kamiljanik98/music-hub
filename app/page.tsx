@@ -1,4 +1,4 @@
-import View from "./view";
+import View from './view';
 
 export default function HomePage() {
   return (

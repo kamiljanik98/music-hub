@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
+import { FC } from 'react';
+import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
 
 type FormProps = {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ const Form: FC<FormProps> = ({ children, onSubmit }) => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
     </FormProvider>
-  )
-}
+  );
+};
 
 export default Form;

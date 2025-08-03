@@ -1,6 +1,6 @@
-import { Song } from "@/types";
-import { useSessionContext } from "@supabase/auth-helpers-react";
-import { useEffect, useMemo, useState } from "react";
+import { Song } from '@/types';
+import { useSessionContext } from '@supabase/auth-helpers-react';
+import { useEffect, useMemo, useState } from 'react';
 
 const useGetSongById = (id?: string) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,9 +15,9 @@ const useGetSongById = (id?: string) => {
 
     const fetchSong = async () => {
       const { data, error } = await supabaseClient
-        .from("audio_files")
-        .select("*")
-        .eq("id", id)
+        .from('audio_files')
+        .select('*')
+        .eq('id', id)
         .single();
 
       if (error) {
@@ -37,7 +37,7 @@ const useGetSongById = (id?: string) => {
       isLoading,
       song,
     }),
-    [isLoading, song],
+    [isLoading, song]
   );
 };
 

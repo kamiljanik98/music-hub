@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Song } from "@/types";
-import { FC, useEffect, useState } from "react";
-import MediaItem from "./MediaItem";
-import { BsPauseFill, BsPlayFill } from "react-icons/bs";
-import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
-import { HiSpeakerXMark, HiSpeakerWave } from "react-icons/hi2";
-import Slider from "./Slider";
-import usePlayer from "@/hooks/usePlayer";
-import useSound from "use-sound";
+import { Song } from '@/types';
+import { FC, useEffect, useState } from 'react';
+import MediaItem from './MediaItem';
+import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
+import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai';
+import { HiSpeakerXMark, HiSpeakerWave } from 'react-icons/hi2';
+import Slider from './Slider';
+import usePlayer from '@/hooks/usePlayer';
+import useSound from 'use-sound';
 
 interface PlayerContentProps {
   song: Song;
@@ -61,7 +61,7 @@ const PlayerContent: FC<PlayerContentProps> = ({ song, songUrl }) => {
       onPlayNext();
     },
     onpause: () => setIsPlaying(false),
-    format: ["mp3"],
+    format: ['mp3'],
   });
 
   useEffect(() => {

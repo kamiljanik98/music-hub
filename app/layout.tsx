@@ -14,16 +14,12 @@ export const metadata: Metadata = {
   description: 'Place for music producers to share their work',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <SupabaseProvider>
         <UserProvider>
-            <body className={`${inter.variable} antialiased`}>
-              {children}
-            </body>
+          <body className={`${inter.variable} antialiased`}>{children}</body>
         </UserProvider>
       </SupabaseProvider>
     </html>

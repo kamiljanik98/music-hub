@@ -1,7 +1,7 @@
-import { User } from "@supabase/auth-helpers-nextjs";
-import { UserDetails } from "@/types";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useSessionContext, useUser as useSupaUser } from "@supabase/auth-helpers-react";
+import { User } from '@supabase/auth-helpers-nextjs';
+import { UserDetails } from '@/types';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useSessionContext, useUser as useSupaUser } from '@supabase/auth-helpers-react';
 
 type UserContextType = {
   accessToken: string | null;
@@ -19,7 +19,7 @@ export const MyUserContextProvider = ({ children }: { children: React.ReactNode 
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
 
-  const getUserDetails = () => supabase.from("profiles").select("*").single();
+  const getUserDetails = () => supabase.from('profiles').select('*').single();
 
   useEffect(() => {
     if (user && !isLoadingData && !userDetails) {
@@ -27,7 +27,7 @@ export const MyUserContextProvider = ({ children }: { children: React.ReactNode 
       Promise.allSettled([getUserDetails()]).then((results) => {
         const userDetailsPromise = results[0];
 
-        if (userDetailsPromise.status === "fulfilled") {
+        if (userDetailsPromise.status === 'fulfilled') {
           setUserDetails(userDetailsPromise.value.data as UserDetails);
         }
 
@@ -51,7 +51,7 @@ export const MyUserContextProvider = ({ children }: { children: React.ReactNode 
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === undefined) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error('useUser must be used within a UserProvider');
   }
 
   return context;

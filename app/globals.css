@@ -1,6 +1,6 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-html, 
+html,
 body,
 :root {
   color-scheme: dark;
@@ -13,4 +13,3 @@ body,
   scrollbar-width: thin;
   scrollbar-color: #ffffff #23272a;
 }
-
