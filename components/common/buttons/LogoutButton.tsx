@@ -1,12 +1,19 @@
-import Button from '../Button';
-import { FaSignOutAlt } from 'react-icons/fa';
-import { useSessionContext } from '@supabase/auth-helpers-react';
+"use client";
 
-const LogoutButton = ({}) => {
+import Button from "../Button";
+import { FaSignOutAlt } from "react-icons/fa";
+import { useSessionContext } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/navigation";
+
+const LogoutButton = () => {
   const { supabaseClient } = useSessionContext();
+  const router = useRouter();
+
   const handleSignOut = async () => {
     await supabaseClient.auth.signOut();
+    router.push("/");
   };
+
   return (
     <Button
       onClick={handleSignOut}
