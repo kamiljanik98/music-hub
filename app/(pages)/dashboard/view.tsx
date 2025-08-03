@@ -5,7 +5,7 @@ import Player from "@/components/audio/Player";
 import Library from "@/components/audio/Library";
 import useGetSongs from "@/hooks/useGetSongs";
 
-const PageContent = () => {
+export default function View() {
   const { songs } = useGetSongs();
   return (
     <div className="flex-1 flex flex-col w-full h-full gap-2">
@@ -17,6 +17,4 @@ const PageContent = () => {
       </div>
     </div>
   );
-};
-
-export default PageContent;
+}
