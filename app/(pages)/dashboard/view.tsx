@@ -5,7 +5,6 @@ import Player from "@/components/audio/Player";
 import Library from "@/components/audio/Library";
 import useGetSongs from "@/hooks/useGetSongs";
 import usePlayer from "@/hooks/usePlayer";
-import { truncateText } from "@/utils/truncate";
 
 export default function View() {
   const { songs } = useGetSongs();
