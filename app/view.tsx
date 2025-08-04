@@ -29,12 +29,13 @@ export default function View() {
         });
     }
   }, [session, supabaseClient, router]);
+
   return (
     <div className="w-full max-w-sm">
       <Auth
         supabaseClient={supabaseClient}
         appearance={{ theme: ThemeSupa }}
-        providers={["google"]}
+        providers={[]}
         theme="dark"
       />
     </div>
