@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { Song } from '@/types';
-import { FC, useEffect, useState } from 'react';
-import MediaItem from './MediaItem';
-import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
-import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai';
-import { HiSpeakerXMark, HiSpeakerWave } from 'react-icons/hi2';
-import Slider from './Slider';
-import usePlayer from '@/hooks/usePlayer';
-import useSound from 'use-sound';
+import { Song } from "@/types";
+import { FC, useEffect, useState } from "react";
+import MediaItem from "@/components/MediaItem";
+import { BsPauseFill, BsPlayFill } from "react-icons/bs";
+import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
+import { HiSpeakerXMark, HiSpeakerWave } from "react-icons/hi2";
+import Slider from "@/components/Slider";
+import usePlayer from "@/hooks/usePlayer";
+import useSound from "use-sound";
 
 interface PlayerContentProps {
   song: Song;
@@ -61,7 +61,7 @@ const PlayerContent: FC<PlayerContentProps> = ({ song, songUrl }) => {
       onPlayNext();
     },
     onpause: () => setIsPlaying(false),
-    format: ['mp3'],
+    format: ["mp3"],
   });
 
   useEffect(() => {
@@ -89,7 +89,7 @@ const PlayerContent: FC<PlayerContentProps> = ({ song, songUrl }) => {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 h-full">
+    <div className="grid grid-cols-2 md:grid-cols-3 pr-4 bg-neutral-900  rounded-md">
       <div className="flex w-full justify-start">
         <div className="flex items-center gap-x-4">
           <MediaItem data={song} />
@@ -126,7 +126,7 @@ const PlayerContent: FC<PlayerContentProps> = ({ song, songUrl }) => {
 
       <div className="hidden md:flex w-full justify-end pr-2">
         <div className="flex items-center gap-x-2 w-[120px]">
-          <VolumeIcon onClick={toggleMute} className="cursor-pointer" size={34} />
+          <VolumeIcon onClick={toggleMute} className="cursor-pointer" size={30} />
           <Slider value={volume} onChange={(value) => setVolume(value)} />
         </div>
       </div>
