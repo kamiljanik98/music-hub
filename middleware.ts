@@ -1,21 +1,26 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
+import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get(`sb-${process.env.PROJECT_REF}-auth-token`)?.value;
+const protectedRoutes = ["/dashboard", "/search", "/settings"];
 
-  if (request.nextUrl.pathname === '/') {
-    return NextResponse.next();
-  }
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-  
-  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/', request.url));
+  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+    const res = NextResponse.next();
+    const supabase = createMiddlewareClient({ req, res });
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      const loginUrl = new URL("/", req.url);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    return res;
   }
 
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: ['/dashboard/:path*', '/'],
-};
