@@ -31,7 +31,9 @@ const MediaItem: FC<MediaItemProps> = ({ data, onClick }) => {
       </div>
       <div className="flex flex-col gap-y-1 ">
         <p className="text-white truncate">{truncateText(data.title, 15)}</p>
-        <p className="text-neutral-400 text-sm truncate">{truncateText(data.uploaded_by, 10)}</p>
+        <p className="text-neutral-400 text-sm truncate">
+          {truncateText(data.uploaded_by as string, 10)}
+        </p>
       </div>
     </div>
   );
