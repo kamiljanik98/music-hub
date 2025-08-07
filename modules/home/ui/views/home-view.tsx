@@ -6,7 +6,6 @@ import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
-import OnboardingPanel from "@/components/OnboardingPanel";
 
 export default function HomeView() {
   const { supabaseClient, session, isLoading } = useSessionContext();
@@ -23,7 +22,7 @@ export default function HomeView() {
         })
         .then(({ error }) => {
           if (error) {
-            console.error("Failed to upsert profile:", error);
+            console.error(error.message);
           } else {
             router.push("/dashboard");
           }
@@ -36,12 +35,10 @@ export default function HomeView() {
   if (!session) {
     return (
       <div className="flex h-screen w-full bg-neutral-950 text-white flex-col md:flex-row justify-between">
-        {/* Onboarding Panel: 40% width on mobile, 50%+ on md+ */}
-        <div className="md:block hidden w-full  max-h-screen overflow-auto">
+        {/* <div className="md:block hidden w-full  max-h-screen overflow-auto">
           <OnboardingPanel />
-        </div>
+        </div> */}
 
-        {/* Auth Panel: 60% width on mobile, 50% on md+ */}
         <div className="flex items-center justify-center p-6 max-h-screen min-h-screen w-full overflow-auto">
           <div className="w-full max-w-sm bg-neutral-900 p-8 rounded-2xl shadow-xl">
             <Auth
