@@ -13,7 +13,7 @@ const DashboardLibrary: FC<Props> = ({ songs }) => {
   const onPlay = useOnPlay(songs);
 
   return (
-    <div className="flex flex-col h-full bg-neutral-900 rounded-md shadow-md">
+    <div className="flex flex-col h-full bg-neutral-900 rounded-md">
       <div className="flex gap-2 items-center sticky top-0 bg-neutral-900 z-10 py-3 px-5 border-b border-neutral-800 rounded-t-md">
         <RiPlayListFill size={26} />
         <h1 className="text-xl font-semibold text-white select-none">Songs Library</h1>
