@@ -6,6 +6,7 @@ import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
+import HomeOnboardPanel from "../components/home-onboard-panel";
 
 export default function HomeView() {
   const { supabaseClient, session, isLoading } = useSessionContext();
@@ -34,13 +35,13 @@ export default function HomeView() {
 
   if (!session) {
     return (
-      <div className="flex h-screen w-full bg-neutral-950 text-white flex-col md:flex-row justify-between">
-        {/* <div className="md:block hidden w-full  max-h-screen overflow-auto">
-          <OnboardingPanel />
-        </div> */}
+      <div className="flex h-screen w-full bg-neutral-950 text-white flex-col lg:flex-row">
+        <div className="hidden lg:flex lg:w-1/2">
+          <HomeOnboardPanel />
+        </div>
 
-        <div className="flex items-center justify-center p-6 max-h-screen min-h-screen w-full overflow-auto">
-          <div className="w-full max-w-sm bg-neutral-900 p-8 rounded-2xl shadow-xl">
+        <div className="flex items-center justify-center p-6 w-full lg:w-1/2 overflow-auto min-h-screen max-h-screen">
+          <div className="w-full max-w-sm bg-neutral-900 p-8 rounded-2xl">
             <Auth
               supabaseClient={supabaseClient}
               appearance={{
