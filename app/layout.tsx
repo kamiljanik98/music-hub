@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-hidden">
       <Head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#050505" />
       </Head>
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} antialiased overflow-hidden`}>
         <SupabaseProvider>
           <UserProvider>{children}</UserProvider>
         </SupabaseProvider>

@@ -12,9 +12,12 @@ const UploadButton = () => {
   const isGuest = userDetails?.role === "guest";
 
   return (
-    <div className="flex flex-col w-fit md:w-full md:bg-neutral-800 md:p-4 rounded-lg items-start md:items-center">
+    <div className="flex flex-col w-fit w-full bg-neutral-800 p-4 rounded-lg items-start md:items-center">
       <div className="flex items-center justify-between w-full relative group">
-        <p className="font-semibold md:block hidden">Upload</p>
+        <span>
+          <p className="font-semibold block ">Upload Files</p>
+          <p className="font-light text-[12px] block text-neutral-400">Max file size is 20MB</p>
+        </span>
         <Button
           onClick={() => {
             if (!isGuest) setModalOpen(true);

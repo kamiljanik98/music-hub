@@ -11,15 +11,20 @@ const PlayerView = () => {
   const { song } = useGetSongById(player.activeId);
   const songUrl = useLoadSongUrl(song as Song);
 
+  // No song selected
   if (!song || !songUrl || !player.activeId) {
     return (
-      <div className="relative py-6 bg-neutral-900 rounded-lg text-xs text-center">
+      <div className="fixed bottom-0 left-0 w-full h-16 bg-neutral-900 text-xs text-center flex items-center justify-center z-50">
         Select a song to start listening...
       </div>
     );
   }
 
-  return <PlayerContent key={song.path} song={song} songUrl={songUrl} />;
+  return (
+    <div className="fixed bottom-0 left-0 w-full h-16 z-50 bg-neutral-900">
+      <PlayerContent key={song.path} song={song} songUrl={songUrl} />
+    </div>
+  );
 };
 
 export default PlayerView;

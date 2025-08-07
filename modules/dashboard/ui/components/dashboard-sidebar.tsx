@@ -20,9 +20,9 @@ export const DashboardSidebar = ({ routes }: Props) => {
         <p className="font-semibold text-lg text-green-400">Music-Hub</p>
       </div>
       <UploadButton />
-      {routes.map((item) => (
-        <SidebarItem key={item.label} {...item} />
-      ))}
+        {routes.map((item) => (
+          <SidebarItem key={item.label} {...item} />
+        ))}
       <div className="mt-auto">
         <DashboardUserButton />
       </div>

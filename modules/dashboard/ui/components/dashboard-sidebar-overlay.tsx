@@ -5,6 +5,7 @@ import { IconType } from "react-icons/lib";
 import SidebarItem from "@/components/SidebarItem";
 import LogoutButton from "@/components/common/LogoutButton";
 import { DashboardUserButton } from "@/modules/dashboard/ui/components/dashboard-user-button";
+import UploadButton from "@/components/common/UploadButton";
 
 type Props = {
   isOpen: boolean;
@@ -48,13 +49,11 @@ const DashboardSidebarOverlay = ({ isOpen, onClose, routes }: Props) => {
 
           <div className="flex flex-col gap-4 overflow-y-auto pb-4">
             {routes.map((item) => (
-              <SidebarItem key={item.label} {...item} />
+              <SidebarItem key={item.label} {...item} onClick={onClose} />
             ))}
           </div>
 
-          <div className="mt-auto pt-2">
-            <LogoutButton label="Logout" />
-          </div>
+          <UploadButton />
         </div>
       </aside>
     </>

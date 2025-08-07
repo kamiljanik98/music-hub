@@ -5,7 +5,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 
-const LogoutButton = ({ label = "Logout" }: { label?: string }) => {
+const LogoutButton = () => {
   const { supabaseClient } = useSessionContext();
   const router = useRouter();
 
@@ -25,7 +25,6 @@ const LogoutButton = ({ label = "Logout" }: { label?: string }) => {
       "
     >
       <FaSignOutAlt size={20} className="m-0" />
-      <p className="block md:hidden text-md font-medium">{label}</p>
     </Button>
   );
 };

@@ -8,12 +8,14 @@ interface Props {
   href: string;
   active: boolean;
   label: string;
+  onClick?: () => void; 
 }
 
-const SidebarItem: FC<Props> = ({ icon: Icon, label, active, href }) => {
+const SidebarItem: FC<Props> = ({ icon: Icon, label, active, href, onClick }) => {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={twMerge(
         `
         flex flex-row h-auto items-center w-full p-4
