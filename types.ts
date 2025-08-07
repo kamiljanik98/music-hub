@@ -1,10 +1,10 @@
 export type Song = {
-  id: number;
+  id: string;
   title: string;
   path: string;
-  duration: number;
+  duration: number | null;
   created_at: string;
-  uploaded_by: string;
+  uploaded_by: string | null;
   image_path: string | null;
 };
 
