@@ -3,6 +3,7 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Head from "next/head";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,10 +18,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <head>
+      <Head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#050505" />
-      </head>
+      </Head>
       <body className={`${inter.variable} antialiased`}>
         <SupabaseProvider>
           <UserProvider>{children}</UserProvider>
