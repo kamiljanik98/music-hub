@@ -19,9 +19,9 @@ const MediaItem: FC<MediaItemProps> = ({ data, onClick }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md"
+      className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-700/25 w-full p-2 rounded-md"
     >
-      <div className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden">
+      <div className="relative rounded-md min-h-[48px] min-w-[48px]">
         <Image
           fill
           className="w-12 h-12 md:w-10 md:h-10 rounded-md object-cover"
@@ -29,8 +29,8 @@ const MediaItem: FC<MediaItemProps> = ({ data, onClick }) => {
           alt="Song Image"
         />
       </div>
-      <div className="flex flex-col gap-y-1 overflow-hidden">
-        <p className="text-white truncate">{truncateText(data.title, 35)}</p>
+      <div className="flex flex-col gap-y-1 ">
+        <p className="text-white truncate">{truncateText(data.title, 15)}</p>
         <p className="text-neutral-400 text-sm truncate">{truncateText(data.uploaded_by, 10)}</p>
       </div>
     </div>

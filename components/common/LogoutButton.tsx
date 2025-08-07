@@ -1,11 +1,11 @@
 "use client";
 
-import Button from "../Button";
+import Button from "./Button";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 
-const LogoutButton = () => {
+const LogoutButton = ({ label = "Logout" }: { label?: string }) => {
   const { supabaseClient } = useSessionContext();
   const router = useRouter();
 
@@ -17,9 +17,15 @@ const LogoutButton = () => {
   return (
     <Button
       onClick={handleSignOut}
-      className="hover:bg-red-500 text-lg text-white font-semibold flex items-center gap-2 p-3 rounded-lg cursor-pointer transition"
+      className="
+        hover:bg-red-500/75 
+        flex items-center gap-4 
+        md:w-fit w-full 
+        p-3 rounded-md cursor-pointer
+      "
     >
-      <FaSignOutAlt size={20} /> Logout
+      <FaSignOutAlt size={20} className="m-0" />
+      <p className="block md:hidden text-md font-medium">{label}</p>
     </Button>
   );
 };
