@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export const DashboardUserButton = ({ isMobile = false }: { isMobile?: boolean }) => {
-  const { userDetails, uploadsCount } = useUser();
+  const { userDetails } = useUser();
   const [expanded, setExpanded] = useState(false);
 
   const toggleDetails = () => {
@@ -59,12 +59,6 @@ export const DashboardUserButton = ({ isMobile = false }: { isMobile?: boolean }
                   year: "numeric",
                 })
               : "unknown"}
-          </span>
-        </p>
-        <p className="m-0 leading-tight mt-1">
-          Uploads:{" "}
-          <span className="text-green-600">
-            {typeof uploadsCount === "number" ? uploadsCount : "loading..."}
           </span>
         </p>
       </div>
