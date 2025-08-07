@@ -1,9 +1,5 @@
-import View from './view';
+import HomeView from "@/modules/home/ui/views/home-view";
 
 export default function HomePage() {
-  return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <View />
-    </div>
-  );
+  return <HomeView />;
 }
