@@ -1,7 +1,8 @@
 "use client";
+
 import { Song } from "@/types";
 import { FC } from "react";
-import MediaItem from "@/components/MediaItem";
+import MediaItem from "@/components/common/MediaItem";
 import useOnPlay from "@/hooks/useOnPlay";
 import { RiPlayListFill } from "react-icons/ri";
 
