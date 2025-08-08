@@ -29,7 +29,9 @@ export const DashboardUserButton = ({ isMobile = false }: { isMobile?: boolean }
         )}
 
         <div className="flex flex-col flex-grow min-w-0 overflow-hidden">
-          <p className="text-sm font-semibold text-white truncate">{userDetails?.nickname || "No name"}</p>
+          <p className="text-sm font-semibold text-white truncate">
+            {userDetails?.nickname || "No name"}
+          </p>
           <p className="text-xs text-neutral-400 truncate">{userDetails?.role || "unidentified"}</p>
         </div>
 
