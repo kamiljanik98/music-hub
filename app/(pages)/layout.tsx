@@ -59,7 +59,7 @@ const Layout = ({ children }: Props) => {
         </button>
       </div>
 
-      <div className="flex flex-1 relative min-h-0 overflow-hidden rounded-lg bg-muted">
+      <div className="flex flex-1 relative min-h-0 overflow-hidden rounded-lg">
         <aside
           className="hidden md:flex w-72 shrink-0 rounded-lg p-4 bg-neutral-900 text-white gap-4"
           style={{ height: "calc(100vh - 80px)" }}
@@ -67,7 +67,7 @@ const Layout = ({ children }: Props) => {
           <DashboardSidebar routes={routes} />
         </aside>
 
-        <main className="flex-1 overflow-y-auto md:pl-2 min-h-0" style={{ paddingBottom: "64px" }}>
+        <main className="flex-1 overflow-y-auto pb-[64px] md:pl-2 min-h-0 min-w-[198px]">
           {children}
         </main>
 

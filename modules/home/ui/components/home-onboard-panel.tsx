@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import OnboardSlide from "@/components/OnboardSlide";
+import OnboardSlide from "@/components/common/OnboardSlide";
 import { ONBOARDING_DATA } from "@/constants/onboarding-data";
 
 const AUTO_ADVANCE_INTERVAL = 6000;
