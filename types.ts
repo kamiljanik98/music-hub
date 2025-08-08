@@ -1,11 +1,16 @@
 export type Song = {
   id: string;
   title: string;
+  uploaded_by: string;
   path: string;
-  duration: number | null;
-  created_at: string;
-  uploaded_by: string | null;
-  image_path: string | null;
+  image_path: string;
+  bpm?: number;
+  scale?: string;
+  genre?: string;
+  tags?: string[];
+  profiles?: {
+    nickname?: string;
+  };
 };
 
 export type SongUrl = {
