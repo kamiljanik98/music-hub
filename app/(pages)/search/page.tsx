@@ -4,7 +4,7 @@ import getSongsByTitle from "@/actions/getSongsByTitle";
 
 interface Props {
   searchParams?: {
-    title: string;
+    title?: string;
   };
 }
 const SearchPage = async ({ searchParams }: Props) => {
