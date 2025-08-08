@@ -21,7 +21,6 @@ const MediaItem: FC<MediaItemProps> = ({ data, onClick }) => {
       onClick={handleClick}
       className="flex flex-wrap items-center gap-x-16 gap-y-2 text-xs text-neutral-500 cursor-pointer hover:bg-neutral-700/25 w-full p-2 rounded-md"
     >
-      {/* Image and title/author */}
       <div className="flex gap-4 items-center min-w-0">
         <div className="relative rounded-md min-h-[48px] min-w-[48px]">
           <Image

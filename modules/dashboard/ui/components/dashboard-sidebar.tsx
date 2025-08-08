@@ -1,5 +1,5 @@
-import UploadButton from "@/components/common/UploadButton";
-import SidebarItem from "@/components/SidebarItem";
+import UploadButton from "@/modules/upload/ui/components/upload-button";
+import SidebarItem from "@/components/common/SidebarItem";
 import { DashboardUserButton } from "@/modules/dashboard/ui/components/dashboard-user-button";
 import { IconType } from "react-icons/lib";
 import Image from "next/image";

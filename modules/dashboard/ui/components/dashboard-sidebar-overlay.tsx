@@ -2,10 +2,9 @@
 
 import { FaTimes } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
-import SidebarItem from "@/components/SidebarItem";
-import LogoutButton from "@/components/common/LogoutButton";
+import SidebarItem from "@/components/common/SidebarItem";
 import { DashboardUserButton } from "@/modules/dashboard/ui/components/dashboard-user-button";
-import UploadButton from "@/components/common/UploadButton";
+import UploadButton from "@/modules/upload/ui/components/upload-button";
 
 type Props = {
   isOpen: boolean;

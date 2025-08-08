@@ -1,15 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import UploadModal from "../UploadModal";
-import Button from "./Button";
+import Button from "@/components/common/Button";
 import { FaPlus } from "react-icons/fa";
 import { useUser } from "@/hooks/useUser";
+import useUploadModal from "@/hooks/useUploadModal";
 
 const UploadButton = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const uploadModal = useUploadModal();
   const { userDetails } = useUser();
   const isGuest = userDetails?.role === "guest";
+
+  const handleClick = () => {
+    if (!isGuest) {
+      uploadModal.onOpen();
+    }
+  };
 
   return (
     <div className="flex flex-col w-fit w-full bg-neutral-800 p-4 rounded-lg items-start md:items-center">
@@ -19,9 +24,7 @@ const UploadButton = () => {
           <p className="font-light text-[12px] block text-neutral-400">Max file size is 20MB</p>
         </span>
         <Button
-          onClick={() => {
-            if (!isGuest) setModalOpen(true);
-          }}
+          onClick={handleClick}
           disabled={isGuest}
           className={`w-fit cursor-pointer hover:scale-110 transition bg-green-500 text-white p-2 rounded-full ${
             isGuest ? "opacity-50 cursor-not-allowed hover:scale-100" : ""
@@ -36,8 +39,6 @@ const UploadButton = () => {
           </span>
         )}
       </div>
-
-      {!isGuest && <UploadModal open={modalOpen} onClose={() => setModalOpen(false)} />}
     </div>
   );
 };
