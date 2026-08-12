@@ -1,14 +1,5 @@
 import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { r2 } from "./client";
-
-const BUCKETS = {
-  songs: process.env.R2_BUCKET_SONGS!,
-  stems: process.env.R2_BUCKET_STEMS!,
-  covers: process.env.R2_BUCKET_COVERS!,
-  avatars: process.env.R2_BUCKET_AVATARS!,
-} as const;
-
-type Bucket = keyof typeof BUCKETS;
+import { Bucket, BUCKETS, r2 } from "./client";
 
 async function uploadToR2(
   file: File,

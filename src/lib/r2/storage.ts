@@ -2,15 +2,10 @@ import "server-only";
 
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { r2, BUCKET_SONGS, BUCKET_STEMS } from "./client";
-
-const PRIVATE_BUCKETS = {
-  songs: BUCKET_SONGS,
-  stems: BUCKET_STEMS,
-} as const;
+import { r2, Bucket, BUCKETS } from "./client";
 
 type PresignOptions = {
-  bucket?: keyof typeof PRIVATE_BUCKETS;
+  bucket?: Bucket;
   asAttachment?: boolean;
 };
 
@@ -21,7 +16,7 @@ export async function getPresignedUrl(
   return getSignedUrl(
     r2,
     new GetObjectCommand({
-      Bucket: PRIVATE_BUCKETS[bucket],
+      Bucket: BUCKETS[bucket],
       Key: path,
       ...(asAttachment && {
         ResponseContentDisposition: `attachment; filename="${path.split("/").pop() ?? path}"`,

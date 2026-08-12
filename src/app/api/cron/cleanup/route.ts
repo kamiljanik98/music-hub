@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { r2 } from "@/lib/r2/client";
+import { BUCKETS, r2 } from "@/lib/r2/client";
 import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
-
-const BUCKETS = {
-  songs: process.env.R2_BUCKET_SONGS!,
-  covers: process.env.R2_BUCKET_COVERS!,
-  stems: process.env.R2_BUCKET_STEMS!,
-} as const;
 
 const MIN_ORPHAN_AGE_MS = 24 * 60 * 60 * 1000;
 
@@ -58,7 +52,10 @@ export async function GET(request: Request) {
   const cronSecret = process.env.CRON_SECRET;
   if (!cronSecret) {
     console.error("CRON_SECRET is not set - refusing to run cleanup");
-    return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Server misconfigured" },
+      { status: 500 },
+    );
   }
 
   const authHeader = request.headers.get("authorization");
@@ -88,9 +85,9 @@ export async function GET(request: Request) {
 
   const cutoff = Date.now() - MIN_ORPHAN_AGE_MS;
 
-  for (const [bucketKey, bucketName] of Object.entries(BUCKETS)) {
+  for (const [bucketKey, validPaths] of Object.entries(dbPaths)) {
+    const bucketName = BUCKETS[bucketKey as keyof typeof BUCKETS];
     const r2Objects = await listAllObjects(bucketName);
-    const validPaths = dbPaths[bucketKey as keyof typeof dbPaths];
 
     const orphanedKeys = r2Objects
       .filter(
