@@ -1,31 +1,26 @@
-const IMAGE_EXTENSION_BY_MIME = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-} as const;
-export const ALLOWED_IMAGE_TYPES = Object.keys(
-  IMAGE_EXTENSION_BY_MIME,
-) as (keyof typeof IMAGE_EXTENSION_BY_MIME)[];
-
-export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+import {
+  ACCEPTED_IMAGE,
+  type AcceptedImageMimeType,
+  MAX_IMAGE_SIZE_BYTES,
+} from "../constants";
 
 type ValidationResult = {
   error: Error | null;
   code?: "FORMAT" | "SIZE";
 };
 
+function isAcceptedImageMime(type: string): type is AcceptedImageMimeType {
+  return type in ACCEPTED_IMAGE;
+}
+
 export const validateImageFile = (file: File): ValidationResult => {
   const fileType = file.type;
 
-  if (file.size > MAX_IMAGE_BYTES) {
+  if (file.size > MAX_IMAGE_SIZE_BYTES) {
     return { error: new Error("Image size exceeds the limit"), code: "SIZE" };
   }
 
-  if (
-    !ALLOWED_IMAGE_TYPES.includes(
-      fileType as (typeof ALLOWED_IMAGE_TYPES)[number],
-    )
-  ) {
+  if (!isAcceptedImageMime(fileType)) {
     return { error: new Error("Invalid image format"), code: "FORMAT" };
   }
 
@@ -33,9 +28,7 @@ export const validateImageFile = (file: File): ValidationResult => {
 };
 
 export const safeImageExtension = (file: File) => {
-  return (
-    IMAGE_EXTENSION_BY_MIME[
-      file.type as keyof typeof IMAGE_EXTENSION_BY_MIME
-    ] ?? "bin"
-  );
+  const mime = file.type;
+  if (!isAcceptedImageMime(mime)) return "bin";
+  return ACCEPTED_IMAGE[mime][0].slice(1);
 };
