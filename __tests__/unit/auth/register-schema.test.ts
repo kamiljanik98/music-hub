@@ -71,8 +71,8 @@ describe("registerSchema - nickname", () => {
     expect(result.success).toBe(true);
   });
 
-  it("rejects nickname with disallowed characters (space, @, diacritics)", () => {
-    const invalidNicknames = ["jan kowalski", "jankówalski", "jan@nick"];
+  it("rejects nickname with disallowed characters (space, diacritics)", () => {
+    const invalidNicknames = ["jan kowalski", "jankówalski"];
     for (const nickname of invalidNicknames) {
       const result = registerSchema.safeParse({
         email: "valid@example.com",

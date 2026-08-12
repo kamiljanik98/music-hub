@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { nicknameSchema } from "./profile";
 
 const passwordSchema = z
   .string()
@@ -8,14 +9,7 @@ const passwordSchema = z
 
 export const registerSchema = z.object({
   email: z.email("Invalid email address"),
-  nickname: z
-    .string()
-    .min(3, "Nickname must be at least 3 characters")
-    .max(32, "Nickname must be at most 32 characters")
-    .regex(
-      /^[a-zA-Z0-9_.-]+$/,
-      "Only letters, numbers, underscores, dots and hyphens allowed",
-    ),
+  nickname: nicknameSchema,
   password: passwordSchema,
 });
 
