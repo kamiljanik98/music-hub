@@ -67,6 +67,7 @@ src/app/test
 /Q&A.md
 skills-lock.json
 /.codex
+/.design-sync
 
 .branches
 .temp
