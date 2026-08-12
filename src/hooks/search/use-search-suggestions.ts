@@ -11,12 +11,10 @@ export const useSearchSuggestions = (query: string) => {
   const [suggestions, setSuggestions] = useState<SongSuggestion[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const debounceQuery = useDebounce(query, 300);
+  const trimmed = debounceQuery.trim();
 
   useEffect(() => {
-    const trimmed = debounceQuery.trim();
-
     if (!trimmed) {
-      setSuggestions([]);
       return;
     }
 
@@ -42,7 +40,7 @@ export const useSearchSuggestions = (query: string) => {
     return () => {
       cancelled = true;
     };
-  }, [debounceQuery]);
+  }, [trimmed]);
 
-  return { suggestions, isLoading };
+  return { suggestions: trimmed ? suggestions : [], isLoading };
 };

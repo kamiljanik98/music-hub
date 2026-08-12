@@ -11,7 +11,6 @@ export function useGetSongById(id: string | null) {
 
   useEffect(() => {
     if (!id) {
-      setSong(null);
       return;
     }
 
@@ -40,5 +39,5 @@ export function useGetSongById(id: string | null) {
     };
   }, [id]);
 
-  return { song, isLoading, error };
+  return { song: id ? song : null, isLoading, error };
 }
