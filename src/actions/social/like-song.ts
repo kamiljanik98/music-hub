@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export const likeSong = async (songId: string) => {
   const supabase = await createClient();
@@ -15,5 +16,14 @@ export const likeSong = async (songId: string) => {
     .from("likes")
     .insert({ user_id: user.id, song_id: songId });
 
-  return { error };
+  if (error) {
+    return { error: new Error(error.message) };
+  }
+
+  revalidatePath(`/profile/[nickname]/likes`, "page");
+  revalidatePath(`/search`);
+  revalidatePath(`/songs/${songId}`);
+  revalidatePath(`/profile/[nickname]`, "page");
+
+  return { error: null };
 };
