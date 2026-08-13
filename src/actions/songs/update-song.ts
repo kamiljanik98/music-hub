@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import type { TablesUpdate } from "@/types/database.types";
+import { revalidatePath } from "next/cache";
 
 type UpdateSongInput = Pick<
   TablesUpdate<"songs">,
@@ -35,5 +36,11 @@ export async function updateSong(id: string, data: UpdateSongInput) {
 
   const { error } = await supabase.from("songs").update(data).eq("id", id);
 
-  return { error };
+  if (error) {
+    return { error: new Error(error.message) };
+  }
+
+  revalidatePath(`/profile/[nickname]`, "page");
+  revalidatePath(`/songs/${id}`);
+  return { error: null };
 }
