@@ -23,5 +23,5 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  redirect("/");
+  redirect("/auth/error");
 }
