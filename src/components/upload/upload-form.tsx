@@ -98,12 +98,10 @@ export default function UploadForm({ step, onStepChange }: UploadFormProps) {
     formData.append("audio", values.audio);
     if (values.cover) formData.append("cover", values.cover);
 
-    if (values.stems?.length) {
-      for (const stem of values.stems) {
-        formData.append("stemFile", stem.file);
-        formData.append("stemCategory", stem.category);
-      }
-    }
+    values.stems?.forEach((stem, index) => {
+      formData.append(`stems[${index}].file`, stem.file);
+      formData.append(`stems[${index}].category`, stem.category);
+    });
 
     const { data, error } = await upload(formData);
     if (error) {

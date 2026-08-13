@@ -61,9 +61,6 @@ export async function POST(req: NextRequest) {
   const tags = formData.get("tags");
   const description = formData.get("description") as string | null;
 
-  const stemFiles = formData.getAll("stemFile");
-  const stemCategories = formData.getAll("stemCategory");
-
   if (!(audioFile instanceof File)) {
     return NextResponse.json({ error: "Audio file required" }, { status: 400 });
   }
@@ -93,15 +90,8 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  if (stemFiles.length !== stemCategories.length) {
-    return NextResponse.json(
-      { error: "Each stem file must have a matching category" },
-      { status: 400 },
-    );
-  }
-
   const MAX_STEMS = 10;
-  if (stemFiles.length > MAX_STEMS) {
+  if (formData.has(`stems[${MAX_STEMS}].file`)) {
     return NextResponse.json(
       { error: `Maximum ${MAX_STEMS} stems per song` },
       { status: 400 },
@@ -109,9 +99,11 @@ export async function POST(req: NextRequest) {
   }
 
   const stems: { file: File; category: StemCategory }[] = [];
-  for (let i = 0; i < stemFiles.length; i++) {
-    const file = stemFiles[i];
-    const category = stemCategories[i];
+  for (let i = 0; i < MAX_STEMS; i++) {
+    const file = formData.get(`stems[${i}].file`);
+    const category = formData.get(`stems[${i}].category`);
+
+    if (file === null && category === null) break;
 
     if (!(file instanceof File)) {
       return NextResponse.json({ error: "Invalid stem file" }, { status: 400 });
