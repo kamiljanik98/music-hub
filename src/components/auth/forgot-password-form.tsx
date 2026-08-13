@@ -10,6 +10,7 @@ import {
 import useForgotPassword from "@/hooks/auth/use-forgot-password";
 import FormInput from "../form/form-input";
 import { Button } from "../ui/button";
+import { authErrorMessage } from "@/lib/auth-error-message";
 
 const ForgotPasswordForm = () => {
   const { resetPassword, isLoading, success } = useForgotPassword();
@@ -24,7 +25,7 @@ const ForgotPasswordForm = () => {
     const { error } = await resetPassword(values.email);
 
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorMessage(error));
       return;
     }
 

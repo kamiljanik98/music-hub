@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import useAuthDialog from "@/hooks/auth/use-auth-dialog";
 
@@ -10,10 +9,6 @@ type AuthGateProps = {
 
 export function AuthGate({ message }: AuthGateProps) {
   const open = useAuthDialog((state) => state.open);
-
-  useEffect(() => {
-    open();
-  }, [open]);
 
   return (
     <div className="flex flex-col items-center gap-4 py-16 text-center">

@@ -11,6 +11,7 @@ import {
 import useUpdatePassword from "@/hooks/auth/use-update-password";
 import FormInput from "@/components/form/form-input";
 import { Button } from "@/components/ui/button";
+import { authErrorMessage } from "@/lib/auth-error-message";
 
 const UpdatePasswordForm = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const UpdatePasswordForm = () => {
     const { error } = await updatePassword(values.password);
 
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorMessage(error));
       return;
     }
 
