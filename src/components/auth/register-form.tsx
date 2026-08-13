@@ -10,6 +10,7 @@ import { RegisterFormValues, registerSchema } from "@/lib/validations/auth";
 import FormInput from "@/components/form/form-input";
 import SocialButton from "./social-button";
 import useDiscordLogin from "@/hooks/auth/use-discord-login";
+import { authErrorMessage } from "@/lib/auth-error-message";
 
 const RegisterForm = () => {
   const { register, isLoading } = useRegister();
@@ -26,7 +27,7 @@ const RegisterForm = () => {
     const { error } = await register(values);
 
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorMessage(error));
       return;
     }
 

@@ -1,27 +1,31 @@
+const LINKS = [
+  "Legal",
+  "Privacy",
+  "Cookie Manager",
+  "Cookie Policy",
+  "About us",
+  "Topics",
+  "Copyright",
+  "Feedback",
+];
+
 const Footer = () => {
   return (
-    <div className="flex py-4 flex-col  items-center text-background/50 w-full text-[11px]">
-      <div className="flex space-x-3">
-        <a className="cursor-pointer hover:underline">Legal</a>
-        <span>-</span>
-        <a className="cursor-pointer hover:underline">Privacy</a>
-        <span>-</span>
-        <a className="cursor-pointer hover:underline">Cookie Manager</a>
-        <span>-</span>
-        <a className="cursor-pointer hover:underline">Cookie Policy</a>
-        <span>-</span>
-        <a className="cursor-pointer hover:underline">About us</a>
-        <span>-</span>
-        <a className="cursor-pointer hover:underline">Topics</a>
-        <span>-</span>
-        <a className="cursor-pointer hover:underline">Copyright</a>
-        <span>-</span>
-        <a className="cursor-pointer hover:underline">Feedback</a>
-      </div>
-      <a className="mt-2 cursor-pointer hover:underline">
-        Language: <span className="text-neutral-100"> English(US)</span>
+    <footer className="flex w-full flex-col items-center py-4 text-[11px] text-muted-foreground">
+      <nav className="flex flex-wrap items-center justify-center gap-x-3">
+        {LINKS.map((label, i) => (
+          <span key={label} className="flex items-center gap-x-3">
+            <a href="#" className="hover:text-foreground hover:underline">
+              {label}
+            </a>
+            {i < LINKS.length - 1 && <span aria-hidden>-</span>}
+          </span>
+        ))}
+      </nav>
+      <a href="#" className="mt-2 hover:text-foreground hover:underline">
+        Language: <span className="text-foreground">English (US)</span>
       </a>
-    </div>
+    </footer>
   );
 };
 

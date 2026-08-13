@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export const unlikeSong = async (songId: string) => {
   const supabase = await createClient();
@@ -17,5 +18,14 @@ export const unlikeSong = async (songId: string) => {
     .eq("user_id", user.id)
     .eq("song_id", songId);
 
-  return { error };
+  if (error) {
+    return { error: new Error(error.message) };
+  }
+
+  revalidatePath(`/profile/[nickname]/likes`, "page");
+  revalidatePath(`/search`);
+  revalidatePath(`/songs/${songId}`);
+  revalidatePath(`/profile/[nickname]`, "page");
+
+  return { error: null };
 };

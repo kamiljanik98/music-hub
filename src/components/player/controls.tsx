@@ -80,8 +80,7 @@ export function Controls({ song }: ControlsProps) {
     if (!audioRef.current || !url) return;
     audioRef.current.src = url;
     attemptPlay();
-    audioRef.current.onended = handleNext;
-  }, [url, handleNext, attemptPlay]);
+  }, [url, attemptPlay]);
 
   useEffect(() => {
     if (!audioRef.current) return;
@@ -121,7 +120,10 @@ export function Controls({ song }: ControlsProps) {
         className="hidden"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        onEnded={() => setIsPlaying(false)}
+        onEnded={() => {
+          setIsPlaying(false);
+          handleNext();
+        }}
         onError={(e) => {
           setIsPlaying(false);
           const message = mediaErrorMessage(e.currentTarget.error);

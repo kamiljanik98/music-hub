@@ -11,6 +11,7 @@ import {
 import useChangePassword from "@/hooks/profile/use-change-password";
 import FormInput from "@/components/form/form-input";
 import { Button } from "@/components/ui/button";
+import { authErrorMessage } from "@/lib/auth-error-message";
 
 export function ChangePasswordForm() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export function ChangePasswordForm() {
     const { error } = await change(values.currentPassword, values.newPassword);
 
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorMessage(error));
       return;
     }
 

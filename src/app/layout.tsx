@@ -7,6 +7,7 @@ import Navbar from "@/components/common/navbar";
 import AuthModal from "@/components/auth/auth-dialog";
 import { Bar } from "@/components/player/bar";
 import { UserProvider } from "@/components/providers/user-provider";
+import Footer from "@/components/common/footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -22,9 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
-      <body className="bg-background text-foreground">
+      <body className="flex min-h-screen flex-col bg-background text-foreground">
         <Navbar />
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto w-full max-w-6xl flex-1">
           <UserProvider />
           <Toaster
             position="top-center"
@@ -38,6 +39,7 @@ export default function RootLayout({
           <AuthModal />
           {children}
         </div>
+        <Footer />
         <Bar />
       </body>
     </html>

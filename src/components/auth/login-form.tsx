@@ -10,6 +10,7 @@ import { LoginFormValues, loginSchema } from "@/lib/validations/auth";
 import FormInput from "@/components/form/form-input";
 import SocialButton from "./social-button";
 import useDiscordLogin from "@/hooks/auth/use-discord-login";
+import { authErrorMessage } from "@/lib/auth-error-message";
 
 const LoginForm = () => {
   const { login, isLoading } = useLogin();
@@ -26,7 +27,7 @@ const LoginForm = () => {
     const { error } = await login(values);
 
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorMessage(error));
       return;
     }
 

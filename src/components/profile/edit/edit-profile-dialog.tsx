@@ -16,6 +16,7 @@ import FormInput from "@/components/form/form-input";
 import FormTextarea from "@/components/form/form-textarea";
 import FormInputAvatar from "@/components/profile/edit/form-input-avatar";
 import useUpdateProfile from "@/hooks/profile/use-update-profile";
+import { authErrorMessage } from "@/lib/auth-error-message";
 import {
   profileSchema,
   type ProfileFormValues,
@@ -45,7 +46,7 @@ export function EditProfileDialog() {
     });
 
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorMessage(error));
     } else {
       toast.success("Profile updated");
       setOpen(false);

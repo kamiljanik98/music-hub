@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { createClient } from "@/lib/supabase/server";
 import { uploadAvatar, deleteFromR2 } from "@/lib/r2/upload";
 import { safeImageExtension, validateImageFile } from "@/lib/validations/files";
+import { revalidatePath } from "next/cache";
 
 type UpdateProfileInput = {
   nickname: string;
@@ -96,6 +97,12 @@ export async function updateProfile(
       );
     }
   }
+
+  revalidatePath("/profile/[nickname]", "page");
+  revalidatePath("/songs/[id]", "page");
+  revalidatePath("/feed");
+  revalidatePath("/profile/[nickname]/following", "page");
+  revalidatePath("/profile/[nickname]/followers", "page");
 
   return { error: null, avatarUrl: newAvatarPath };
 }

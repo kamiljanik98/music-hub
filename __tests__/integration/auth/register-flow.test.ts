@@ -101,16 +101,16 @@ describe("register flow (PKCE) integration", () => {
     expect(res.headers.get("location")).toBe("/auth/confirmed");
   });
 
-  it("redirects silently to / when token_hash/type are missing or verifyOtp fails", async () => {
+  it("redirects to /auth/error when token_hash/type are missing or verifyOtp fails", async () => {
     const missingParamsRes = await fetch(`${APP_URL}/auth/confirm`, {
       redirect: "manual",
     });
-    expect(missingParamsRes.headers.get("location")).toBe("/");
+    expect(missingParamsRes.headers.get("location")).toBe("/auth/error");
 
     const invalidTokenRes = await fetch(
       `${APP_URL}/auth/confirm?token_hash=invalid_token_hash_12345&type=signup`,
       { redirect: "manual" },
     );
-    expect(invalidTokenRes.headers.get("location")).toBe("/");
+    expect(invalidTokenRes.headers.get("location")).toBe("/auth/error");
   });
 });

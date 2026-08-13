@@ -2,7 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { LogOut, Settings, User2Icon } from "lucide-react";
+import {
+  Heart,
+  LogOut,
+  Settings,
+  User2Icon,
+  UserRoundCheck,
+  Users,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,6 +50,34 @@ export const UserProfileButton = () => {
             Profile
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`/profile/${user.nickname}/following`}
+            className="flex items-center gap-2"
+          >
+            <UserRoundCheck size={14} />
+            Following
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`/profile/${user.nickname}/likes`}
+            className="flex items-center gap-2"
+          >
+            <Heart size={14} />
+            Likes
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`/profile/${user.nickname}/followers`}
+            className="flex items-center gap-2"
+          >
+            <Users size={14} />
+            Followers
+          </Link>
+        </DropdownMenuItem>
+
         <DropdownMenuItem asChild>
           <Link
             href={`/profile/${user.nickname}/settings`}

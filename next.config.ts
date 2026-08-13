@@ -5,7 +5,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.r2.dev",
+        hostname: new URL(process.env.NEXT_PUBLIC_R2_AVATARS_URL!).hostname,
+        pathname: "/**",
+        search: "",
+      },
+      {
+        protocol: "https",
+        hostname: new URL(process.env.NEXT_PUBLIC_R2_COVERS_URL!).hostname,
+        pathname: "/**",
+        search: "",
       },
     ],
   },

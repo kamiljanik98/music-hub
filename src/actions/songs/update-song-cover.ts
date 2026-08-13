@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { createClient } from "@/lib/supabase/server";
 import { uploadCover, deleteFromR2 } from "@/lib/r2/upload";
 import { validateImageFile, safeImageExtension } from "@/lib/validations/files";
+import { revalidatePath } from "next/cache";
 
 export async function updateSongCover(id: string, file: File) {
   const supabase = await createClient();
@@ -71,5 +72,7 @@ export async function updateSongCover(id: string, file: File) {
     }
   }
 
+  revalidatePath(`/profile/[nickname]`, "page");
+  revalidatePath(`/songs/${id}`);
   return { error: null };
 }
