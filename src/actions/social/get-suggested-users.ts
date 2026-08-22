@@ -1,15 +1,13 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { ProfileSummary } from "@/types";
+import { ActionResult, ProfileSummary } from "@/types";
 
 const SUGGESTION_LIMIT = 4;
 
-type GetSuggestedUsersResult = { data: ProfileSummary[]; error: Error | null };
-
 export const getSuggestedUsers = async (
   excludeUserId: string,
-): Promise<GetSuggestedUsersResult> => {
+): Promise<ActionResult<ProfileSummary[]>> => {
   const supabase = await createClient();
   const {
     data: { user: currentUser },

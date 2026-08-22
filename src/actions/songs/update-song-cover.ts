@@ -5,8 +5,12 @@ import { createClient } from "@/lib/supabase/server";
 import { uploadCover, deleteFromR2 } from "@/lib/r2/upload";
 import { validateImageFile, safeImageExtension } from "@/lib/validations/files";
 import { revalidatePath } from "next/cache";
+import { MutationResult } from "@/types";
 
-export async function updateSongCover(id: string, file: File) {
+export async function updateSongCover(
+  id: string,
+  file: File,
+): Promise<MutationResult> {
   const supabase = await createClient();
 
   const {

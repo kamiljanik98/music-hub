@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { MutationResult } from "@/types";
 
 export async function changePassword({
   currentPassword,
@@ -8,7 +9,7 @@ export async function changePassword({
 }: {
   currentPassword: string;
   password: string;
-}): Promise<{ error: Error | null }> {
+}): Promise<MutationResult> {
   const supabase = await createClient();
 
   const {

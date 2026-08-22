@@ -2,20 +2,17 @@
 
 import { uploadStem, deleteFromR2 } from "@/lib/r2/upload";
 import { createClient } from "@/lib/supabase/server";
+import { MutationResult } from "@/types";
 import { Database } from "@/types/database.types";
 import { revalidatePath } from "next/cache";
 
 type StemCategory = Database["public"]["Enums"]["stem_category"];
 
-type AddStemResult = {
-  error: Error | null;
-};
-
 export const addStem = async (
   songId: string,
   file: File,
   category: StemCategory,
-): Promise<AddStemResult> => {
+): Promise<MutationResult> => {
   const supabase = await createClient();
 
   const {

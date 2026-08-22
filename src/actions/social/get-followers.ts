@@ -1,13 +1,11 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { ProfileSummary } from "@/types";
-
-type GetFollowersResult = { data: ProfileSummary[]; error: Error | null };
+import { ActionResult, ProfileSummary } from "@/types";
 
 export const getFollowers = async (
   userId: string,
-): Promise<GetFollowersResult> => {
+): Promise<ActionResult<ProfileSummary[]>> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase

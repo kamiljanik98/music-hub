@@ -9,7 +9,8 @@ type FollowersPageProps = {
 
 export default async function FollowersPage({ params }: FollowersPageProps) {
   const { nickname } = await params;
-  const { profile, error: profileError } = await getProfileByNickname(nickname);
+  const { data: profile, error: profileError } =
+    await getProfileByNickname(nickname);
 
   if (profileError) {
     return <p className="text-destructive">Failed to load profile</p>;

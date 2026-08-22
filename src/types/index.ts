@@ -19,3 +19,6 @@ export type ProfileSummary = Pick<
   UserProfile,
   "id" | "nickname" | "avatar_url"
 >;
+
+export type ActionResult<T> = { data: T; error: Error | null };
+export type MutationResult = { error: Error | null };

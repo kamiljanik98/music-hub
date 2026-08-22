@@ -1,8 +1,16 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { ActionResult, UserProfile } from "@/types";
 
-export const getProfileByNickname = async (nickname: string) => {
+type ProfileDetails = Pick<
+  UserProfile,
+  "id" | "nickname" | "avatar_url" | "bio" | "created_at"
+>;
+
+export const getProfileByNickname = async (
+  nickname: string,
+): Promise<ActionResult<ProfileDetails | null>> => {
   const supabase = await createClient();
 
   const { data: profile, error } = await supabase
@@ -11,5 +19,9 @@ export const getProfileByNickname = async (nickname: string) => {
     .eq("nickname", nickname.toLowerCase())
     .single();
 
-  return { profile, error };
+  if (error) {
+    return { data: null, error: new Error(error.message) };
+  }
+
+  return { data: profile, error };
 };

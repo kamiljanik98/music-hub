@@ -1,14 +1,12 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { Song } from "@/types";
+import { ActionResult, Song } from "@/types";
 import { attachIsLiked } from "@/lib/attach-is-liked";
-
-type GetSearchedSongsResult = { data: Song[]; error: Error | null };
 
 export const getSearchedSongs = async (
   query?: string,
-): Promise<GetSearchedSongsResult> => {
+): Promise<ActionResult<Song[]>> => {
   const supabase = await createClient();
 
   if (!query) {

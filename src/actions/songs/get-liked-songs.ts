@@ -1,14 +1,12 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { Song } from "@/types";
+import { ActionResult, Song } from "@/types";
 import { attachIsLiked } from "@/lib/attach-is-liked";
-
-type GetLikedSongsResult = { data: Song[]; error: Error | null };
 
 export const getLikedSongs = async (
   profileUserId: string,
-): Promise<GetLikedSongsResult> => {
+): Promise<ActionResult<Song[]>> => {
   const supabase = await createClient();
 
   const { data: likes, error } = await supabase

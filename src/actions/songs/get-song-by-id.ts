@@ -2,11 +2,11 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { attachIsLiked } from "@/lib/attach-is-liked";
-import { Song } from "@/types";
+import { ActionResult, Song } from "@/types";
 
-type GetSongByIdResult = { data: Song | null; error: Error | null };
-
-export const getSongById = async (id: string): Promise<GetSongByIdResult> => {
+export const getSongById = async (
+  id: string,
+): Promise<ActionResult<Song | null>> => {
   const supabase = await createClient();
 
   const { data: song, error } = await supabase

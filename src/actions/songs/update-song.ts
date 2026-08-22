@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { MutationResult } from "@/types";
 import type { TablesUpdate } from "@/types/database.types";
 import { revalidatePath } from "next/cache";
 
@@ -9,7 +10,10 @@ type UpdateSongInput = Pick<
   "title" | "bpm" | "scale" | "genre" | "tags" | "description"
 >;
 
-export async function updateSong(id: string, data: UpdateSongInput) {
+export async function updateSong(
+  id: string,
+  data: UpdateSongInput,
+): Promise<MutationResult> {
   const supabase = await createClient();
 
   const {

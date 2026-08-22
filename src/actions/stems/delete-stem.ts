@@ -3,12 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { deleteFromR2 } from "@/lib/r2/upload";
+import { MutationResult } from "@/types";
 
-type DeleteStemResult = {
-  error: Error | null;
-};
-
-export const deleteStem = async (stemId: string): Promise<DeleteStemResult> => {
+export const deleteStem = async (stemId: string): Promise<MutationResult> => {
   const supabase = await createClient();
 
   const {

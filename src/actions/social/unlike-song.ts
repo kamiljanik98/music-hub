@@ -1,9 +1,10 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { MutationResult } from "@/types";
 import { revalidatePath } from "next/cache";
 
-export const unlikeSong = async (songId: string) => {
+export const unlikeSong = async (songId: string): Promise<MutationResult> => {
   const supabase = await createClient();
   const {
     data: { user },
