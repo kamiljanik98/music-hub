@@ -19,7 +19,7 @@ export const Bar = () => {
 
   return (
     <div className="fixed inset-x-4 bottom-4 z-40 flex justify-center rounded-[var(--mh-radius-card)] border border-white/12 bg-card">
-      <div className="w-full max-w-[var(--mh-content-max)] px-5 py-3">
+      <div className="w-full max-w-[var(--mh-content-max)] px-5 py-3 space-y-4">
         <div className="grid grid-cols-3 items-center">
           <TrackInfo song={song} />
           <Controls song={song} />
@@ -29,6 +29,7 @@ export const Bar = () => {
             <RepeatButton />
           </div>
         </div>
+
         <Seekbar />
       </div>
     </div>

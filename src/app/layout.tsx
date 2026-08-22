@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Anton } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
@@ -9,7 +9,17 @@ import { Bar } from "@/components/player/bar";
 import { UserProvider } from "@/components/providers/user-provider";
 import Footer from "@/components/common/footer";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-sans",
+});
+
+const anton = Anton({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "MusicHub",
@@ -22,10 +32,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
-      <body className="flex min-h-screen flex-col bg-background text-foreground">
+    <html lang="en" className={`${dmSans.variable} ${anton.variable} antialiased`}>
+      <body className="relative flex min-h-screen flex-col gap-4 overflow-x-clip bg-background p-4 pb-[116px] text-foreground">
+        <div
+          aria-hidden
+          className="mh-atmosphere-a pointer-events-none absolute -top-20 -right-[10%] -z-10 h-[520px] w-[60%] rounded-full"
+        />
+        <div
+          aria-hidden
+          className="mh-atmosphere-b pointer-events-none absolute top-[820px] -left-[6%] -z-10 h-[520px] w-[55%] rounded-full"
+        />
         <Navbar />
-        <div className="mx-auto w-full max-w-6xl flex-1">
+        <div className="mx-auto w-full max-w-[var(--mh-content-max)] flex-1">
           <UserProvider />
           <Toaster
             position="top-center"

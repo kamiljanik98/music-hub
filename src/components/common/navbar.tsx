@@ -16,16 +16,16 @@ export default function Navbar() {
   const { open } = useAuthModal();
 
   return (
-    <nav className="bg-card">
-      <div className="mx-auto flex max-w-6xl items-center gap-6 px-6 py-4">
+    <nav className="sticky top-4 z-35">
+      <div className="mx-auto flex max-w-[var(--mh-content-max)] flex-wrap items-center gap-3 rounded-[var(--mh-radius-pill)] border border-border bg-card px-3.5 py-2.5">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <Image src="/logo.svg" alt="App logo" width={50} height={50} />
-          <p className="text-sm font-semibold uppercase tracking-wider text-neutral-300">
+          <p className="font-display text-base uppercase tracking-[0.1em] text-foreground">
             MusicHub
           </p>
         </Link>
 
-        <div className="flex shrink-0 gap-4 text-[13px] font-bold text-muted-foreground">
+        <div className="flex shrink-0 gap-4 text-[13px] font-medium text-muted-foreground">
           <Link href="/feed">Feed</Link>
           <Link href="/library">Library</Link>
         </div>
