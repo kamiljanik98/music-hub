@@ -35,12 +35,14 @@ export function Controls({ song }: ControlsProps) {
   const setIsPlaying = usePlayer((s) => s.setIsPlaying);
   const setProgress = usePlayer((s) => s.setProgress);
   const setDuration = usePlayer((s) => s.setDuration);
+  const duration = usePlayer((s) => s.duration);
   const seekTo = usePlayer((s) => s.seekTo);
   const clearSeekRequest = usePlayer((s) => s.clearSeekRequest);
   const activeId = usePlayer((state) => state.activeId);
   const ids = usePlayer((state) => state.ids);
   const setActiveId = usePlayer((state) => state.setActiveId);
   const volume = usePlayer((state) => state.volume);
+  const repeatMode = usePlayer((state) => state.repeatMode);
   const playPauseRequested = usePlayer((state) => state.playPauseRequested);
   const clearPlayPauseRequest = usePlayer(
     (state) => state.clearPlayPauseRequest,
@@ -56,12 +58,30 @@ export function Controls({ song }: ControlsProps) {
     });
   }, [setIsPlaying]);
 
+  const restart = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = 0;
+    attemptPlay();
+  }, [attemptPlay]);
+
   const handleNext = useCallback(() => {
     if (!ids.length || !activeId) return;
     const currentIndex = ids.indexOf(activeId);
-    const nextId = ids[currentIndex + 1] ?? ids[0];
-    setActiveId(nextId);
-  }, [ids, activeId, setActiveId]);
+    const nextId = ids[currentIndex + 1];
+
+    if (nextId) {
+      setActiveId(nextId);
+      return;
+    }
+
+    if (repeatMode === "all") {
+      if (ids[0] === activeId) {
+        restart();
+        return;
+      }
+      setActiveId(ids[0]);
+    }
+  }, [ids, activeId, repeatMode, setActiveId, restart]);
 
   const handlePrev = useCallback(() => {
     if (!ids.length || !activeId) return;
@@ -88,11 +108,14 @@ export function Controls({ song }: ControlsProps) {
   }, [volume]);
 
   useEffect(() => {
-    if (seekTo === null || !audioRef.current || !audioRef.current.duration)
+    if (seekTo === null || !audioRef.current || !duration) return;
+    if (seekTo.songId !== activeId) {
+      clearSeekRequest();
       return;
-    audioRef.current.currentTime = seekTo * audioRef.current.duration;
+    }
+    audioRef.current.currentTime = seekTo.progress * duration;
     clearSeekRequest();
-  }, [seekTo, clearSeekRequest]);
+  }, [activeId, seekTo, clearSeekRequest, duration]);
 
   useEffect(() => {
     if (playPauseRequested === false || !audioRef.current) return;
@@ -121,6 +144,11 @@ export function Controls({ song }: ControlsProps) {
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onEnded={() => {
+          if (repeatMode === "one") {
+            restart();
+            return;
+          }
+
           setIsPlaying(false);
           handleNext();
         }}

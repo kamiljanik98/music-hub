@@ -91,13 +91,12 @@ export function useWaveform({
   }, [isActive, progress]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
     if (!isActive) {
       onActivate?.(songId);
-      return;
     }
-    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    requestSeek((e.clientX - rect.left) / rect.width);
+    requestSeek(songId, (e.clientX - rect.left) / rect.width);
   };
 
   return { rootRef, containerRef, isActive, isPlaying, handleClick };

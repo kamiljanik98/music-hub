@@ -6,6 +6,8 @@ import { TrackInfo } from "./track-info";
 import { Controls } from "./controls";
 import { Volume } from "./volume";
 import { usePathname } from "next/navigation";
+import { Seekbar } from "./seekbar";
+import { RepeatButton } from "./repeat-button";
 
 export const Bar = () => {
   const activeId = usePlayer((state) => state.activeId);
@@ -16,11 +18,18 @@ export const Bar = () => {
   if (pathname.startsWith("/upload")) return null;
 
   return (
-    <div className="z-index-5 fixed inset-x-0 bottom-0 flex justify-center border-t border-border bg-black">
-      <div className="grid w-full max-w-6xl grid-cols-3 items-center px-6 py-3">
-        <TrackInfo song={song} />
-        <Controls song={song} />
-        <Volume />
+    <div className="fixed inset-x-4 bottom-4 z-40 flex justify-center rounded-[var(--mh-radius-card)] border border-white/12 bg-card">
+      <div className="w-full max-w-[var(--mh-content-max)] px-5 py-3">
+        <div className="grid grid-cols-3 items-center">
+          <TrackInfo song={song} />
+          <Controls song={song} />
+
+          <div className="flex items-center justify-end gap-4">
+            <Volume />
+            <RepeatButton />
+          </div>
+        </div>
+        <Seekbar />
       </div>
     </div>
   );
