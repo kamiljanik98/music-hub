@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
 import type { Provider } from "@supabase/supabase-js";
 
+const POPUP_TIMEOUT_MS = 2 * 60 * 1000;
+
 const useSocialLogin = () => {
   const [isSocialLoading, setIsLoading] = useState<boolean>(false);
   const supabase = createClient();
@@ -32,28 +34,46 @@ const useSocialLogin = () => {
       "width=500,height=700",
     );
 
+    if (!popup) {
+      setIsLoading(false);
+      return {
+        error: new Error(
+          "Pop-up blocked. Allow pop-ups for this site and try again",
+        ),
+      };
+    }
+
     return new Promise<{ error: Error | null }>((resolve) => {
+      const settle = (settleError: Error | null) => {
+        clearInterval(checkClosed);
+        clearTimeout(giveUp);
+        setIsLoading(false);
+        resolve({ error: settleError });
+      };
+
       const checkClosed = setInterval(() => {
-        if (popup?.closed) {
-          clearInterval(checkClosed);
-          setIsLoading(false);
+        if (!popup.closed) return;
 
-          const raw = localStorage.getItem("discord-oauth-result");
-          localStorage.removeItem("discord-oauth-result");
+        const raw = localStorage.getItem("discord-oauth-result");
+        localStorage.removeItem("discord-oauth-result");
 
-          if (!raw) {
-            resolve({
-              error: new Error("Popup closed before completing sign in"),
-            });
-            return;
-          }
+        if (!raw) {
+          settle(new Error("Popup closed before completing sign in"));
+          return;
+        }
 
+        try {
           const result = JSON.parse(raw);
-          resolve({
-            error: result.success ? null : new Error("Discord sign in failed"),
-          });
+          settle(result.success ? null : new Error("Discord sign in failed"));
+        } catch {
+          settle(new Error("Discord sign in failed"));
         }
       }, 500);
+
+      const giveUp = setTimeout(() => {
+        popup.close();
+        settle(new Error("Discord sign in timed out"));
+      }, POPUP_TIMEOUT_MS);
     });
   };
   return { socialLogin, isSocialLoading };
