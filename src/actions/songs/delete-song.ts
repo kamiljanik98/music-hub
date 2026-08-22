@@ -3,12 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { deleteFromR2 } from "@/lib/r2/upload";
+import { MutationResult } from "@/types";
 
-type DeleteSongResult = {
-  error: Error | null;
-};
-
-export const deleteSong = async (id: string): Promise<DeleteSongResult> => {
+export const deleteSong = async (id: string): Promise<MutationResult> => {
   const supabase = await createClient();
 
   const {
@@ -71,7 +68,15 @@ export const deleteSong = async (id: string): Promise<DeleteSongResult> => {
     .eq("id", id);
 
   if (deleteSongError) {
-    return { error: new Error(deleteSongError.message) };
+    console.error(
+      `Song ${id} has no R2 files but its row survived deletion:`,
+      deleteSongError.message,
+    );
+    return {
+      error: new Error(
+        "This track's files were removed but the record could not be deleted. Try deleting it again.",
+      ),
+    };
   }
 
   revalidatePath(`/profile/[nickname]`, "page");
