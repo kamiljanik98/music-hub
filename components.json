@@ -24,8 +24,8 @@
   "registries": {
     "@shadcnio": {
       "url": "https://www.shadcn.io/r/{name}.json",
-      "headers": {
-        "Authorization": "Bearer ${SHADCN_REGISTRY_TOKEN}"
+      "params": {
+        "token": "${SHADCN_REGISTRY_TOKEN}"
       }
     }
   }

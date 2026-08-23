@@ -15,9 +15,11 @@ export const BUCKETS = {
   stems: process.env.R2_BUCKET_STEMS!,
   covers: process.env.R2_BUCKET_COVERS!,
   avatars: process.env.R2_BUCKET_AVATARS!,
+  banners: process.env.R2_BUCKET_BANNERS!,
 } as const;
 
 export type Bucket = keyof typeof BUCKETS;
 
 export const R2_COVERS_URL = process.env.NEXT_PUBLIC_R2_COVERS_URL!;
 export const R2_AVATARS_URL = process.env.NEXT_PUBLIC_R2_AVATARS_URL!;
+export const R2_BANNERS_URL = process.env.NEXT_PUBLIC_R2_BANNERS_URL!;

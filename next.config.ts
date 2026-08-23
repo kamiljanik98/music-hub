@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         pathname: "/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: new URL(process.env.NEXT_PUBLIC_R2_BANNERS_URL!).hostname,
+        pathname: "/**",
+        search: "",
+      },
     ],
   },
 };

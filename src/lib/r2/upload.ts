@@ -33,6 +33,10 @@ export async function uploadAvatar(file: File, path: string): Promise<void> {
   return uploadToR2(file, "avatars", path);
 }
 
+export async function uploadBanner(file: File, path: string): Promise<void> {
+  return uploadToR2(file, "banners", path);
+}
+
 export async function deleteFromR2(
   bucket: Bucket,
   path: string,
