@@ -33,7 +33,7 @@ export const SearchRow = ({
   return (
     <div
       className={cn(
-        "group/row flex items-center gap-5 rounded-[var(--radius-lg)] py-3.5 pr-6 pl-3.5 transition hover:bg-[var(--mh-glass-hover)]",
+        "group/row flex items-center gap-3 rounded-[var(--radius-lg)] sm:gap-5 py-3.5 pr-3 pl-3.5 sm:pr-6 transition hover:bg-[var(--mh-glass-hover)]",
         isActive && "bg-[var(--mh-glass-hover)]",
       )}
     >

@@ -63,7 +63,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   return (
     <div className="pb-16">
       {/* Banner */}
-      <div className="relative left-1/2 -mt-24 h-60 w-screen -translate-x-1/2 overflow-hidden bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))] md:h-72">
+      <div className="relative left-1/2 -mt-24 h-72 w-screen -translate-x-1/2 overflow-hidden bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))] md:h-96">
         {isOwnProfile ? (
           <EditableBanner
             bannerUrl={bannerUrl}
@@ -113,7 +113,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             alt={profile.nickname ?? "User Avatar"}
             width={112}
             height={112}
-            className="size-28 shrink-0 rounded-full object-cover ring-4 ring-[var(--mh-ink)]"
+            className="size-20 shrink-0 rounded-full object-cover ring-4 ring-[var(--mh-ink)] md:size-28"
           />
         )}
 

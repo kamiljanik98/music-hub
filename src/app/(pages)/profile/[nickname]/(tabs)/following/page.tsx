@@ -34,12 +34,12 @@ export default async function FollowingPage({ params }: FollowingPageProps) {
           NETWORK / FOLLOWING
         </p>
 
-        <div className="flex items-baseline justify-end gap-4">
-          <h1 className="font-display text-6xl leading-none tracking-tight uppercase text-foreground">
+        <div className="flex flex-wrap items-baseline justify-end gap-x-4 gap-y-2">
+          <h1 className="font-display text-4xl leading-none tracking-tight uppercase text-foreground md:text-6xl">
             FOLLOWING
           </h1>
 
-          <p className="font-mono text-2xl tabular-nums text-muted-foreground">
+          <p className="font-mono text-lg tabular-nums text-muted-foreground md:text-2xl">
             [{users.length.toString().padStart(3, "0")}]
           </p>
         </div>

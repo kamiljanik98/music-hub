@@ -10,7 +10,7 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
   return (
     <div className="flex items-center gap-4 rounded-[24px] border border-white/8 bg-[var(--mh-solid)] p-4">
       <Link href={`/playlists/${playlist.id}`} className="shrink-0">
-        <span className="flex size-24 items-center justify-center rounded-[var(--radius-md)] bg-[var(--muted)] text-[var(--mh-text-meta)] ring-1 ring-white/10">
+        <span className="flex size-16 items-center justify-center rounded-[var(--radius-md)] bg-[var(--muted)] text-[var(--mh-text-meta)] ring-1 ring-white/10 sm:size-24">
           <ListMusic className="size-8" />
         </span>
       </Link>

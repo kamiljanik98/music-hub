@@ -35,7 +35,7 @@ export const PromoBanner = ({ playlist, tracks }: PromoBannerProps) => {
   const href = `/playlists/${playlist.id}`;
 
   return (
-    <section className="relative isolate w-full overflow-hidden rounded-[var(--mh-radius-card)] bg-[var(--mh-solid)]">
+    <section className="relative isolate flex min-h-[320px] w-full items-center overflow-hidden rounded-[var(--mh-radius-card)] bg-[var(--mh-solid)] sm:min-h-[400px] md:min-h-[460px]">
       <div className="absolute inset-0 overflow-hidden rounded-[inherit] [transform:translateZ(0)]">
         <Image
           src="/banner.jpg"
@@ -61,13 +61,13 @@ export const PromoBanner = ({ playlist, tracks }: PromoBannerProps) => {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,10,10,0.96)_0%,rgba(10,10,10,0.88)_32%,rgba(10,10,10,0.45)_62%,rgba(10,10,10,0.05)_100%)]" />
       </div>
 
-      <div className="relative flex max-w-[620px] flex-col gap-3.5 px-8 py-9 md:px-12 md:py-11">
+      <div className="relative flex max-w-[620px] flex-col gap-3.5 px-5 py-8 sm:px-8 sm:py-9 md:px-12 md:py-11">
         <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
           Playlist
         </p>
 
         <Link href={href} className="w-fit">
-          <h2 className="font-display text-4xl leading-[0.95] text-foreground md:text-5xl">
+          <h2 className="font-display text-3xl leading-[0.95] text-foreground sm:text-4xl md:text-5xl">
             {playlist.title}
           </h2>
         </Link>

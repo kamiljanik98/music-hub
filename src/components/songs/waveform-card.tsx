@@ -25,13 +25,13 @@ export const WaveformCard = ({
   const meta = formatSongMeta(song);
 
   return (
-    <div className="flex group/item flex gap-6 rounded-[var(--radius-lg)]">
+    <div className="group/item flex flex-col gap-4 rounded-[var(--radius-lg)] sm:flex-row sm:gap-6">
       <Image
         src={getCoverUrl(song.image_path)}
         alt={song.title}
         width={128}
         height={128}
-        className="size-38 shrink-0 rounded-[var(--radius-md)] object-cover"
+        className="size-24 shrink-0 rounded-[var(--radius-md)] object-cover sm:size-38"
       />
 
       <div className="flex min-w-0 flex-1 flex-col gap-2.5">

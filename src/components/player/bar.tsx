@@ -39,35 +39,44 @@ export const Bar = () => {
             aria-hidden={!isExpanded}
           >
             <div className="overflow-hidden">
-              <div className="mb-4 flex items-center justify-center border-b border-border/60 pb-4">
+              <div className="mb-4 flex flex-wrap items-center justify-center gap-6 border-b border-border/60 pb-4">
                 <Speed />
+
+                <div className="md:hidden">
+                  <Volume />
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 items-center">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 md:grid-cols-3 md:gap-0">
             <TrackInfo song={song} />
 
-            <Controls song={song} />
+            <div className="flex items-center gap-2 md:contents">
+              <Controls song={song} />
 
-            <div className="flex items-center justify-end gap-4">
-              <button
-                type="button"
-                onClick={() => setIsExpanded((value) => !value)}
-                className={cn(
-                  "flex size-9 items-center justify-center rounded-md transition-colors hover:bg-white/5 hover:text-foreground",
-                  isExpanded
-                    ? "bg-white/10 text-foreground"
-                    : "text-muted-foreground",
-                )}
-                aria-label="Playback speed"
-                aria-pressed={isExpanded}
-              >
-                <Gauge className="size-5" strokeWidth={2.25} />
-              </button>
+              <div className="flex items-center justify-end gap-2 md:gap-4">
+                <button
+                  type="button"
+                  onClick={() => setIsExpanded((value) => !value)}
+                  className={cn(
+                    "flex size-9 items-center justify-center rounded-md transition-colors hover:bg-white/5 hover:text-foreground",
+                    isExpanded
+                      ? "bg-white/10 text-foreground"
+                      : "text-muted-foreground",
+                  )}
+                  aria-label="Playback speed"
+                  aria-pressed={isExpanded}
+                >
+                  <Gauge className="size-5" strokeWidth={2.25} />
+                </button>
 
-              <Volume />
-              <RepeatButton />
+                <div className="hidden md:block">
+                  <Volume />
+                </div>
+
+                <RepeatButton />
+              </div>
             </div>
           </div>
 

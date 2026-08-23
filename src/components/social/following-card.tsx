@@ -25,7 +25,7 @@ export const FollowingCard = ({
           alt={user.nickname ?? "User"}
           width={96}
           height={96}
-          className="size-24 rounded-full object-cover ring-1 ring-white/10"
+          className="size-16 rounded-full object-cover ring-1 ring-white/10 sm:size-24"
         />
       </Link>
 

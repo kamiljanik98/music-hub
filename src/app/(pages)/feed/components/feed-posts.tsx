@@ -78,7 +78,7 @@ export function FeedPosts({ songs, eyebrow, note }: FeedPostsProps) {
           {eyebrow}
         </p>
 
-        <div className="flex items-baseline justify-end gap-4">
+        <div className="flex flex-wrap items-baseline justify-end gap-x-4 gap-y-2">
           <div className="mr-auto flex shrink-0 items-center gap-1 self-center">
             {options.map(({ value, icon: Icon, label: optionLabel }) => (
               <button
@@ -98,11 +98,11 @@ export function FeedPosts({ songs, eyebrow, note }: FeedPostsProps) {
             ))}
           </div>
 
-          <h1 className="font-display text-6xl leading-none tracking-tight uppercase text-foreground">
+          <h1 className="font-display text-4xl leading-none tracking-tight uppercase text-foreground md:text-6xl">
             Posts
           </h1>
 
-          <p className="font-mono text-2xl tabular-nums text-muted-foreground">
+          <p className="font-mono text-lg tabular-nums text-muted-foreground md:text-2xl">
             [{songs.length.toString().padStart(3, "0")}]
           </p>
         </div>

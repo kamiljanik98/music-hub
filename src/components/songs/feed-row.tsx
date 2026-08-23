@@ -48,7 +48,7 @@ export const FeedRow = ({
   return (
     <div
       className={cn(
-        "group/row flex flex-col gap-2 rounded-[var(--radius-lg)] py-3.5 pr-5 pl-3.5 transition hover:bg-[var(--mh-glass-hover)]",
+        "group/row flex flex-col gap-2 rounded-[var(--radius-lg)] py-3.5 pr-3 pl-3.5 sm:pr-5 transition hover:bg-[var(--mh-glass-hover)]",
         isActive && "bg-[var(--mh-glass-hover)]",
       )}
     >
@@ -56,7 +56,7 @@ export const FeedRow = ({
         posted {formatRelativeTime(song.created_at)}
       </p>
 
-      <div className="flex items-start gap-5">
+      <div className="flex items-start gap-3 sm:gap-5">
         <div className="relative shrink-0">
           <Image
             src={getCoverUrl(song.image_path)}

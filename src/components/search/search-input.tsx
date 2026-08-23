@@ -51,7 +51,7 @@ export const SearchInput = () => {
 
   return (
     <div className="relative w-full">
-      <div className="flex items-center gap-2.5 rounded-[var(--mh-radius-pill)] border border-transparent bg-[rgba(0,0,0,0.35)] px-5 py-3.5">
+      <div className="flex items-center gap-2.5 rounded-[var(--mh-radius-pill)] border border-white/12 bg-[rgba(0,0,0,0.55)] px-5 py-3.5 transition-colors focus-within:border-primary/60 focus-within:bg-[rgba(0,0,0,0.7)] hover:border-white/20">
         <Search
           className="pointer-events-none size-4 shrink-0 text-[var(--mh-text-meta)]"
           strokeWidth={1.9}
