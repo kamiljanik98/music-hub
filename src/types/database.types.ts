@@ -93,35 +93,70 @@ export type Database = {
           },
         ]
       }
+      plays: {
+        Row: {
+          id: number
+          played_at: string
+          song_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: never
+          played_at?: string
+          song_id: string
+          user_id: string
+        }
+        Update: {
+          id?: never
+          played_at?: string
+          song_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plays_song_id_fkey"
+            columns: ["song_id"]
+            isOneToOne: false
+            referencedRelation: "songs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
+          banner_url: string | null
           bio: string | null
           created_at: string
           email: string | null
           id: string
           nickname: string | null
           role: string
+          social_links: Json | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
+          banner_url?: string | null
           bio?: string | null
           created_at?: string
           email?: string | null
           id: string
           nickname?: string | null
           role?: string
+          social_links?: Json | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
+          banner_url?: string | null
           bio?: string | null
           created_at?: string
           email?: string | null
           id?: string
           nickname?: string | null
           role?: string
+          social_links?: Json | null
           updated_at?: string
         }
         Relationships: []
@@ -135,6 +170,7 @@ export type Database = {
           id: string
           image_path: string | null
           path: string
+          play_count: number
           scale: string | null
           tags: string[] | null
           title: string
@@ -148,6 +184,7 @@ export type Database = {
           id?: string
           image_path?: string | null
           path: string
+          play_count?: number
           scale?: string | null
           tags?: string[] | null
           title: string
@@ -161,6 +198,7 @@ export type Database = {
           id?: string
           image_path?: string | null
           path?: string
+          play_count?: number
           scale?: string | null
           tags?: string[] | null
           title?: string
@@ -213,7 +251,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      record_play: { Args: { p_song_id: string }; Returns: undefined }
+      tags_within_limits: { Args: { tags: string[] }; Returns: boolean }
     }
     Enums: {
       stem_category:
