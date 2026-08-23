@@ -8,6 +8,7 @@ import {
 } from "@/lib/r2/upload";
 import type { Database } from "@/types/database.types";
 import { validateImageFile } from "@/lib/validations/files";
+import { parseTags } from "@/lib/validations/song";
 import {
   ACCEPTED_AUDIO,
   type AcceptedAudioMimeType,
@@ -190,11 +191,8 @@ export async function POST(req: NextRequest) {
     scale: typeof scale === "string" ? scale : null,
     genre: typeof genre === "string" ? genre : null,
     tags:
-      typeof tags === "string"
-        ? tags
-            .split(",")
-            .map((t) => t.trim())
-            .filter(Boolean)
+      typeof tags === "string" && parseTags(tags).length
+        ? parseTags(tags)
         : null,
     description: description ?? null,
   };

@@ -30,3 +30,24 @@ export const IMAGE_PLACEHOLDER = {
   COVER: "/cover-placeholder.jpg",
   AVATAR: "/avatar-placeholder.jpg",
 } as const;
+
+export const GENRES = [
+  "Hip Hop",
+  "Trap",
+  "R&B",
+  "Pop",
+  "Rock",
+  "Metal",
+  "Electronic",
+  "House",
+  "Techno",
+  "Drum & Bass",
+  "Lo-fi",
+  "Ambient",
+  "Jazz",
+  "Classical",
+  "Experimental",
+  "Other",
+] as const;
+
+export type Genre = (typeof GENRES)[number];
