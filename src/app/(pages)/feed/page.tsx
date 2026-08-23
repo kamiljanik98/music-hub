@@ -1,12 +1,13 @@
 import { getFollowedArtistsSongs } from "@/actions/songs/get-followed-artists-songs";
 import { ProfileList } from "@/components/social/profile-list";
 import { createClient } from "@/lib/supabase/server";
-import { SongList } from "@/components/songs/song-list";
+import { SongList } from "./components/song-list";
 import { AuthGate } from "@/components/auth/auth-gate";
 import { getSuggestedUsers } from "@/actions/social/get-suggested-users";
 
 export default async function FeedPage() {
   const supabase = await createClient();
+
   const {
     data: { user: currentUser },
   } = await supabase.auth.getUser();
@@ -30,12 +31,14 @@ export default async function FeedPage() {
     const { data: users, error: suggestedUsersError } = await getSuggestedUsers(
       currentUser.id,
     );
+
     return (
       <div>
         <p className="text-muted-foreground">
           You&apos;re not following anyone yet — follow some artists to see
           their tracks here.
         </p>
+
         {suggestedUsersError ? (
           <p className="text-destructive">
             Failed to load your suggested artists list.
@@ -48,7 +51,7 @@ export default async function FeedPage() {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
       <SongList songs={songs} />
     </div>
   );

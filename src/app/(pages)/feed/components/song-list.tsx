@@ -1,7 +1,7 @@
 "use client";
 
 import { useOnPlay } from "@/hooks/player/use-on-play";
-import { Card } from "./card";
+import { SongPost } from "@/components/songs/song-post";
 import { Song } from "@/types";
 
 type SongListProps = {
@@ -14,14 +14,12 @@ export function SongList({ songs }: SongListProps) {
   if (!songs.length) return null;
 
   return (
-    <div className="flex flex-col gap-2.5 w-fit">
+    <div className="flex w-full flex-col gap-5">
       {songs.map((song) => (
-        <Card
+        <SongPost
           key={song.id}
           song={song}
           onPlay={onPlay}
-          variant="row"
-          postedAt={song.created_at}
           isLikedInitially={song.isLiked}
         />
       ))}

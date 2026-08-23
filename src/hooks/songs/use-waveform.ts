@@ -20,9 +20,9 @@ export function useWaveform({
   songId,
   path,
   height,
-  barWidth = 2,
-  barGap = 2,
-  barRadius = 2,
+  barWidth = 4,
+  barGap = 4,
+  barRadius = 4,
   lazyMount = true,
   onActivate,
 }: UseWaveformOptions) {
@@ -34,7 +34,9 @@ export function useWaveform({
   const activeId = usePlayer((s) => s.activeId);
   const isPlaying = usePlayer((s) => s.isPlaying);
   const progress = usePlayer((s) => s.progress);
+  const playbackRate = usePlayer((s) => s.playbackRate);
   const requestSeek = usePlayer((s) => s.requestSeek);
+
   const isActive = activeId === songId;
 
   useEffect(() => {
@@ -51,6 +53,7 @@ export function useWaveform({
     );
 
     observer.observe(rootRef.current);
+
     return () => observer.disconnect();
   }, [lazyMount]);
 
@@ -61,13 +64,16 @@ export function useWaveform({
 
     const init = async () => {
       const { url, error } = await resolveSongUrl(path);
-      if (cancelled || !containerRef.current || error || !url) return;
+
+      if (cancelled || !containerRef.current || error || !url) {
+        return;
+      }
 
       wavesurferRef.current = WaveSurfer.create({
         container: containerRef.current,
         url,
-        waveColor: "#525252",
-        progressColor: "#fafafa",
+        waveColor: "rgba(255, 255, 255, 0.16)",
+        progressColor: "#d6f24b",
         height,
         barWidth,
         barGap,
@@ -75,6 +81,8 @@ export function useWaveform({
         cursorWidth: 0,
         interact: false,
       });
+
+      wavesurferRef.current.setPlaybackRate(playbackRate);
     };
 
     init();
@@ -84,7 +92,11 @@ export function useWaveform({
       wavesurferRef.current?.destroy();
       wavesurferRef.current = null;
     };
-  }, [isVisible, path, height, barWidth, barGap, barRadius]);
+  }, [isVisible, path, height, barWidth, barGap, barRadius, playbackRate]);
+
+  useEffect(() => {
+    wavesurferRef.current?.setPlaybackRate(playbackRate);
+  }, [playbackRate]);
 
   useEffect(() => {
     wavesurferRef.current?.seekTo(isActive ? progress : 0);
@@ -92,12 +104,21 @@ export function useWaveform({
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
+
     if (!isActive) {
       onActivate?.(songId);
     }
+
     const rect = containerRef.current.getBoundingClientRect();
+
     requestSeek(songId, (e.clientX - rect.left) / rect.width);
   };
 
-  return { rootRef, containerRef, isActive, isPlaying, handleClick };
+  return {
+    rootRef,
+    containerRef,
+    isActive,
+    isPlaying,
+    handleClick,
+  };
 }

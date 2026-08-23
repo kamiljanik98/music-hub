@@ -3,17 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  CircleUserRound,
   Heart,
   LogOut,
   Settings,
-  User2Icon,
   UserRoundCheck,
-  Users,
+  UsersRound,
 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useUser from "@/hooks/profile/use-user";
@@ -28,70 +29,58 @@ export const UserProfileButton = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="flex items-center gap-1.5 text-sm text-neutral-300 hover:text-neutral-100 transition-colors cursor-pointer outline-none">
-        <div className="size-8 rounded-full overflow-hidden shrink-0">
-          <Image
-            src={getAvatarUrl(user.avatar_url)}
-            alt={user.nickname ?? "User avatar"}
-            width={24}
-            height={24}
-            className="size-full object-cover"
-          />
-        </div>
-        <span>{user.nickname ?? "No nickname"}</span>
+      <DropdownMenuTrigger className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+        <Image
+          src={getAvatarUrl(user.avatar_url)}
+          alt={user.nickname ?? "User avatar"}
+          width={36}
+          height={36}
+          className="size-full rounded-full object-cover"
+        />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-40">
+      <DropdownMenuContent align="start" className="w-56">
         <DropdownMenuItem asChild>
-          <Link
-            href={`/profile/${user.nickname}`}
-            className="flex items-center gap-2"
-          >
-            <User2Icon size={14} />
+          <Link href={`/profile/${user.nickname}`}>
+            <CircleUserRound />
             Profile
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            href={`/profile/${user.nickname}/following`}
-            className="flex items-center gap-2"
-          >
-            <UserRoundCheck size={14} />
-            Following
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            href={`/profile/${user.nickname}/likes`}
-            className="flex items-center gap-2"
-          >
-            <Heart size={14} />
-            Likes
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            href={`/profile/${user.nickname}/followers`}
-            className="flex items-center gap-2"
-          >
-            <Users size={14} />
-            Followers
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link
-            href={`/profile/${user.nickname}/settings`}
-            className="flex items-center gap-2"
-          >
-            <Settings size={14} />
+          <Link href={`/profile/${user.nickname}/likes`}>
+            <Heart />
+            Likes
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link href={`/profile/${user.nickname}/following`}>
+            <UserRoundCheck />
+            Following
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link href={`/profile/${user.nickname}/followers`}>
+            <UsersRound />
+            Followers
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem asChild>
+          <Link href={`/profile/${user.nickname}/settings`}>
+            <Settings />
             Settings
           </Link>
         </DropdownMenuItem>
+
         <DropdownMenuItem
           onClick={() => signOut()}
-          className="flex items-center gap-2 text-destructive"
+          className="text-destructive"
         >
-          <LogOut size={14} />
+          <LogOut />
           Sign Out
         </DropdownMenuItem>
       </DropdownMenuContent>

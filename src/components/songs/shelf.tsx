@@ -6,28 +6,66 @@ import { useGetSongs } from "@/hooks/songs/use-get-songs";
 import { useOnPlay } from "@/hooks/player/use-on-play";
 import { Card } from "@/components/songs/card";
 
-export const Shelf = () => {
+type ShelfProps = {
+  title: string;
+};
+
+export const Shelf = ({ title }: ShelfProps) => {
   const { songs, isLoading, error } = useGetSongs();
   const onPlay = useOnPlay(songs);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: "left" | "right") => {
     scrollRef.current?.scrollBy({
-      left: dir === "left" ? -200 : 200,
+      left: dir === "left" ? -480 : 480,
       behavior: "smooth",
     });
   };
 
+  const header = (
+    <div className="mb-6 flex items-center justify-between gap-6">
+      <h2 className="font-display text-2xl uppercase tracking-[0.02em] text-foreground">
+        {title}
+      </h2>
+
+      <div className="flex shrink-0 items-center gap-2">
+        <button
+          type="button"
+          onClick={() => scroll("left")}
+          className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-[var(--mh-glass-hover)] hover:text-foreground"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft size={18} />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => scroll("right")}
+          className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-[var(--mh-glass-hover)] hover:text-foreground"
+          aria-label="Scroll right"
+        >
+          <ChevronRight size={18} />
+        </button>
+      </div>
+    </div>
+  );
+
   if (isLoading) {
     return (
-      <div className="h-48 w-full animate-pulse rounded-md bg-neutral-800" />
+      <div>
+        {header}
+        <div className="h-48 w-full animate-pulse rounded-md bg-neutral-800" />
+      </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex h-48 w-full items-center justify-center text-sm text-neutral-500">
-        Failed to load songs.
+      <div>
+        {header}
+        <div className="flex h-48 w-full items-center justify-center text-sm text-neutral-500">
+          Failed to load songs.
+        </div>
       </div>
     );
   }
@@ -35,33 +73,24 @@ export const Shelf = () => {
   if (!songs.length) return null;
 
   return (
-    <div className="group/scroll relative">
-      <button
-        onClick={() => scroll("left")}
-        className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-card p-2 opacity-0 transition group-hover/scroll:opacity-100"
-        aria-label="Scroll left"
-      >
-        <ChevronLeft size={20} />
-      </button>
+    <div>
+      {header}
 
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-hidden scrollbar-none"
+        className="mh-scroll flex items-stretch gap-5 overflow-x-auto"
       >
         {songs.map((song) => (
-          <div key={song.id} className="w-40 shrink-0">
-            <Card isLikedInitially={song.isLiked} song={song} onPlay={onPlay} />
+          <div key={song.id} className="w-[220px] shrink-0">
+            <Card
+              isLikedInitially={song.isLiked}
+              isNew={song.isNew}
+              song={song}
+              onPlay={onPlay}
+            />
           </div>
         ))}
       </div>
-
-      <button
-        onClick={() => scroll("right")}
-        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-card p-2 opacity-0 transition group-hover/scroll:opacity-100"
-        aria-label="Scroll right"
-      >
-        <ChevronRight size={20} />
-      </button>
     </div>
   );
 };

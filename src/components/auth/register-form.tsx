@@ -20,7 +20,8 @@ const RegisterForm = () => {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: { email: "", nickname: "", password: "" },
-    mode: "onBlur",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
   });
 
   const onSubmit = async (values: RegisterFormValues) => {

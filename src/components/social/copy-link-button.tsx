@@ -23,13 +23,13 @@ export function CopyLinkButton({ path, className }: CopyLinkButtonProps) {
 
   return (
     <Button
-      variant="outline"
-      size="sm"
+      variant="ghost"
+      size="icon-sm"
       onClick={handleCopy}
+      aria-label="Copy link"
       className={className}
     >
       <Link size={14} />
-      Link
     </Button>
   );
 }

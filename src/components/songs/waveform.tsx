@@ -9,6 +9,7 @@ interface WaveformProps {
   path: string;
   height?: number;
   barWidth?: number;
+  barGap?: number;
   barRadius?: number;
   lazyMount?: boolean;
   onActivate?: (songId: string) => void;
@@ -17,9 +18,10 @@ interface WaveformProps {
 export const Waveform = ({
   songId,
   path,
-  height = 80,
-  barWidth = 3,
-  barRadius = 3,
+  height = 72,
+  barWidth = 4,
+  barGap = 4,
+  barRadius = 4,
   lazyMount = false,
   onActivate,
 }: WaveformProps) => {
@@ -37,6 +39,7 @@ export const Waveform = ({
       path,
       height: height,
       barWidth: barWidth,
+      barGap: barGap,
       barRadius: barRadius,
       lazyMount: lazyMount,
       onActivate: () => activate(songId),
@@ -58,7 +61,7 @@ export const Waveform = ({
       <div
         ref={containerRef}
         onClick={handleClick}
-        className="h-20 flex-1 cursor-pointer"
+        className="h-[72px] flex-1 cursor-pointer"
       />
     </div>
   );

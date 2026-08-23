@@ -1,30 +1,65 @@
-const LINKS = [
-  "Legal",
-  "Privacy",
-  "Cookie Manager",
-  "Cookie Policy",
-  "About us",
-  "Topics",
-  "Copyright",
-  "Feedback",
-];
-
 const Footer = () => {
   return (
-    <footer className="mt-10 flex w-full flex-col items-center border-t border-border pt-6 pb-4 text-[11px] text-muted-foreground">
-      <nav className="flex flex-wrap items-center justify-center gap-x-3">
-        {LINKS.map((label, i) => (
-          <span key={label} className="flex items-center gap-x-3">
-            <a href="#" className="transition-colors hover:text-primary">
-              {label}
+    <footer className="mt-16 w-full">
+      <div className="mx-auto flex w-full max-w-[var(--mh-content-max)] flex-col gap-4 border-t border-border px-4 py-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="font-display text-lg tracking-tight text-foreground">
+              MUSICHUB
+            </span>
+
+            <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+
+            <span className="font-mono text-[9px] tracking-[0.2em] text-muted-foreground uppercase">
+              SYSTEM / 2026
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 font-mono text-[9px] tracking-[0.14em] text-muted-foreground uppercase">
+            <span className="size-1.5 rounded-full bg-emerald-500" />
+            <span>Operational</span>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 font-mono text-[9px] tracking-wide text-muted-foreground">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2">
+            <a
+              href="/terms"
+              className="transition-colors hover:text-foreground"
+            >
+              Terms
             </a>
-            {i < LINKS.length - 1 && <span aria-hidden>-</span>}
+            <a
+              href="/privacy"
+              className="transition-colors hover:text-foreground"
+            >
+              Privacy
+            </a>
+            <a
+              href="/cookies"
+              className="transition-colors hover:text-foreground"
+            >
+              Cookies
+            </a>
+            <a
+              href="/copyright"
+              className="transition-colors hover:text-foreground"
+            >
+              Copyright
+            </a>
+            <a
+              href="/feedback"
+              className="transition-colors hover:text-foreground"
+            >
+              Feedback
+            </a>
+          </nav>
+
+          <span className="text-muted-foreground/60">
+            © {new Date().getFullYear()} MUSICHUB
           </span>
-        ))}
-      </nav>
-      <a href="#" className="mt-2 transition-colors hover:text-primary">
-        Language: <span className="text-foreground">English (US)</span>
-      </a>
+        </div>
+      </div>
     </footer>
   );
 };

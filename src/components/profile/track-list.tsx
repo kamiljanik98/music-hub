@@ -2,13 +2,14 @@
 
 import { Song } from "@/types";
 import { useOnPlay } from "@/hooks/player/use-on-play";
-import { Card } from "@/components/songs/card";
+import { WaveformCard } from "../songs/waveform-card";
 
 type TrackListProps = {
   songs: Song[];
+  isOwner?: boolean;
 };
 
-export const TrackList = ({ songs }: TrackListProps) => {
+export const TrackList = ({ songs, isOwner = false }: TrackListProps) => {
   const onPlay = useOnPlay(songs);
 
   if (!songs.length) {
@@ -20,12 +21,12 @@ export const TrackList = ({ songs }: TrackListProps) => {
   return (
     <div className="flex flex-col">
       {songs.map((song) => (
-        <Card
+        <WaveformCard
           key={song.id}
           song={song}
           onPlay={onPlay}
-          variant="waveform"
           isLikedInitially={song.isLiked}
+          isOwner={isOwner}
         />
       ))}
     </div>

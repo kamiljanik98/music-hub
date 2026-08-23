@@ -20,7 +20,8 @@ const LoginForm = () => {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
-    mode: "onBlur",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
   });
 
   const onSubmit = async (values: LoginFormValues) => {
@@ -55,16 +56,14 @@ const LoginForm = () => {
       />
       <Button
         type="button"
+        variant="link"
+        size="xs"
         onClick={() => setView("forgot-password")}
-        className="self-end text-xs text-neutral-400 hover:underline"
+        className="self-end"
       >
         Forgot password?
       </Button>
-      <Button
-        className="text-sm bg-neutral-800 h-12"
-        type="submit"
-        disabled={isLoading}
-      >
+      <Button type="submit" size="sm" className="w-full" disabled={isLoading}>
         Sign in
       </Button>
       <SocialButton

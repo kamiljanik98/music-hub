@@ -18,7 +18,8 @@ const ForgotPasswordForm = () => {
   const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: { email: "" },
-    mode: "onBlur",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
   });
 
   const onSubmit = async (values: ForgotPasswordFormValues) => {

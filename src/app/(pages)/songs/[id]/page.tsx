@@ -26,7 +26,7 @@ export default async function SongPage({ params }: SongPageProps) {
   const meta = formatSongMeta(song);
 
   return (
-    <div className="flex flex-col gap-8 px-6 py-10">
+    <div className="flex flex-col gap-8 py-10">
       <div className="flex gap-6">
         <Image
           src={getCoverUrl(song.image_path)}

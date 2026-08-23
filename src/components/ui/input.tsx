@@ -8,13 +8,13 @@ const inputVariants = cva(
     variants: {
       variant: {
         underline:
-          "bg-transparent px-0 py-2 border-0 border-b border-neutral-600 focus:border-neutral-700",
+          "bg-transparent px-0 py-2 border-0 border-b border-input focus:border-ring/60",
         filled:
-          "rounded-md bg-neutral-900 px-3 py-2 border border-transparent focus:border-neutral-700",
+          "rounded-[var(--radius-md)] border border-input bg-[rgba(0,0,0,0.3)] px-4 py-3 text-sm focus:border-ring/60",
       },
     },
     defaultVariants: {
-      variant: "underline",
+      variant: "filled",
     },
   },
 );

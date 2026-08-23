@@ -22,9 +22,14 @@ export default function AuthDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && close()}>
-      <DialogContent className="bg-neutral-900 text-neutral-200 sm:max-w-md">
+      <DialogContent
+        className="bg-neutral-900 text-neutral-200 sm:max-w-md"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
-          <DialogTitle>{titles[view]}</DialogTitle>
+          <DialogTitle className="font-sans text-lg font-semibold">
+            {titles[view]}
+          </DialogTitle>
         </DialogHeader>
 
         {view === "login" && <LoginForm />}
