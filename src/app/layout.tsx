@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Anton } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import { Toaster } from "sonner";
-import Navbar from "@/components/common/navbar";
-import AuthModal from "@/components/auth/auth-dialog";
-import { Bar } from "@/components/player/bar";
-import { UserProvider } from "@/components/providers/user-provider";
-import Footer from "@/components/common/footer";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -32,33 +25,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${anton.variable} antialiased`}>
-      <body className="relative flex min-h-screen flex-col gap-4 overflow-x-clip bg-background p-4 pb-[116px] text-foreground">
+    <html
+      lang="en"
+      className={`${dmSans.variable} ${anton.variable} antialiased`}
+    >
+      <body className="relative flex min-h-screen flex-col overflow-x-clip bg-background text-foreground">
         <div
           aria-hidden
-          className="mh-atmosphere-a pointer-events-none absolute -top-20 -right-[10%] -z-10 h-[520px] w-[60%] rounded-full"
+          className="mh-atmosphere-a pointer-events-none fixed -top-20 -right-[10%] z-0 h-[520px] w-[60%] rounded-full"
         />
+
         <div
           aria-hidden
-          className="mh-atmosphere-b pointer-events-none absolute top-[820px] -left-[6%] -z-10 h-[520px] w-[55%] rounded-full"
+          className="mh-atmosphere-b pointer-events-none fixed top-[820px] -left-[6%] z-0 h-[520px] w-[55%] rounded-full"
         />
-        <Navbar />
-        <div className="mx-auto w-full max-w-[var(--mh-content-max)] flex-1">
-          <UserProvider />
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              classNames: {
-                success: "!bg-neutral-950 !border-green-800 !text-green-300",
-                error: "!bg-red-950 !border-red-800 !text-red-300",
-              },
-            }}
-          />
-          <AuthModal />
-          {children}
-        </div>
-        <Footer />
-        <Bar />
+
+        {children}
       </body>
     </html>
   );
