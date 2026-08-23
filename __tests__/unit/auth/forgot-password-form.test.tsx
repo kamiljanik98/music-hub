@@ -29,18 +29,27 @@ describe("ForgotPasswordForm", () => {
     hookState.success = false;
   });
 
-  it("shows an inline error on invalid email without submitting", async () => {
+  it("does not submit an invalid email", async () => {
+    const user = userEvent.setup();
+    render(<ForgotPasswordForm />);
+
+    const email = screen.getByLabelText<HTMLInputElement>(/email/i);
+    await user.type(email, "not-an-email");
+    await user.click(screen.getByRole("button", { name: /send reset link/i }));
+
+    expect(email.validity.typeMismatch).toBe(true);
+    expect(hookState.resetPassword).not.toHaveBeenCalled();
+  });
+
+  it("shows no error on blur before a submit attempt", async () => {
     const user = userEvent.setup();
     render(<ForgotPasswordForm />);
 
     const email = screen.getByLabelText(/email/i);
-    await user.type(email, "not-an-email");
+    await user.click(email);
     await user.tab();
 
-    await waitFor(() => {
-      expect(screen.getByText(/invalid email/i)).toBeDefined();
-      expect(email).toHaveAttribute("aria-invalid", "true");
-    });
+    expect(email).toHaveAttribute("aria-invalid", "false");
     expect(hookState.resetPassword).not.toHaveBeenCalled();
   });
 

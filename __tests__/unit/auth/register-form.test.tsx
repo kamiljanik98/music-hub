@@ -46,46 +46,60 @@ describe("RegisterForm", () => {
     vi.clearAllMocks();
   });
 
-  it("shows an inline field error on invalid email without submitting", async () => {
+  it("does not submit an invalid email", async () => {
     const user = userEvent.setup();
     render(<RegisterForm />);
 
-    const emailInput = screen.getByLabelText(/email/i);
+    const emailInput = screen.getByLabelText<HTMLInputElement>(/email/i);
     await user.type(emailInput, "not-an-email");
-    await user.tab();
+    await user.type(screen.getByLabelText(/nickname/i), "jankowalski");
+    await user.type(screen.getByLabelText(/password/i), "Secret123");
+    await user.click(screen.getByRole("button", { name: /^register$/i }));
 
-    await waitFor(() => {
-      expect(screen.getByText(/invalid email/i)).toBeDefined();
-      expect(emailInput).toHaveAttribute("aria-invalid", "true");
-    });
+    expect(emailInput.validity.typeMismatch).toBe(true);
+    expect(mockRegister).not.toHaveBeenCalled();
   });
 
-  it("shows an inline field error on a too-short password without submitting", async () => {
+  it("shows an inline field error on a too-short password on submit", async () => {
     const user = userEvent.setup();
     render(<RegisterForm />);
 
     const passwordInput = screen.getByLabelText(/password/i);
     await user.type(passwordInput, "short");
-    await user.tab();
+    await user.click(screen.getByRole("button", { name: /^register$/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/at least/i)).toBeDefined();
+      expect(screen.getByText(/password must be at least/i)).toBeDefined();
       expect(passwordInput).toHaveAttribute("aria-invalid", "true");
     });
   });
 
-  it("shows an inline field error on invalid nickname characters without submitting", async () => {
+  it("shows an inline field error on invalid nickname characters on submit", async () => {
     const user = userEvent.setup();
     render(<RegisterForm />);
 
     const nicknameInput = screen.getByLabelText(/nickname/i);
     await user.type(nicknameInput, "jan kowalski");
-    await user.tab();
+    await user.click(screen.getByRole("button", { name: /^register$/i }));
 
     await waitFor(() => {
       expect(screen.getByText(/only letters, numbers/i)).toBeDefined();
       expect(nicknameInput).toHaveAttribute("aria-invalid", "true");
     });
+  });
+
+  it("shows no field errors on blur before a submit attempt", async () => {
+    const user = userEvent.setup();
+    render(<RegisterForm />);
+
+    await user.type(screen.getByLabelText(/nickname/i), "ab");
+    await user.tab();
+
+    expect(screen.queryByText(/nickname must be at least/i)).toBeNull();
+    expect(screen.getByLabelText(/nickname/i)).toHaveAttribute(
+      "aria-invalid",
+      "false",
+    );
   });
 
   it("does not show field errors for valid input", async () => {
