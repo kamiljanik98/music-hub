@@ -19,7 +19,7 @@ export const Waveform = ({
   songId,
   path,
   height = 72,
-  barWidth = 4,
+  barWidth = 3,
   barGap = 4,
   barRadius = 4,
   lazyMount = false,

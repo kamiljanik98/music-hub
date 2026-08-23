@@ -2,8 +2,8 @@
 
 import { useOnPlay } from "@/hooks/player/use-on-play";
 import { ProfileSummary, Song } from "@/types";
-import { Row } from "@/components/songs/row";
-import { ProfileCard } from "../social/profile-card";
+import { SearchRow } from "@/components/songs/search-row";
+import { ProfileRow } from "../social/profile-row";
 
 type ContentProps = {
   songs: Song[];
@@ -42,13 +42,9 @@ export const Content = ({ songs, users, query }: ContentProps) => {
                 Artists · {users.length}
               </h2>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-2.5">
                 {users.map((user) => (
-                  <ProfileCard
-                    key={`user-${user.id}`}
-                    user={user}
-                    variant="row"
-                  />
+                  <ProfileRow key={`user-${user.id}`} user={user} />
                 ))}
               </div>
             </section>
@@ -60,9 +56,13 @@ export const Content = ({ songs, users, query }: ContentProps) => {
                 Tracks · {songs.length}
               </h2>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-2.5">
                 {songs.map((song) => (
-                  <Row key={`song-${song.id}`} song={song} onPlay={onPlay} />
+                  <SearchRow
+                    key={`song-${song.id}`}
+                    song={song}
+                    onPlay={onPlay}
+                  />
                 ))}
               </div>
             </section>

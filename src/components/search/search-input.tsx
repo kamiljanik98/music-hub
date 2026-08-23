@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { AudioLines, CornerDownLeft, Search, UserRound } from "lucide-react";
 import { useSearchSuggestions } from "@/hooks/search/use-search-suggestions";
@@ -9,10 +9,17 @@ const LISTBOX_ID = "search-suggestions";
 const optionId = (index: number) => `${LISTBOX_ID}-option-${index}`;
 
 export const SearchInput = () => {
-  const [value, setValue] = useState("");
+  const queryParam = useSearchParams().get("query") ?? "";
+  const [lastQueryParam, setLastQueryParam] = useState(queryParam);
+  const [value, setValue] = useState(queryParam);
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
+
+  if (queryParam !== lastQueryParam) {
+    setLastQueryParam(queryParam);
+    setValue(queryParam);
+  }
 
   const { suggestions } = useSearchSuggestions(value);
 
@@ -44,7 +51,7 @@ export const SearchInput = () => {
 
   return (
     <div className="relative w-full">
-      <div className="flex items-center gap-2.5 rounded-[var(--mh-radius-pill)] border border-transparent bg-[rgba(0,0,0,0.35)] px-4 py-2">
+      <div className="flex items-center gap-2.5 rounded-[var(--mh-radius-pill)] border border-transparent bg-[rgba(0,0,0,0.35)] px-5 py-3.5">
         <Search
           className="pointer-events-none size-4 shrink-0 text-[var(--mh-text-meta)]"
           strokeWidth={1.9}

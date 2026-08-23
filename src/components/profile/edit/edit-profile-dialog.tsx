@@ -14,8 +14,6 @@ import {
 import { Button } from "@/components/ui/button";
 import FormInput from "@/components/form/form-input";
 import FormTextarea from "@/components/form/form-textarea";
-import FormInputAvatar from "@/components/profile/edit/form-input-avatar";
-import FormInputBanner from "@/components/profile/edit/form-input-banner";
 import useUpdateProfile from "@/hooks/profile/use-update-profile";
 import { authErrorMessage } from "@/lib/auth-error-message";
 import {
@@ -40,9 +38,11 @@ export function EditProfileDialog() {
       avatar: undefined,
       banner: undefined,
       socialLinks: {
+        youtube: storedLinks?.youtube ?? "",
         instagram: storedLinks?.instagram ?? "",
-        twitch: storedLinks?.twitch ?? "",
+        tiktok: storedLinks?.tiktok ?? "",
         spotify: storedLinks?.spotify ?? "",
+        soundcloud: storedLinks?.soundcloud ?? "",
       },
     },
     mode: "onBlur",
@@ -76,9 +76,11 @@ export function EditProfileDialog() {
             avatar: undefined,
             banner: undefined,
             socialLinks: {
+              youtube: storedLinks?.youtube ?? "",
               instagram: storedLinks?.instagram ?? "",
-              twitch: storedLinks?.twitch ?? "",
+              tiktok: storedLinks?.tiktok ?? "",
               spotify: storedLinks?.spotify ?? "",
+              soundcloud: storedLinks?.soundcloud ?? "",
             },
           });
         }
@@ -99,16 +101,6 @@ export function EditProfileDialog() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <FormInputBanner
-            name="banner"
-            control={form.control}
-            currentBannerPath={user?.banner_url ?? null}
-          />
-          <FormInputAvatar
-            name="avatar"
-            control={form.control}
-            currentAvatarPath={user?.avatar_url ?? null}
-          />
           <FormInput
             name="nickname"
             control={form.control}
@@ -124,22 +116,34 @@ export function EditProfileDialog() {
             rows={4}
           />
           <FormInput
+            name="socialLinks.youtube"
+            control={form.control}
+            label="YouTube"
+            placeholder="https://youtube.com/@you"
+          />
+          <FormInput
             name="socialLinks.instagram"
             control={form.control}
             label="Instagram"
             placeholder="https://instagram.com/you"
           />
           <FormInput
-            name="socialLinks.twitch"
+            name="socialLinks.tiktok"
             control={form.control}
-            label="Twitch"
-            placeholder="https://twitch.tv/you"
+            label="TikTok"
+            placeholder="https://tiktok.com/@you"
           />
           <FormInput
             name="socialLinks.spotify"
             control={form.control}
             label="Spotify"
             placeholder="https://open.spotify.com/artist/..."
+          />
+          <FormInput
+            name="socialLinks.soundcloud"
+            control={form.control}
+            label="SoundCloud"
+            placeholder="https://soundcloud.com/you"
           />
           <Button variant="secondary" type="submit" disabled={isLoading}>
             {isLoading ? "Saving..." : "Save changes"}

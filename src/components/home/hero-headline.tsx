@@ -23,7 +23,7 @@ export const HeroHeadline = () => {
   }, []);
 
   return (
-    <h1 className="font-display min-h-[2.76em] text-balance text-[clamp(60px,9.6vw,148px)] leading-[0.92] tracking-[0.02em] uppercase text-foreground">
+    <h1 className="font-display min-h-[2.76em] text-balance text-[clamp(36px,5.2vw,80px)] leading-[0.92] tracking-[0.02em] uppercase text-foreground">
       {PHRASES[index].map((line, lineIndex) => (
         <span key={`${index}-${lineIndex}`} className="mh-write-line">
           {line}

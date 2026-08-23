@@ -14,7 +14,7 @@ export function Seekbar() {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="w-10 shrink-0 text-right text-xs text-muted-foreground tabular-nums">
+      <span className="w-10 shrink-0 text-left text-xs text-muted-foreground tabular-nums">
         {formatDuration((shown / 100) * duration)}
       </span>
       <Slider
@@ -29,7 +29,7 @@ export function Seekbar() {
         }}
         className="flex"
       />
-      <span className="w-10 shrink-0 text-xs text-muted-foregorund tabular-nums">
+      <span className="w-10 shrink-0 text-right text-xs text-muted-foreground tabular-nums">
         {formatDuration(duration)}
       </span>
     </div>

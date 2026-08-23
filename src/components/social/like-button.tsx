@@ -3,6 +3,7 @@
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLike } from "@/hooks/social/use-like";
+import { Button } from "../ui/button";
 
 type LikeButtonProps = {
   songId: string;
@@ -21,12 +22,13 @@ export function LikeButton({
   }
 
   return (
-    <button
+    <Button
+      variant="ghost"
       onClick={handleClick}
       aria-label={isLiked ? "Unlike" : "Like"}
-      className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition hover:text-foreground"
+      className="p-2 hover:bg-[var(--muted)] hover:text-foreground"
     >
       <Heart className={cn("size-4", isLiked && "fill-primary text-primary")} />
-    </button>
+    </Button>
   );
 }

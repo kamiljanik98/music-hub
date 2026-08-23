@@ -7,6 +7,7 @@ import { TitleLink } from "@/components/songs/title-link";
 import { Actions } from "./actions";
 import { Waveform as SongWaveform } from "./waveform";
 import { Song } from "@/types";
+import { formatRelativeTime } from "@/lib/format/relative-time";
 
 type WaveformCardProps = {
   song: Song;
@@ -24,43 +25,52 @@ export const WaveformCard = ({
   const meta = formatSongMeta(song);
 
   return (
-    <div className="group/item flex gap-3 rounded-[var(--radius-lg)] p-3 transition hover:bg-[var(--mh-glass-hover)]">
+    <div className="flex group/item flex gap-6 rounded-[var(--radius-lg)]">
       <Image
         src={getCoverUrl(song.image_path)}
         alt={song.title}
-        width={64}
-        height={64}
-        className="size-20 shrink-0 rounded-[var(--radius-md)] object-cover"
+        width={128}
+        height={128}
+        className="size-38 shrink-0 rounded-[var(--radius-md)] object-cover"
       />
 
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <TitleLink
-          songId={song.id}
-          title={song.title}
-          className="text-sm font-medium"
-        />
+      <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+        <div className="flex justify-between">
+          <span>
+            <TitleLink
+              songId={song.id}
+              title={song.title}
+              className="text-sm font-medium"
+            />
 
-        {meta && (
-          <p className="truncate font-mono text-xs text-[var(--mh-text-mono)]">
-            {meta}
-          </p>
-        )}
-
+            {meta ? (
+              <p className="truncate font-mono text-[var(--mh-text-mono)] text-xs ">
+                {meta}
+              </p>
+            ) : (
+              <p className="font-mono text-[var(--mh-text-mono)] text-xs">
+                No tracks details
+              </p>
+            )}
+          </span>
+          <div className="flex items-center gap-2">
+            <Actions
+              songId={song.id}
+              isLikedInitially={isLikedInitially}
+              isOwner={isOwner}
+              song={song}
+            />
+          </div>
+        </div>
         <SongWaveform
           songId={song.id}
           path={song.path}
           onActivate={onPlay}
           lazyMount
         />
-
-        <div className="flex items-center gap-2">
-          <Actions
-            songId={song.id}
-            isLikedInitially={isLikedInitially}
-            isOwner={isOwner}
-            song={song}
-          />
-        </div>
+        <p className="font-mono text-[11px] text-[var(--mh-text-mono)]">
+          posted {formatRelativeTime(song.created_at)}
+        </p>
       </div>
     </div>
   );

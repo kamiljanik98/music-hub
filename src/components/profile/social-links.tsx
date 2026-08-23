@@ -1,4 +1,4 @@
-import { Camera, Video, Music2 } from "lucide-react";
+import Image from "next/image";
 import type { SocialLinks as SocialLinksValue } from "@/lib/validations/profile";
 
 type SocialLinksProps = {
@@ -6,9 +6,15 @@ type SocialLinksProps = {
 };
 
 const platforms = [
-  { key: "instagram", label: "Instagram", Icon: Camera },
-  { key: "twitch", label: "Twitch", Icon: Video },
-  { key: "spotify", label: "Spotify", Icon: Music2 },
+  { key: "youtube", label: "YouTube", icon: "/youtube-168-svgrepo-com.svg" },
+  { key: "instagram", label: "Instagram", icon: "/instagram-svgrepo-com.svg" },
+  { key: "tiktok", label: "TikTok", icon: "/tiktok-svgrepo-com.svg" },
+  { key: "spotify", label: "Spotify", icon: "/spotify-162-svgrepo-com.svg" },
+  {
+    key: "soundcloud",
+    label: "SoundCloud",
+    icon: "/soundcloud-164-svgrepo-com.svg",
+  },
 ] as const;
 
 export const SocialLinks = ({ links }: SocialLinksProps) => {
@@ -20,7 +26,7 @@ export const SocialLinks = ({ links }: SocialLinksProps) => {
 
   return (
     <ul className="flex items-center gap-3">
-      {present.map(({ key, label, Icon }) => (
+      {present.map(({ key, label, icon }) => (
         <li key={key}>
           <a
             href={links[key]}
@@ -29,7 +35,13 @@ export const SocialLinks = ({ links }: SocialLinksProps) => {
             aria-label={label}
             className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:text-foreground"
           >
-            <Icon className="size-4" />
+            <Image
+              src={icon}
+              alt=""
+              width={16}
+              height={16}
+              className="size-4 brightness-0 invert"
+            />
           </a>
         </li>
       ))}

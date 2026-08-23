@@ -7,12 +7,7 @@ export default function FocusedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative z-10 flex min-h-screen flex-col">
-      <div
-        aria-hidden
-        className="mh-atmosphere-a pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[560px] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full"
-      />
-
+    <div className="relative flex min-h-screen flex-col">
       <UserProvider />
 
       <Toaster

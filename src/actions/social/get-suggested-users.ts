@@ -5,9 +5,14 @@ import { ActionResult, ProfileSummary } from "@/types";
 
 const SUGGESTION_LIMIT = 4;
 
+export type SuggestedProfile = ProfileSummary & {
+  followerCount: number;
+  trackCount: number;
+};
+
 export const getSuggestedUsers = async (
   excludeUserId: string,
-): Promise<ActionResult<ProfileSummary[]>> => {
+): Promise<ActionResult<SuggestedProfile[]>> => {
   const supabase = await createClient();
   const {
     data: { user: currentUser },
@@ -28,7 +33,9 @@ export const getSuggestedUsers = async (
 
   const { data, error: profilesError } = await supabase
     .from("profiles")
-    .select("id, nickname, avatar_url")
+    .select(
+      "id, nickname, avatar_url, followers:follows!following_id(count), songs(count)",
+    )
     .not(
       "id",
       "in",
@@ -39,5 +46,14 @@ export const getSuggestedUsers = async (
   if (profilesError || !data) return { data: [], error: profilesError };
 
   const shuffled = [...data].sort(() => Math.random() - 0.5);
-  return { data: shuffled.slice(0, SUGGESTION_LIMIT), error: null };
+
+  const suggestions = shuffled
+    .slice(0, SUGGESTION_LIMIT)
+    .map(({ followers, songs, ...profile }) => ({
+      ...profile,
+      followerCount: followers[0]?.count ?? 0,
+      trackCount: songs[0]?.count ?? 0,
+    }));
+
+  return { data: suggestions, error: null };
 };

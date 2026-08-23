@@ -30,16 +30,6 @@ export default function RootLayout({
       className={`${dmSans.variable} ${anton.variable} antialiased`}
     >
       <body className="relative flex min-h-screen flex-col overflow-x-clip bg-background text-foreground">
-        <div
-          aria-hidden
-          className="mh-atmosphere-a pointer-events-none fixed -top-20 -right-[10%] z-0 h-[520px] w-[60%] rounded-full"
-        />
-
-        <div
-          aria-hidden
-          className="mh-atmosphere-b pointer-events-none fixed top-[820px] -left-[6%] z-0 h-[520px] w-[55%] rounded-full"
-        />
-
         {children}
       </body>
     </html>

@@ -1,11 +1,11 @@
 "use client";
 
 import { useOnPlay } from "@/hooks/player/use-on-play";
-import { SongPost } from "@/components/songs/song-post";
-import { Song } from "@/types";
+import { LikedRow } from "@/components/songs/liked-row";
+import type { HistorySong } from "@/actions/songs/get-play-history";
 
 type SongListProps = {
-  songs: Song[];
+  songs: HistorySong[];
 };
 
 export function SongList({ songs }: SongListProps) {
@@ -14,12 +14,13 @@ export function SongList({ songs }: SongListProps) {
   if (!songs.length) return null;
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex w-full flex-col gap-2.5">
       {songs.map((song) => (
-        <SongPost
+        <LikedRow
           key={song.id}
           song={song}
           onPlay={onPlay}
+          likesCount={song.likesCount}
           isLikedInitially={song.isLiked}
         />
       ))}

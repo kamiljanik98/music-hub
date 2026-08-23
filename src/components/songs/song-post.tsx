@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Play, Pause } from "lucide-react";
+import { Play, Pause, Heart } from "lucide-react";
 import { getAvatarUrl, getCoverUrl } from "@/lib/r2/public";
 import { formatRelativeTime } from "@/lib/format/relative-time";
 import { Actions } from "./actions";
@@ -14,6 +14,8 @@ import { cn } from "@/lib/utils";
 type SongPostProps = {
   song: Song;
   onPlay: (id: string) => void;
+  likesCount?: number;
+  stemCount?: number;
   isLikedInitially?: boolean;
   isOwner?: boolean;
 };
@@ -21,6 +23,8 @@ type SongPostProps = {
 export function SongPost({
   song,
   onPlay,
+  likesCount = 0,
+  stemCount = 0,
   isLikedInitially = false,
   isOwner = false,
 }: SongPostProps) {
@@ -92,41 +96,31 @@ export function SongPost({
 
       {/* Content */}
       <div className="flex flex-col gap-3 p-4">
-        <TitleLink
-          songId={song.id}
-          title={song.title}
-          className="text-lg font-semibold"
-        />
+        <div className="flex flex-col gap-1.5">
+          <TitleLink
+            songId={song.id}
+            title={song.title}
+            className="text-lg font-semibold"
+          />
+
+          <div className="flex items-center gap-3 text-xs text-[var(--mh-text-meta)]">
+            <span className="flex items-center gap-1.5">
+              <Play className="size-3" aria-hidden="true" />
+              {song.play_count}
+            </span>
+
+            <span className="flex items-center gap-1.5">
+              <Heart className="size-3" aria-hidden="true" />
+              {likesCount}
+            </span>
+          </div>
+        </div>
 
         {song.description && (
           <p className="text-sm leading-relaxed text-muted-foreground">
             {song.description}
           </p>
         )}
-
-        {/* Song information */}
-        <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
-          {song.genre && (
-            <div>
-              <span className="text-muted-foreground">Genre </span>
-              <span>{song.genre}</span>
-            </div>
-          )}
-
-          {song.bpm && (
-            <div>
-              <span className="text-muted-foreground">BPM </span>
-              <span className="font-mono">{song.bpm}</span>
-            </div>
-          )}
-
-          {song.scale && (
-            <div>
-              <span className="text-muted-foreground">Scale </span>
-              <span>{song.scale}</span>
-            </div>
-          )}
-        </div>
 
         {/* Tags */}
         {song.tags?.length ? (
@@ -145,7 +139,13 @@ export function SongPost({
         <div className="h-px w-full bg-border" />
 
         <p className="font-mono text-[11px] text-[var(--mh-text-mono)]">
-          {[song.genre, song.bpm && `${song.bpm} BPM`, song.scale]
+          {[
+            song.genre,
+            song.bpm && `${song.bpm} BPM`,
+            song.scale,
+            stemCount > 0 &&
+              `${stemCount} ${stemCount === 1 ? "stem" : "stems"}`,
+          ]
             .filter(Boolean)
             .join(" · ") || "No track details yet"}
         </p>

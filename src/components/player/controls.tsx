@@ -136,6 +136,12 @@ export function Controls({ song }: ControlsProps) {
   }, [playbackRate, url]);
 
   useEffect(() => {
+    hasRecordedRef.current = false;
+
+    return clearPlayTimer;
+  }, [song.id, clearPlayTimer]);
+
+  useEffect(() => {
     if (seekTo === null || !audioRef.current || !duration) return;
     if (seekTo.songId !== activeId) {
       clearSeekRequest();
@@ -169,9 +175,17 @@ export function Controls({ song }: ControlsProps) {
       <audio
         ref={audioRef}
         className="hidden"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
+        onPlay={() => {
+          setIsPlaying(true);
+          startPlayTimer();
+        }}
+        onPause={() => {
+          setIsPlaying(false);
+          clearPlayTimer();
+        }}
         onEnded={() => {
+          clearPlayTimer();
+
           if (repeatMode === "one") {
             restart();
             return;

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play } from "lucide-react";
 import { getAvatarUrl, getCoverUrl } from "@/lib/r2/public";
-import { formatSongMeta } from "@/lib/format/song-meta";
 import { formatRelativeTime } from "@/lib/format/relative-time";
 import { TitleLink } from "@/components/songs/title-link";
 import { Actions } from "./actions";
@@ -25,8 +24,6 @@ export const Card = ({
   isOwner = false,
   isNew = false,
 }: CardProps) => {
-  const meta = formatSongMeta(song);
-
   return (
     <div className="group/card flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-border bg-card p-2.5 transition hover:bg-[var(--mh-glass-hover)]">
       <div className="relative aspect-square overflow-hidden rounded-[var(--radius-md)]">
@@ -35,6 +32,7 @@ export const Card = ({
             songId={song.id}
             isLikedInitially={isLikedInitially}
             isOwner={isOwner}
+            showCopyLink={false}
             song={song}
           />
         </div>
@@ -55,46 +53,48 @@ export const Card = ({
 
         <button
           onClick={() => onPlay(song.id)}
-          className="absolute right-2.5 bottom-2.5 flex size-10 items-center justify-center rounded-[var(--mh-radius-pill)] bg-primary text-primary-foreground transition-transform hover:scale-105"
+          className="absolute bottom-3 left-3 flex size-12 items-center justify-center rounded-[var(--mh-radius-pill)] bg-primary text-primary-foreground transition-transform hover:scale-105"
           aria-label={`Play ${song.title}`}
         >
-          <Play className="ml-0.5 size-4" fill="currentColor" />
+          <Play className="ml-0.5 size-5" fill="currentColor" />
         </button>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <span className="font-mono text-[11px] text-[var(--mh-text-mono)]">
-          posted {formatRelativeTime(song.created_at)}
-        </span>
-
-        <TitleLink
-          songId={song.id}
-          title={song.title}
-          className="truncate text-sm font-semibold"
-        />
-
-        <Link
-          href={`/profile/${song.profiles?.nickname ?? ""}`}
-          className="flex w-fit items-center gap-1.5"
-        >
-          <Image
-            src={getAvatarUrl(song.profiles?.avatar_url ?? null)}
-            alt={song.profiles?.nickname ?? "Unknown"}
-            width={16}
-            height={16}
-            className="rounded-full"
+        <div className="flex flex-col gap-0.5">
+          <TitleLink
+            songId={song.id}
+            title={song.title}
+            className="truncate text-sm font-semibold"
           />
 
-          <span className="truncate text-xs text-[var(--mh-text-meta)] transition-colors hover:text-foreground">
-            {song.profiles?.nickname ?? "Unknown"}
-          </span>
-        </Link>
+          <Link
+            href={`/profile/${song.profiles?.nickname ?? ""}`}
+            className="flex w-fit items-center gap-1.5"
+          >
+            <Image
+              src={getAvatarUrl(song.profiles?.avatar_url ?? null)}
+              alt={song.profiles?.nickname ?? "Unknown"}
+              width={16}
+              height={16}
+              className="rounded-full"
+            />
+
+            <span className="truncate text-xs text-[var(--mh-text-meta)] transition-colors hover:text-foreground">
+              {song.profiles?.nickname ?? "Unknown"}
+            </span>
+          </Link>
+        </div>
 
         <span className="my-1 h-0.25 w-full bg-neutral-800" />
 
-        <p className="truncate font-mono text-[11px] text-[var(--mh-text-mono)]">
-          {meta || "No track details yet"}
-        </p>
+        <div className="flex items-center justify-between gap-3 font-mono text-[11px] text-[var(--mh-text-mono)]">
+          <span className="truncate">{song.genre ?? "No genre"}</span>
+
+          <span className="shrink-0">
+            {formatRelativeTime(song.created_at)}
+          </span>
+        </div>
       </div>
     </div>
   );

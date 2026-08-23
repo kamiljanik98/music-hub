@@ -1,5 +1,10 @@
 import { ProfileCard } from "./profile-card";
-import { ProfileSummary } from "@/types";
+import type { ProfileSummary } from "@/types";
+
+type GridProfile = ProfileSummary & {
+  followerCount?: number;
+  trackCount?: number;
+};
 
 export const ProfileGrid = ({
   title,
@@ -7,7 +12,7 @@ export const ProfileGrid = ({
   emptyMessage = "Nobody here yet.",
 }: {
   title?: string;
-  users: ProfileSummary[];
+  users: GridProfile[];
   emptyMessage?: string;
 }) => {
   if (!users.length && title) return null;
@@ -18,9 +23,14 @@ export const ProfileGrid = ({
         <h2 className="text-lg font-semibold text-neutral-100">{title}</h2>
       )}
       {users.length ? (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {users.map((user) => (
-            <ProfileCard variant="grid" key={user.id} user={user} />
+            <ProfileCard
+              key={user.id}
+              user={user}
+              followerCount={user.followerCount}
+              trackCount={user.trackCount}
+            />
           ))}
         </div>
       ) : (

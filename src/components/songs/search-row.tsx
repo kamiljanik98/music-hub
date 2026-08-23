@@ -1,31 +1,29 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Play, Pause } from "lucide-react";
 import { getAvatarUrl, getCoverUrl } from "@/lib/r2/public";
 import { formatSongMeta } from "@/lib/format/song-meta";
-import { formatRelativeTime } from "@/lib/format/relative-time";
 import { TitleLink } from "@/components/songs/title-link";
 import { cn } from "@/lib/utils";
 import { Actions } from "./actions";
 import { Song } from "@/types";
 import usePlayer from "@/hooks/player/use-player";
 
-type RowProps = {
+type SearchRowProps = {
   song: Song;
   onPlay: (id: string) => void;
   isLikedInitially?: boolean;
   isOwner?: boolean;
-  postedAt?: string;
 };
 
-export const Row = ({
+export const SearchRow = ({
   song,
   onPlay,
   isLikedInitially = false,
   isOwner = false,
-  postedAt,
-}: RowProps) => {
+}: SearchRowProps) => {
   const meta = formatSongMeta(song);
 
   const activeId = usePlayer((s) => s.activeId);
@@ -35,7 +33,7 @@ export const Row = ({
   return (
     <div
       className={cn(
-        "group/row flex items-center gap-5 rounded-[var(--radius-lg)] border border-border bg-card py-3.5 pr-6 pl-3.5 transition hover:bg-[var(--mh-glass-hover)]",
+        "group/row flex items-center gap-5 rounded-[var(--radius-lg)] py-3.5 pr-6 pl-3.5 transition hover:bg-[var(--mh-glass-hover)]",
         isActive && "bg-[var(--mh-glass-hover)]",
       )}
     >
@@ -64,7 +62,10 @@ export const Row = ({
       <div className="flex min-w-0 flex-[1_1_180px] flex-col gap-[3px]">
         <TitleLink songId={song.id} title={song.title} className="text-base" />
 
-        <div className="flex items-center gap-1.5">
+        <Link
+          href={`/profile/${song.profiles?.nickname ?? ""}`}
+          className="flex w-fit items-center gap-1.5 text-[var(--mh-text-meta)] transition-colors hover:text-primary hover:underline"
+        >
           <Image
             src={getAvatarUrl(song.profiles?.avatar_url ?? null)}
             alt={song.profiles?.nickname ?? "Unknown"}
@@ -73,17 +74,11 @@ export const Row = ({
             className="rounded-full"
           />
 
-          <p className="truncate text-sm text-[var(--mh-text-meta)]">
+          <p className="truncate text-sm">
             {song.profiles?.nickname ?? "Unknown"}
           </p>
-        </div>
+        </Link>
       </div>
-
-      {postedAt && (
-        <p className="hidden shrink-0 text-sm text-[var(--mh-text-meta)] sm:block">
-          {formatRelativeTime(postedAt)}
-        </p>
-      )}
 
       {meta && (
         <p className="hidden shrink-0 truncate font-mono text-[13px] text-[var(--mh-text-meta)] sm:block">

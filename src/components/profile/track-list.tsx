@@ -19,7 +19,7 @@ export const TrackList = ({ songs, isOwner = false }: TrackListProps) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-12">
       {songs.map((song) => (
         <WaveformCard
           key={song.id}

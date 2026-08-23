@@ -10,6 +10,14 @@ export type Song = Tables<"songs"> & {
 
 export type UserProfile = Tables<"profiles">;
 
+export type Playlist = Tables<"playlists"> & {
+  profiles: Pick<Tables<"profiles">, "nickname" | "avatar_url"> | null;
+};
+
+export type PlaylistSummary = Playlist & {
+  trackCount: number;
+};
+
 export type EmailPasswordCredentials = {
   email: string;
   password: string;

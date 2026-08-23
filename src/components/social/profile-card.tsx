@@ -6,64 +6,69 @@ import { ProfileSummary } from "@/types";
 
 type ProfileCardProps = {
   user: ProfileSummary;
-  variant?: "grid" | "row";
   isFollowing?: boolean;
+  followerCount?: number;
+  trackCount?: number;
+  showFollowButton?: boolean;
 };
 
 export const ProfileCard = ({
   user,
-  variant = "grid",
   isFollowing = false,
+  followerCount,
+  trackCount,
+  showFollowButton = true,
 }: ProfileCardProps) => {
-  if (variant === "row") {
-    return (
-      <div className="flex items-center gap-3 rounded-md p-2">
-        <Link href={`/profile/${user.nickname}`} className="shrink-0">
-          <Image
-            src={getAvatarUrl(user.avatar_url)}
-            alt={user.nickname ?? "User"}
-            width={40}
-            height={40}
-            className="size-10 rounded-full object-cover"
-          />
-        </Link>
-        <Link
-          href={`/profile/${user.nickname}`}
-          className="min-w-0 flex-1 truncate text-sm font-medium text-foreground"
-        >
-          {user.nickname}
-        </Link>
-        <FollowButton
-          profileUserId={user.id}
-          isFollowingInitially={isFollowing}
-        />
-      </div>
-    );
-  }
+  const hasCounts = followerCount !== undefined || trackCount !== undefined;
 
   return (
-    <div className="group flex max-w-64 flex-col items-center space-y-4 p-4 rounded-lg hover:bg-neutral-900">
+    <div className="flex flex-col items-center gap-4 rounded-[24px] border border-white/8 bg-[var(--mh-solid)] p-6">
       <Link href={`/profile/${user.nickname}`} className="shrink-0">
         <Image
           src={getAvatarUrl(user.avatar_url)}
           alt={user.nickname ?? "User"}
-          width={124}
-          height={124}
-          className="size-36 rounded-full object-cover"
+          width={72}
+          height={72}
+          className="size-[72px] rounded-full object-cover ring-1 ring-white/10"
         />
       </Link>
+
       <Link
         href={`/profile/${user.nickname}`}
-        className="min-w-0 flex-1 truncate text-xs font-medium text-foreground"
+        className="max-w-full truncate text-lg font-semibold text-foreground transition-colors hover:text-primary"
       >
         {user.nickname}
       </Link>
-      <div className="opacity-0 transition-opacity group-hover:opacity-100">
+
+      {hasCounts && (
+        <div className="grid w-full grid-cols-2 gap-2">
+          <div className="flex flex-col items-center rounded-[16px] bg-white/5 px-3 py-2.5">
+            <span className="font-display text-xl leading-none text-foreground">
+              {followerCount ?? 0}
+            </span>
+            <span className="mt-1 text-xs text-[var(--mh-text-meta)]">
+              followers
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center rounded-[16px] bg-white/5 px-3 py-2.5">
+            <span className="font-display text-xl leading-none text-foreground">
+              {trackCount ?? 0}
+            </span>
+            <span className="mt-1 text-xs text-[var(--mh-text-meta)]">
+              tracks
+            </span>
+          </div>
+        </div>
+      )}
+
+      {showFollowButton && (
         <FollowButton
           profileUserId={user.id}
           isFollowingInitially={isFollowing}
+          className="w-full"
         />
-      </div>
+      )}
     </div>
   );
 };

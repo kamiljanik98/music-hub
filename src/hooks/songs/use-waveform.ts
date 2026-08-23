@@ -72,7 +72,7 @@ export function useWaveform({
       wavesurferRef.current = WaveSurfer.create({
         container: containerRef.current,
         url,
-        waveColor: "rgba(255, 255, 255, 0.16)",
+        waveColor: "rgba(255, 255, 255, 0.54)",
         progressColor: "#d6f24b",
         height,
         barWidth,

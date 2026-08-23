@@ -5,6 +5,8 @@ import Link from "next/link";
 import {
   CircleUserRound,
   Heart,
+  History,
+  ListMusic,
   LogOut,
   Settings,
   UserRoundCheck,
@@ -29,12 +31,12 @@ export const UserProfileButton = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+      <DropdownMenuTrigger className="flex size-11.25 shrink-0 cursor-pointer items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
         <Image
           src={getAvatarUrl(user.avatar_url)}
           alt={user.nickname ?? "User avatar"}
-          width={36}
-          height={36}
+          width={40}
+          height={40}
           className="size-full rounded-full object-cover"
         />
       </DropdownMenuTrigger>
@@ -50,6 +52,20 @@ export const UserProfileButton = () => {
           <Link href={`/profile/${user.nickname}/likes`}>
             <Heart />
             Likes
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link href={`/profile/${user.nickname}/playlists`}>
+            <ListMusic />
+            Playlists
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link href={`/profile/${user.nickname}/history`}>
+            <History />
+            History
           </Link>
         </DropdownMenuItem>
 

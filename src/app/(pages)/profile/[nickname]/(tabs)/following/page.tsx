@@ -1,6 +1,6 @@
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
 import { getFollowedUsers } from "@/actions/social/get-followed-users";
-import { ProfileGrid } from "@/components/social/profile-grid";
+import { FollowingCard } from "@/components/social/following-card";
 import { notFound } from "next/navigation";
 
 type FollowingPageProps = {
@@ -45,7 +45,20 @@ export default async function FollowingPage({ params }: FollowingPageProps) {
         </div>
       </div>
 
-      <ProfileGrid users={users} />
+      {users.length ? (
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {users.map((user) => (
+            <FollowingCard
+              key={user.id}
+              user={user}
+              followerCount={user.followerCount}
+              trackCount={user.trackCount}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">Nobody here yet.</p>
+      )}
     </div>
   );
 }
