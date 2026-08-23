@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import usePlayer from "@/hooks/player/use-player";
+import { recordPlay } from "@/actions/songs/record-play";
 import { useLoadSongUrl } from "@/hooks/songs/use-load-song-url";
 import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { toast } from "sonner";
@@ -9,6 +10,8 @@ import { cn } from "@/lib/utils";
 import type { Song } from "@/types";
 
 const SILENT_PLAY_ERRORS = ["NotAllowedError", "NotSupportedError"];
+
+const PLAY_THRESHOLD_MS = 15_000;
 
 function playErrorMessage(error: unknown): string | null {
   if (error instanceof DOMException && SILENT_PLAY_ERRORS.includes(error.name))
@@ -42,6 +45,7 @@ export function Controls({ song }: ControlsProps) {
   const ids = usePlayer((state) => state.ids);
   const setActiveId = usePlayer((state) => state.setActiveId);
   const volume = usePlayer((state) => state.volume);
+  const playbackRate = usePlayer((state) => state.playbackRate);
   const repeatMode = usePlayer((state) => state.repeatMode);
   const playPauseRequested = usePlayer((state) => state.playPauseRequested);
   const clearPlayPauseRequest = usePlayer(
@@ -49,6 +53,24 @@ export function Controls({ song }: ControlsProps) {
   );
 
   const { url, error: loadError } = useLoadSongUrl(song.path);
+
+  const playTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasRecordedRef = useRef(false);
+
+  const clearPlayTimer = useCallback(() => {
+    if (playTimerRef.current === null) return;
+    clearTimeout(playTimerRef.current);
+    playTimerRef.current = null;
+  }, []);
+
+  const startPlayTimer = useCallback(() => {
+    if (hasRecordedRef.current || playTimerRef.current !== null) return;
+    playTimerRef.current = setTimeout(() => {
+      playTimerRef.current = null;
+      hasRecordedRef.current = true;
+      void recordPlay(song.id);
+    }, PLAY_THRESHOLD_MS);
+  }, [song.id]);
 
   const attemptPlay = useCallback(() => {
     audioRef.current?.play().catch((error: unknown) => {
@@ -106,6 +128,12 @@ export function Controls({ song }: ControlsProps) {
     if (!audioRef.current) return;
     audioRef.current.volume = volume;
   }, [volume]);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    audioRef.current.defaultPlaybackRate = playbackRate;
+    audioRef.current.playbackRate = playbackRate;
+  }, [playbackRate, url]);
 
   useEffect(() => {
     if (seekTo === null || !audioRef.current || !duration) return;
