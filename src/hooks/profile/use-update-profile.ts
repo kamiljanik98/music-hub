@@ -3,11 +3,14 @@
 import { useState } from "react";
 import useUser from "@/hooks/profile/use-user";
 import { updateProfile } from "@/actions/profile/update-profile";
+import type { SocialLinks } from "@/lib/validations/profile";
 
 type UpdateProfileInput = {
   nickname: string;
   bio: string;
   avatarFile?: File;
+  bannerFile?: File;
+  socialLinks?: SocialLinks;
 };
 
 export default function useUpdateProfile() {
@@ -19,7 +22,7 @@ export default function useUpdateProfile() {
     input: UpdateProfileInput,
   ): Promise<{ error: Error | null }> {
     setIsLoading(true);
-    const { error, avatarUrl } = await updateProfile(input);
+    const { error, avatarUrl, bannerUrl } = await updateProfile(input);
     setIsLoading(false);
 
     if (!error && user) {
@@ -27,7 +30,9 @@ export default function useUpdateProfile() {
         ...user,
         nickname: input.nickname.toLowerCase(),
         bio: input.bio || null,
+        social_links: input.socialLinks ?? null,
         ...(avatarUrl ? { avatar_url: avatarUrl } : {}),
+        ...(bannerUrl ? { banner_url: bannerUrl } : {}),
       });
     }
 

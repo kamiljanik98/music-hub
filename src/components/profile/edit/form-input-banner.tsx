@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { ACCEPTED_IMAGE } from "@/lib/constants";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { getAvatarUrl } from "@/lib/r2/public";
+import { getBannerUrl } from "@/lib/r2/public";
 
-type FormInputAvatarProps<T extends FieldValues> = {
+type FormInputBannerProps<T extends FieldValues> = {
   name: Path<T>;
   control: Control<T>;
-  currentAvatarPath: string | null;
+  currentBannerPath: string | null;
 };
 
-const FormInputAvatar = <T extends FieldValues>({
+const FormInputBanner = <T extends FieldValues>({
   name,
   control,
-  currentAvatarPath,
-}: FormInputAvatarProps<T>) => {
+  currentBannerPath,
+}: FormInputBannerProps<T>) => {
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
@@ -24,21 +24,27 @@ const FormInputAvatar = <T extends FieldValues>({
     return () => URL.revokeObjectURL(preview);
   }, [preview]);
 
+  const current = preview ?? getBannerUrl(currentBannerPath);
+
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
-          <FieldLabel>Avatar</FieldLabel>
-          <div className="flex items-center gap-4">
-            <div className="size-16 rounded-full overflow-hidden bg-muted shrink-0">
-              <img
-                src={preview ?? getAvatarUrl(currentAvatarPath)}
-                alt="Avatar preview"
-                className="size-full object-cover"
-              />
+          <FieldLabel>Banner</FieldLabel>
+
+          <div className="flex flex-col gap-3">
+            <div className="aspect-[4/1] w-full overflow-hidden rounded-[var(--radius-md)] border border-border bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))]">
+              {current && (
+                <img
+                  src={current}
+                  alt="Banner preview"
+                  className="size-full object-cover"
+                />
+              )}
             </div>
+
             <input
               type="file"
               accept={Object.keys(ACCEPTED_IMAGE).join(",")}
@@ -58,4 +64,4 @@ const FormInputAvatar = <T extends FieldValues>({
   );
 };
 
-export default FormInputAvatar;
+export default FormInputBanner;

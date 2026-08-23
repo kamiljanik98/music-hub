@@ -1,9 +1,11 @@
 import { getUserSongs } from "@/actions/songs/get-user-songs";
 import { TrackList } from "@/components/profile/track-list";
+import { ProfileSongList } from "./components/profile-song-list";
 import { EditProfileDialog } from "@/components/profile/edit/edit-profile-dialog";
-import { getAvatarUrl } from "@/lib/r2/public";
+import { getAvatarUrl, getBannerUrl } from "@/lib/r2/public";
 import { createClient } from "@/lib/supabase/server";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CopyLinkButton } from "@/components/social/copy-link-button";
 import { FollowButton } from "@/components/social/follow-button";
@@ -11,8 +13,12 @@ import { ProfileList } from "@/components/social/profile-list";
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
 import { getFollowStatus } from "@/actions/social/get-follow-status";
 import { getLikedSongs } from "@/actions/songs/get-liked-songs";
-import { SongList } from "@/components/songs/song-list";
 import { getSuggestedUsers } from "@/actions/social/get-suggested-users";
+import { getFollowers } from "@/actions/social/get-followers";
+import { getFollowedUsers } from "@/actions/social/get-followed-users";
+import { SocialLinks } from "@/components/profile/social-links";
+import { ProfileBio } from "./components/profile-bio";
+import type { SocialLinks as SocialLinksValue } from "@/lib/validations/profile";
 
 type ProfilePageProps = {
   params: Promise<{ nickname: string }>;
@@ -20,6 +26,7 @@ type ProfilePageProps = {
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const { nickname } = await params;
+
   const { data: profile, error: profileError } =
     await getProfileByNickname(nickname);
 
@@ -39,42 +46,46 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   const isOwnProfile = currentUser?.id === profile.id;
 
-  const [{ data: songs }, likedSongs, { data: isFollowing }] =
-    await Promise.all([
-      getUserSongs(profile.id),
-      getLikedSongs(profile.id),
-      isOwnProfile
-        ? Promise.resolve({ data: false, error: null })
-        : getFollowStatus(profile.id),
-    ]);
+  const [
+    { data: songs },
+    likedSongs,
+    { data: isFollowing },
+    { data: followers },
+    { data: following },
+  ] = await Promise.all([
+    getUserSongs(profile.id),
+    getLikedSongs(profile.id),
+    isOwnProfile
+      ? Promise.resolve({ data: false, error: null })
+      : getFollowStatus(profile.id),
+    getFollowers(profile.id),
+    getFollowedUsers(profile.id),
+  ]);
 
   const { data: users, error: suggestedUsersError } = await getSuggestedUsers(
     profile.id,
   );
 
+  const bannerUrl = getBannerUrl(profile.banner_url);
+
   return (
-    <div className="px-6 py-10">
-      {/* Header */}
-      <header className="flex items-center gap-6">
-        <Image
-          src={getAvatarUrl(profile.avatar_url)}
-          alt={profile.nickname ?? "User Avatar"}
-          width={96}
-          height={96}
-          className="size-24 rounded-full object-cover"
-        />
+    <div className="pb-16">
+      {/* Banner */}
+      <div className="relative left-1/2 -mt-24 h-60 w-screen -translate-x-1/2 overflow-hidden bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))] md:h-72">
+        {bannerUrl && (
+          <Image
+            src={bannerUrl}
+            alt={`${profile.nickname ?? "User"} banner`}
+            fill
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            className="object-cover"
+            priority
+          />
+        )}
 
-        <div className="min-w-0 flex-1">
-          <h1 className="text-xl font-semibold text-foreground">
-            {profile.nickname}
-          </h1>
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0)_0%,rgba(10,10,10,0.55)_55%,var(--mh-ink)_100%)]" />
 
-          <p className="mt-1 text-xs text-muted-foreground">
-            Since {profile.created_at.slice(0, 4)}
-          </p>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="absolute right-6 bottom-4 z-10 flex items-center gap-3">
           {isOwnProfile ? (
             <EditProfileDialog />
           ) : (
@@ -83,71 +94,104 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                 profileUserId={profile.id}
                 isFollowingInitially={isFollowing}
               />
+
               <CopyLinkButton path={`/profile/${profile.nickname}`} />
             </>
           )}
         </div>
-      </header>
-
-      {/* Stats */}
-      <div className="mt-8 flex items-center gap-8 border-y border-border py-5">
-        <div>
-          <p className="text-lg font-semibold">{songs.length}</p>
-          <p className="text-xs text-muted-foreground">Tracks</p>
-        </div>
-
-        <div>
-          <p className="text-lg font-semibold">{likedSongs.data.length}</p>
-          <p className="text-xs text-muted-foreground">Likes</p>
-        </div>
       </div>
 
-      {/* Bio */}
-      {profile.bio && (
-        <section className="mt-8 max-w-2xl">
-          <h2 className="mb-2 text-sm font-semibold">Bio</h2>
-          <p className="text-sm leading-6 text-muted-foreground">
-            {profile.bio}
-          </p>
-        </section>
-      )}
+      {/* Identity */}
+      <header className="relative -mt-14 flex flex-wrap items-end gap-x-6 gap-y-4">
+        <Image
+          src={getAvatarUrl(profile.avatar_url)}
+          alt={profile.nickname ?? "User Avatar"}
+          width={112}
+          height={112}
+          className="size-28 shrink-0 rounded-full object-cover ring-4 ring-[var(--mh-ink)]"
+        />
 
-      {/* Content */}
-      <div className="mt-10 grid grid-cols-[minmax(0,1fr)_18rem] gap-10">
+        <div className="min-w-0 flex-1 pb-1">
+          <h1 className="font-display text-4xl uppercase leading-none tracking-[0.02em] text-foreground md:text-5xl">
+            {profile.nickname}
+          </h1>
+
+          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.12em] text-[var(--mh-text-mono)]">
+            <Link
+              href={`/profile/${profile.nickname}/followers`}
+              className="hover:text-foreground"
+            >
+              <span className="text-foreground">{followers.length}</span>{" "}
+              Followers
+            </Link>
+
+            <Link
+              href={`/profile/${profile.nickname}/following`}
+              className="hover:text-foreground"
+            >
+              <span className="text-foreground">{following.length}</span>{" "}
+              Following
+            </Link>
+
+            <span>
+              <span className="text-foreground">{songs.length}</span> Tracks
+            </span>
+
+            <span>Since {profile.created_at.slice(0, 4)}</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Bio + social */}
+      <div className="mt-6 flex flex-wrap items-start justify-between gap-6">
+        {profile.bio ? (
+          <ProfileBio bio={profile.bio} />
+        ) : (
+          <div className="max-w-2xl" />
+        )}
+
+        <SocialLinks links={profile.social_links as SocialLinksValue | null} />
+      </div>
+
+      <div className="mt-12 grid grid-cols-[minmax(0,1fr)_22rem] gap-8">
         {/* Tracks */}
-        <section className="min-w-0">
-          <h2 className="mb-4 text-lg font-semibold text-neutral-100">
+        <section className="min-w-0 border-t border-white/10 pt-8">
+          <h2 className="mb-5 font-display text-sm uppercase tracking-[0.18em] text-[var(--mh-text-meta)]">
             Tracks
           </h2>
 
-          <TrackList songs={songs} />
+          <TrackList songs={songs} isOwner={isOwnProfile} />
         </section>
 
-        {/* Likes + suggestions */}
         <aside className="flex flex-col gap-8">
-          {likedSongs.error && (
-            <p className="text-sm text-destructive">
-              Failed to fetch liked songs
-            </p>
-          )}
-
-          {likedSongs.data.length > 0 && (
-            <section>
-              <h2 className="mb-4 text-lg font-semibold text-neutral-100">
-                Likes
-              </h2>
-
-              <SongList songs={likedSongs.data} />
+          {/* Likes */}
+          {likedSongs.error ? (
+            <section className="border-t border-white/10 pt-8">
+              <p className="text-sm text-destructive">
+                Failed to fetch liked songs
+              </p>
             </section>
+          ) : (
+            likedSongs.data.length > 0 && (
+              <section className="border-t border-white/10 pt-8">
+                <ProfileSongList
+                  songs={likedSongs.data}
+                  nickname={profile.nickname ?? nickname}
+                />
+              </section>
+            )
           )}
 
-          {suggestedUsersError ? (
-            <p className="text-sm text-destructive">
-              Failed to fetch suggested users
-            </p>
-          ) : (
-            <ProfileList title="Suggested Users for You" users={users} />
-          )}
+          {/* Suggested */}
+          <section className="border-t border-white/10 pt-8">
+            {suggestedUsersError ? (
+              <p className="text-sm text-destructive">
+                Failed to fetch suggested users
+              </p>
+            ) : (
+              <ProfileList title="Suggested Users for You" users={users} />
+            )}
+          </section>
         </aside>
       </div>
     </div>

@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import FormInput from "@/components/form/form-input";
 import FormTextarea from "@/components/form/form-textarea";
 import FormInputAvatar from "@/components/profile/edit/form-input-avatar";
+import FormInputBanner from "@/components/profile/edit/form-input-banner";
 import useUpdateProfile from "@/hooks/profile/use-update-profile";
 import { authErrorMessage } from "@/lib/auth-error-message";
 import {
@@ -22,11 +23,14 @@ import {
   type ProfileFormValues,
 } from "@/lib/validations/profile";
 import useUser from "@/hooks/profile/use-user";
+import type { SocialLinks } from "@/lib/validations/profile";
 
 export function EditProfileDialog() {
   const [open, setOpen] = useState(false);
   const user = useUser((state) => state.user);
   const { update, isLoading } = useUpdateProfile();
+
+  const storedLinks = (user?.social_links ?? null) as SocialLinks | null;
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -34,6 +38,12 @@ export function EditProfileDialog() {
       nickname: user?.nickname ?? "",
       bio: user?.bio ?? "",
       avatar: undefined,
+      banner: undefined,
+      socialLinks: {
+        instagram: storedLinks?.instagram ?? "",
+        twitch: storedLinks?.twitch ?? "",
+        spotify: storedLinks?.spotify ?? "",
+      },
     },
     mode: "onBlur",
   });
@@ -43,6 +53,8 @@ export function EditProfileDialog() {
       nickname: values.nickname,
       bio: values.bio ?? "",
       avatarFile: values.avatar,
+      bannerFile: values.banner,
+      socialLinks: values.socialLinks,
     });
 
     if (error) {
@@ -62,6 +74,12 @@ export function EditProfileDialog() {
             nickname: user.nickname ?? "",
             bio: user.bio ?? "",
             avatar: undefined,
+            banner: undefined,
+            socialLinks: {
+              instagram: storedLinks?.instagram ?? "",
+              twitch: storedLinks?.twitch ?? "",
+              spotify: storedLinks?.spotify ?? "",
+            },
           });
         }
         setOpen(next);
@@ -81,6 +99,11 @@ export function EditProfileDialog() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
+          <FormInputBanner
+            name="banner"
+            control={form.control}
+            currentBannerPath={user?.banner_url ?? null}
+          />
           <FormInputAvatar
             name="avatar"
             control={form.control}
@@ -99,6 +122,24 @@ export function EditProfileDialog() {
             placeholder="Tell people about yourself"
             maxWords={150}
             rows={4}
+          />
+          <FormInput
+            name="socialLinks.instagram"
+            control={form.control}
+            label="Instagram"
+            placeholder="https://instagram.com/you"
+          />
+          <FormInput
+            name="socialLinks.twitch"
+            control={form.control}
+            label="Twitch"
+            placeholder="https://twitch.tv/you"
+          />
+          <FormInput
+            name="socialLinks.spotify"
+            control={form.control}
+            label="Spotify"
+            placeholder="https://open.spotify.com/artist/..."
           />
           <Button variant="secondary" type="submit" disabled={isLoading}>
             {isLoading ? "Saving..." : "Save changes"}

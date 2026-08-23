@@ -5,7 +5,13 @@ import { ActionResult, UserProfile } from "@/types";
 
 type ProfileDetails = Pick<
   UserProfile,
-  "id" | "nickname" | "avatar_url" | "bio" | "created_at"
+  | "id"
+  | "nickname"
+  | "avatar_url"
+  | "banner_url"
+  | "bio"
+  | "created_at"
+  | "social_links"
 >;
 
 export const getProfileByNickname = async (
@@ -15,7 +21,9 @@ export const getProfileByNickname = async (
 
   const { data: profile, error } = await supabase
     .from("profiles")
-    .select("id, nickname, avatar_url, bio, created_at")
+    .select(
+      "id, nickname, avatar_url, banner_url, bio, created_at, social_links",
+    )
     .eq("nickname", nickname.toLowerCase())
     .single();
 

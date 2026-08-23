@@ -1,4 +1,25 @@
 import { z } from "zod";
+import {
+  ACCEPTED_IMAGE,
+  MAX_IMAGE_SIZE_BYTES,
+  MAX_IMAGE_SIZE_MB,
+} from "@/lib/constants";
+
+const IMAGE_FORMATS_LABEL = Object.values(ACCEPTED_IMAGE)
+  .flat()
+  .map((ext) => ext.slice(1).toUpperCase())
+  .join(", ");
+
+const imageFile = z
+  .instanceof(File)
+  .refine(
+    (file) => file.type in ACCEPTED_IMAGE,
+    `Image must be ${IMAGE_FORMATS_LABEL}`,
+  )
+  .refine(
+    (file) => file.size <= MAX_IMAGE_SIZE_BYTES,
+    `Image must be at most ${MAX_IMAGE_SIZE_MB}MB`,
+  );
 
 export const bioSchema = z
   .string()
@@ -16,10 +37,22 @@ export const nicknameSchema = z
     "Only letters, numbers, and !@#$%&_.- allowed",
   );
 
+const socialUrl = z.url("Must be a valid URL").or(z.literal("")).optional();
+
+export const socialLinksSchema = z.object({
+  instagram: socialUrl,
+  twitch: socialUrl,
+  spotify: socialUrl,
+});
+
+export type SocialLinks = z.infer<typeof socialLinksSchema>;
+
 export const profileSchema = z.object({
   nickname: nicknameSchema,
   bio: bioSchema.optional().or(z.literal("")),
-  avatar: z.instanceof(File).optional(),
+  avatar: imageFile.optional(),
+  banner: imageFile.optional(),
+  socialLinks: socialLinksSchema.optional(),
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;

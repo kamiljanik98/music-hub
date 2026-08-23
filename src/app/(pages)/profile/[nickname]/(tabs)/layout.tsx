@@ -12,7 +12,7 @@ export default async function ProfileTabsLayout({
   const { nickname } = await params;
 
   return (
-    <div className="px-6 py-10">
+    <div className="py-10">
       <Tabs nickname={nickname} />
       {children}
     </div>

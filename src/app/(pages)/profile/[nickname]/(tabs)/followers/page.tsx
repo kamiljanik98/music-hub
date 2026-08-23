@@ -27,7 +27,7 @@ export default async function FollowersPage({ params }: FollowersPageProps) {
   }
 
   return (
-    <div className="px-6 py-10">
+    <div className="py-10">
       <h1 className="mb-6 text-lg font-semibold text-neutral-100">
         {profile.nickname}&apos;s followers
       </h1>
