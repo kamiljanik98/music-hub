@@ -72,7 +72,13 @@
   }
   html {
     scrollbar-gutter: stable;
+    scroll-behavior: smooth;
     @apply font-sans;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
@@ -86,14 +92,17 @@
   }
 }
 
+body[data-scroll-locked][data-scroll-locked] {
+  margin-right: 0 !important;
+}
+
+@utility mh-glass {
+  backdrop-filter: var(--mh-glass-blur);
+}
+
 @layer utilities {
   .bg-card {
     backdrop-filter: var(--mh-glass-blur);
-    -webkit-backdrop-filter: var(--mh-glass-blur);
-  }
-  .mh-glass {
-    backdrop-filter: var(--mh-glass-blur);
-    -webkit-backdrop-filter: var(--mh-glass-blur);
   }
   .mh-scroll::-webkit-scrollbar {
     height: 0;
