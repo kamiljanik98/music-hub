@@ -29,7 +29,7 @@ export const Bar = () => {
     <>
       <div aria-hidden="true" className="h-[116px] shrink-0" />
 
-      <div className="fixed inset-x-4 bottom-4 z-40 mx-auto max-w-[var(--mh-content-max)] rounded-[var(--radius-lg)] border border-white/12 bg-[rgba(23,23,23,0.72)] backdrop-blur-[24px] backdrop-saturate-[1.4]">
+      <div className="fixed inset-x-4 bottom-4 z-40 mx-auto max-w-[var(--mh-content-max)] rounded-lg border border-white/12 bg-[rgba(23,23,23,0.72)] mh-glass">
         <div className="relative w-full px-3 py-2.5">
           <div
             className={cn(

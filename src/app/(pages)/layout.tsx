@@ -29,9 +29,7 @@ export default function PagesLayout({
 
         <AuthModal />
 
-        <main className="flex w-full flex-1 justify-center">
-          <div className="w-full">{children}</div>
-        </main>
+        <main className="flex-1">{children}</main>
       </div>
 
       <Footer />

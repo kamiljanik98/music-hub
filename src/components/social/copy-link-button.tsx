@@ -26,7 +26,7 @@ export function CopyLinkButton({ path }: CopyLinkButtonProps) {
       size="icon-sm"
       onClick={handleCopy}
       aria-label="Copy link"
-      className="p-2 hover:bg-[var(--muted)] hover:text-foreground"
+      className="p-2 hover:bg-muted hover:text-foreground"
     >
       <Link size={14} />
     </Button>

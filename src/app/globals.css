@@ -91,6 +91,10 @@
     backdrop-filter: var(--mh-glass-blur);
     -webkit-backdrop-filter: var(--mh-glass-blur);
   }
+  .mh-glass {
+    backdrop-filter: var(--mh-glass-blur);
+    -webkit-backdrop-filter: var(--mh-glass-blur);
+  }
   .mh-scroll::-webkit-scrollbar {
     height: 0;
     width: 0;

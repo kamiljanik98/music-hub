@@ -52,7 +52,7 @@ export function SongOwnerMenu({ song }: SongOwnerMenuProps) {
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           aria-label="Track options"
-          className="flex p-2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-[var(--muted)] cursor-pointer hover:text-foreground"
+          className="flex p-2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted cursor-pointer hover:text-foreground"
         >
           <MoreHorizontal className="size-4" />
         </DropdownMenuTrigger>

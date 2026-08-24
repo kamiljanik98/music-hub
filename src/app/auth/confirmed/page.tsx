@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 
 export default function AuthConfirmedPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-zinc-50 px-4 font-sans dark:bg-black">
+    <div className="flex flex-1 flex-col items-center justify-center gap-4 bg-background px-4">
       <h1 className="text-xl font-semibold">Email confirmed</h1>
-      <p className="text-center text-sm text-zinc-500">
+      <p className="text-center text-sm text-muted-foreground">
         Your account is ready. Welcome to MusicHub.
       </p>
       <Button asChild>

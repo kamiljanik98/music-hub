@@ -51,7 +51,7 @@ export function AddToPlaylistMenu({ songId }: AddToPlaylistMenuProps) {
       <DropdownMenu modal={false} open={isOpen} onOpenChange={handleOpenChange}>
         <DropdownMenuTrigger
           aria-label="Add to playlist"
-          className="flex cursor-pointer items-center justify-center rounded-full p-2 text-muted-foreground transition-colors hover:bg-[var(--muted)] hover:text-foreground"
+          className="flex cursor-pointer items-center justify-center rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <ListPlus className="size-4" />
         </DropdownMenuTrigger>
