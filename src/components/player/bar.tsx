@@ -60,7 +60,7 @@ export const Bar = () => {
                   type="button"
                   onClick={() => setIsExpanded((value) => !value)}
                   className={cn(
-                    "flex size-9 items-center justify-center rounded-md transition-colors hover:bg-white/5 hover:text-foreground",
+                    "flex size-9 cursor-pointer items-center justify-center rounded-md transition-colors hover:bg-white/5 hover:text-foreground",
                     isExpanded
                       ? "bg-white/10 text-foreground"
                       : "text-muted-foreground",

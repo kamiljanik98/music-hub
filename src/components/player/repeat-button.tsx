@@ -30,7 +30,7 @@ export function RepeatButton() {
             ? "Repeat all"
             : "Repeat one"
       }
-      className="text-neutral-400 transition-colors hover:text-white"
+      className="cursor-pointer text-neutral-400 transition-colors hover:text-white"
     >
       <span className="relative block h-5 w-5">
         {repeatMode === "one" ? (
