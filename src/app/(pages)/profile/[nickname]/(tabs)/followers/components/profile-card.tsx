@@ -7,6 +7,7 @@ import { ProfileSummary } from "@/types";
 type ProfileCardProps = {
   user: ProfileSummary;
   isFollowing?: boolean;
+  showFollowButton?: boolean;
   followerCount?: number;
   trackCount?: number;
 };
@@ -14,6 +15,7 @@ type ProfileCardProps = {
 export const ProfileCard = ({
   user,
   isFollowing = false,
+  showFollowButton = true,
   followerCount,
   trackCount,
 }: ProfileCardProps) => {
@@ -60,11 +62,14 @@ export const ProfileCard = ({
         </div>
       )}
 
-      <FollowButton
-        profileUserId={user.id}
-        isFollowingInitially={isFollowing}
-        className="w-full"
-      />
+      {showFollowButton && (
+        <FollowButton
+          profileUserId={user.id}
+          isFollowingInitially={isFollowing}
+          label="Unfollow"
+          className="w-full"
+        />
+      )}
     </div>
   );
 };

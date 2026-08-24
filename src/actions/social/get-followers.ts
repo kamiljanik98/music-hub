@@ -6,6 +6,8 @@ import { ActionResult, ProfileSummary } from "@/types";
 type FollowerProfile = ProfileSummary & {
   followerCount: number;
   trackCount: number;
+  isFollowing: boolean;
+  isSelf: boolean;
 };
 
 export const getFollowers = async (
@@ -31,5 +33,38 @@ export const getFollowers = async (
       trackCount: songs[0]?.count ?? 0,
     }));
 
-  return { data: profiles, error: null };
+  const {
+    data: { user: currentUser },
+  } = await supabase.auth.getUser();
+
+  if (!currentUser || profiles.length === 0) {
+    return {
+      data: profiles.map((profile) => ({
+        ...profile,
+        isFollowing: false,
+        isSelf: false,
+      })),
+      error: null,
+    };
+  }
+
+  const { data: follows } = await supabase
+    .from("follows")
+    .select("following_id")
+    .eq("follower_id", currentUser.id)
+    .in(
+      "following_id",
+      profiles.map((profile) => profile.id),
+    );
+
+  const followedIds = new Set(follows?.map((f) => f.following_id));
+
+  return {
+    data: profiles.map((profile) => ({
+      ...profile,
+      isFollowing: followedIds.has(profile.id),
+      isSelf: profile.id === currentUser.id,
+    })),
+    error: null,
+  };
 };

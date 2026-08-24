@@ -4,6 +4,8 @@ import type { ProfileSummary } from "@/types";
 type GridProfile = ProfileSummary & {
   followerCount?: number;
   trackCount?: number;
+  isFollowing?: boolean;
+  isSelf?: boolean;
 };
 
 export const ProfileGrid = ({
@@ -30,6 +32,8 @@ export const ProfileGrid = ({
               user={user}
               followerCount={user.followerCount}
               trackCount={user.trackCount}
+              isFollowing={user.isFollowing}
+              showFollowButton={!user.isSelf}
             />
           ))}
         </div>
