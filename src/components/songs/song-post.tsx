@@ -39,7 +39,6 @@ export function SongPost({
         isActive && "bg-[var(--mh-glass-hover)]",
       )}
     >
-      {/* Header */}
       <div className="flex items-start justify-between gap-4 p-4">
         <Link
           href={`/profile/${song.profiles?.nickname ?? ""}`}
@@ -72,7 +71,6 @@ export function SongPost({
         />
       </div>
 
-      {/* Cover */}
       <div className="relative aspect-video w-full overflow-hidden">
         <Image
           src={getCoverUrl(song.image_path)}
@@ -94,7 +92,6 @@ export function SongPost({
         </button>
       </div>
 
-      {/* Content */}
       <div className="flex flex-col gap-3 p-4">
         <div className="flex flex-col gap-1.5">
           <TitleLink
@@ -122,7 +119,6 @@ export function SongPost({
           </p>
         )}
 
-        {/* Tags */}
         {song.tags?.length ? (
           <div className="flex flex-wrap gap-1.5">
             {song.tags.map((tag) => (

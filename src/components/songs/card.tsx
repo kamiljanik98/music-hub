@@ -14,7 +14,6 @@ type CardProps = {
   onPlay: (id: string) => void;
   isLikedInitially?: boolean;
   isOwner?: boolean;
-  isNew?: boolean;
 };
 
 export const Card = ({
@@ -22,7 +21,6 @@ export const Card = ({
   onPlay,
   isLikedInitially = false,
   isOwner = false,
-  isNew = false,
 }: CardProps) => {
   return (
     <div className="group/card flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-border bg-card p-2.5 transition hover:bg-[var(--mh-glass-hover)]">
@@ -45,11 +43,9 @@ export const Card = ({
           className="size-full object-cover"
         />
 
-        {isNew && (
-          <span className="absolute right-2.5 bottom-2.5 rounded-[var(--mh-radius-pill)] border border-white/20 bg-[rgba(10,10,10,0.7)] px-2 py-1 font-display text-[10px] tracking-[0.1em] uppercase text-foreground backdrop-blur-sm">
-            New
-          </span>
-        )}
+        <span className="absolute right-2.5 bottom-2.5 rounded-[var(--mh-radius-pill)] border border-white/20 bg-[rgba(10,10,10,0.7)] px-2 py-1 font-display text-[10px] tracking-[0.1em] uppercase text-foreground backdrop-blur-sm">
+          New
+        </span>
 
         <button
           onClick={() => onPlay(song.id)}

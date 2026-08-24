@@ -3,7 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { ActionResult, ProfileSummary } from "@/types";
 
-export type FollowerProfile = ProfileSummary & {
+type FollowerProfile = ProfileSummary & {
   followerCount: number;
   trackCount: number;
 };

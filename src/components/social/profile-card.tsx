@@ -9,7 +9,6 @@ type ProfileCardProps = {
   isFollowing?: boolean;
   followerCount?: number;
   trackCount?: number;
-  showFollowButton?: boolean;
 };
 
 export const ProfileCard = ({
@@ -17,7 +16,6 @@ export const ProfileCard = ({
   isFollowing = false,
   followerCount,
   trackCount,
-  showFollowButton = true,
 }: ProfileCardProps) => {
   const hasCounts = followerCount !== undefined || trackCount !== undefined;
 
@@ -62,13 +60,11 @@ export const ProfileCard = ({
         </div>
       )}
 
-      {showFollowButton && (
-        <FollowButton
-          profileUserId={user.id}
-          isFollowingInitially={isFollowing}
-          className="w-full"
-        />
-      )}
+      <FollowButton
+        profileUserId={user.id}
+        isFollowingInitially={isFollowing}
+        className="w-full"
+      />
     </div>
   );
 };

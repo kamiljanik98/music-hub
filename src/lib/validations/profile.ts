@@ -21,7 +21,7 @@ const imageFile = z
     `Image must be at most ${MAX_IMAGE_SIZE_MB}MB`,
   );
 
-export const bioSchema = z
+const bioSchema = z
   .string()
   .refine(
     (value) => value.trim().split(/\s+/).filter(Boolean).length <= 150,
@@ -36,7 +36,7 @@ export const nicknameSchema = z
 
 const socialUrl = z.url("Must be a valid URL").or(z.literal("")).optional();
 
-export const socialLinksSchema = z.object({
+const socialLinksSchema = z.object({
   youtube: socialUrl,
   instagram: socialUrl,
   tiktok: socialUrl,

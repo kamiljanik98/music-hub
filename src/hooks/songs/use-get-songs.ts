@@ -9,7 +9,7 @@ const NEW_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
 const TODAY_WINDOW_MS = 24 * 60 * 60 * 1000;
 
-export type SongWithFlags = Song & { isNew: boolean; isToday: boolean };
+type SongWithFlags = Song & { isNew: boolean; isToday: boolean };
 
 export function useGetSongs() {
   const [songs, setSongs] = useState<SongWithFlags[]>([]);

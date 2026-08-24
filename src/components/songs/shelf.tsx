@@ -118,7 +118,6 @@ export const Shelf = ({ title }: ShelfProps) => {
           <div key={song.id} className="w-[160px] shrink-0 sm:w-[220px]">
             <Card
               isLikedInitially={song.isLiked}
-              isNew={song.isNew}
               song={song}
               onPlay={onPlay}
             />

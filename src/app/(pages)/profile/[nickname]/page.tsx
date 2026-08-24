@@ -62,7 +62,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   return (
     <div className="pb-16">
-      {/* Banner */}
       <div className="relative left-1/2 -mt-24 h-72 w-screen -translate-x-1/2 overflow-hidden bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))] md:h-96">
         {isOwnProfile ? (
           <EditableBanner
@@ -100,7 +99,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         </div>
       </div>
 
-      {/* Identity */}
       <header className="relative -mt-14 flex flex-wrap items-end gap-x-6 gap-y-4">
         {isOwnProfile ? (
           <EditableAvatar
@@ -148,7 +146,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         </div>
       </header>
 
-      {/* Bio + social */}
       <div className="mt-6 flex flex-wrap items-start justify-between gap-6">
         {profile.bio ? (
           <ProfileBio bio={profile.bio} />

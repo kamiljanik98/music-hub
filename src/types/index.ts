@@ -18,11 +18,6 @@ export type PlaylistSummary = Playlist & {
   trackCount: number;
 };
 
-export type EmailPasswordCredentials = {
-  email: string;
-  password: string;
-};
-
 export type ProfileSummary = Pick<
   UserProfile,
   "id" | "nickname" | "avatar_url"

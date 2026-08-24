@@ -28,9 +28,7 @@ export const PromoBanner = ({ playlist, tracks }: PromoBannerProps) => {
   const isPlaying = usePlayer((state) => state.isPlaying);
 
   const firstTrack = tracks[0];
-  const isActive = Boolean(
-    firstTrack && tracks.some((track) => track.id === activeId),
-  );
+  const isActive = tracks.some((track) => track.id === activeId);
 
   const href = `/playlists/${playlist.id}`;
 

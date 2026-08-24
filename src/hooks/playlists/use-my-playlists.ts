@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import useUser from "@/hooks/profile/use-user";
 import type { Tables } from "@/types/database.types";
 
-export type MyPlaylist = Pick<Tables<"playlists">, "id" | "title">;
+type MyPlaylist = Pick<Tables<"playlists">, "id" | "title">;
 
 export function useMyPlaylists() {
   const user = useUser((state) => state.user);

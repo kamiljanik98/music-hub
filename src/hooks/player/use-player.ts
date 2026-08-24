@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import type { Song } from "@/types";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type SeekRequest = {
@@ -12,7 +11,6 @@ type RepeatMode = "off" | "all" | "one";
 interface PlayerStore {
   ids: string[];
   activeId: string | null;
-  songs: Song[];
   volume: number;
   playbackRate: number;
   repeatMode: RepeatMode;
@@ -24,7 +22,6 @@ interface PlayerStore {
 
   setActiveId: (id: string) => void;
   setIds: (ids: string[]) => void;
-  setSongs: (songs: Song[]) => void;
   setVolume: (volume: number) => void;
   setPlaybackRate: (rate: number) => void;
   setRepeatMode: (mode: RepeatMode) => void;
@@ -35,7 +32,6 @@ interface PlayerStore {
   clearSeekRequest: () => void;
   requestPlayPause: () => void;
   clearPlayPauseRequest: () => void;
-  reset: () => void;
 }
 
 const usePlayer = create<PlayerStore>()(
@@ -43,7 +39,6 @@ const usePlayer = create<PlayerStore>()(
     (set) => ({
       ids: [],
       activeId: null,
-      songs: [],
       volume: 1,
       playbackRate: 1,
       repeatMode: "off",
@@ -61,8 +56,6 @@ const usePlayer = create<PlayerStore>()(
         }),
 
       setIds: (ids) => set({ ids }),
-
-      setSongs: (songs) => set({ songs }),
 
       setVolume: (volume) => set({ volume }),
 
@@ -112,16 +105,6 @@ const usePlayer = create<PlayerStore>()(
       clearPlayPauseRequest: () =>
         set({
           playPauseRequested: false,
-        }),
-
-      reset: () =>
-        set({
-          ids: [],
-          activeId: null,
-          songs: [],
-          progress: 0,
-          duration: 0,
-          isPlaying: false,
         }),
     }),
     {

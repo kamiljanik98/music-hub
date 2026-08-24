@@ -47,7 +47,6 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              {/* Logo + navigation */}
               <div className="flex min-w-0 flex-1 items-center gap-4 md:flex-none md:gap-8">
                 <Link
                   href="/"
@@ -77,7 +76,6 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Search */}
               <div className="hidden w-full min-w-0 justify-self-center md:block md:w-[420px]">
                 <Suspense fallback={null}>
                   <SearchInput />
@@ -93,7 +91,6 @@ export default function Navbar() {
                 <Search className="size-5" />
               </button>
 
-              {/* Actions */}
               {user ? (
                 <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
                   <button

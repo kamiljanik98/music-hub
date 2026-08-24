@@ -26,10 +26,9 @@ import type { Song } from "@/types";
 
 type SongOwnerMenuProps = {
   song: Song;
-  onDeleted?: () => void;
 };
 
-export function SongOwnerMenu({ song, onDeleted }: SongOwnerMenuProps) {
+export function SongOwnerMenu({ song }: SongOwnerMenuProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleting, startDelete] = useTransition();
@@ -45,7 +44,6 @@ export function SongOwnerMenu({ song, onDeleted }: SongOwnerMenuProps) {
 
       toast.success("Track deleted");
       setIsDeleteOpen(false);
-      onDeleted?.();
     });
   };
 
