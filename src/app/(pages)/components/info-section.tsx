@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 export const InfoSection = () => {
   return (
-    <section>
+    <section className="pt-8 md:pt-16">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-4">
         <div className="flex min-w-0 flex-col gap-1">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
