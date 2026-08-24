@@ -21,7 +21,7 @@ const SocialButton = ({ provider, onClick, disabled }: SocialButtonProps) => {
       onClick={onClick}
       disabled={disabled}
     >
-      <Image src={`/${provider}.svg`} alt="" width={20} height={20} />
+      <Image src={`/social/${provider}.svg`} alt="" width={20} height={20} />
       Continue with {providerLabels[provider] ?? provider}
     </Button>
   );

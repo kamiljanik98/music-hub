@@ -36,7 +36,7 @@ export const PromoBanner = ({ playlist, tracks }: PromoBannerProps) => {
     <section className="relative isolate flex min-h-[320px] items-center overflow-hidden rounded-[var(--mh-radius-card)] bg-[var(--mh-solid)] sm:min-h-[400px] md:min-h-[460px]">
       <div className="absolute inset-0 overflow-hidden rounded-[inherit] [transform:translateZ(0)]">
         <Image
-          src="/banner.jpg"
+          src="/media/banner.jpg"
           alt=""
           fill
           priority
@@ -49,11 +49,11 @@ export const PromoBanner = ({ playlist, tracks }: PromoBannerProps) => {
           muted
           loop
           playsInline
-          poster="/banner.jpg"
+          poster="/media/banner.jpg"
           aria-hidden="true"
           className="absolute inset-0 size-full rounded-[inherit] object-cover motion-reduce:hidden"
         >
-          <source src="/banner.mp4" type="video/mp4" />
+          <source src="/media/banner.mp4" type="video/mp4" />
         </video>
 
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,10,10,0.96)_0%,rgba(10,10,10,0.88)_32%,rgba(10,10,10,0.45)_62%,rgba(10,10,10,0.05)_100%)]" />

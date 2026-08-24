@@ -52,7 +52,7 @@ export default function Navbar() {
                   href="/"
                   className="flex shrink-0 items-center gap-2.5 rounded-full"
                 >
-                  <Image src="/logo.svg" alt="App logo" width={28} height={28} />
+                  <Image src="/brand/logo.svg" alt="App logo" width={28} height={28} />
 
                   <p className="hidden font-display text-base uppercase tracking-[0.1em] text-foreground sm:block">
                     MusicHub

@@ -6,14 +6,14 @@ type SocialLinksProps = {
 };
 
 const platforms = [
-  { key: "youtube", label: "YouTube", icon: "/youtube-168-svgrepo-com.svg" },
-  { key: "instagram", label: "Instagram", icon: "/instagram-svgrepo-com.svg" },
-  { key: "tiktok", label: "TikTok", icon: "/tiktok-svgrepo-com.svg" },
-  { key: "spotify", label: "Spotify", icon: "/spotify-162-svgrepo-com.svg" },
+  { key: "youtube", label: "YouTube", icon: "/social/youtube.svg" },
+  { key: "instagram", label: "Instagram", icon: "/social/instagram.svg" },
+  { key: "tiktok", label: "TikTok", icon: "/social/tiktok.svg" },
+  { key: "spotify", label: "Spotify", icon: "/social/spotify.svg" },
   {
     key: "soundcloud",
     label: "SoundCloud",
-    icon: "/soundcloud-164-svgrepo-com.svg",
+    icon: "/social/soundcloud.svg",
   },
 ] as const;
 
