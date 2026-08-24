@@ -16,8 +16,8 @@ export const UploadFooter = ({ isLoading, onSubmit }: UploadFooterProps) => {
           Use and you don&apos;t infringe anyone else&apos;s rights.
         </p>
 
-        <Button type="button" size="sm" disabled={isLoading} onClick={onSubmit}>
-          {isLoading ? "Uploading..." : "Upload"}
+        <Button type="button" size="sm" loading={isLoading} onClick={onSubmit}>
+          Upload
         </Button>
       </div>
     </div>

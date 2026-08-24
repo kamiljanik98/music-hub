@@ -49,7 +49,8 @@ const ForgotPasswordForm = () => {
       <Button
         className="text-sm bg-neutral-800 h-12"
         type="submit"
-        disabled={isLoading || success}
+        loading={isLoading}
+        disabled={success}
       >
         {success ? "Link sent" : "Send reset link"}
       </Button>

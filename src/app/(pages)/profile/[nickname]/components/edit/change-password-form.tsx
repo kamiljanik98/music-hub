@@ -55,8 +55,8 @@ export function ChangePasswordForm() {
         type="password"
         placeholder="******"
       />
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Updating..." : "Update password"}
+      <Button type="submit" loading={isLoading}>
+        Update password
       </Button>
     </form>
   );

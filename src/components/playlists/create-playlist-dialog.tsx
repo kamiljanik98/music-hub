@@ -132,8 +132,8 @@ export function CreatePlaylistDialog({
               Cancel
             </Button>
 
-            <Button type="submit" disabled={isPending}>
-              {isPending ? "Creating..." : "Create playlist"}
+            <Button type="submit" loading={isPending}>
+              Create playlist
             </Button>
           </div>
         </form>

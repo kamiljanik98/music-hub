@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal, Trash2, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
@@ -95,7 +95,11 @@ export function PlaylistOwnerMenu({ playlistId }: PlaylistOwnerMenuProps) {
                 confirmDelete();
               }}
             >
-              {isDeleting ? "Deleting..." : "Delete playlist"}
+              {isDeleting ? (
+                <LoaderCircle className="size-4 animate-spin" />
+              ) : (
+                "Delete playlist"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

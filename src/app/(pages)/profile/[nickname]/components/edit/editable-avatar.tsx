@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState, useTransition } from "react";
-import { Camera } from "lucide-react";
+import { Camera, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { updateProfileImage } from "@/actions/profile/update-profile-image";
 import { validateImageFile } from "@/lib/validations/files";
@@ -67,8 +67,14 @@ export function EditableAvatar({ avatarPath, nickname }: EditableAvatarProps) {
         className="absolute inset-0 flex items-center justify-center rounded-full bg-black/55 opacity-0 transition-opacity group-hover/avatar:opacity-100 focus-visible:opacity-100 disabled:opacity-100"
       >
         <span className="flex flex-col items-center gap-1 text-xs font-medium text-white">
-          <Camera className="size-5" />
-          {isSaving ? "Saving..." : "Edit"}
+          {isSaving ? (
+            <LoaderCircle className="size-5 animate-spin" />
+          ) : (
+            <>
+              <Camera className="size-5" />
+              Edit
+            </>
+          )}
         </span>
       </button>
 

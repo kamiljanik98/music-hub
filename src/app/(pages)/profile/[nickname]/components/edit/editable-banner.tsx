@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState, useTransition } from "react";
-import { Camera } from "lucide-react";
+import { Camera, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { updateProfileImage } from "@/actions/profile/update-profile-image";
 import { validateImageFile } from "@/lib/validations/files";
@@ -70,8 +70,14 @@ export function EditableBanner({ bannerUrl, nickname }: EditableBannerProps) {
         aria-label="Change banner"
         className="absolute bottom-4 left-6 z-10 flex items-center gap-2 rounded-[var(--mh-radius-pill)] bg-black/55 px-4 py-2 text-xs font-medium text-white opacity-0 transition-opacity group-hover/banner:opacity-100 focus-visible:opacity-100 disabled:opacity-100"
       >
-        <Camera className="size-4" />
-        {isSaving ? "Saving..." : "Edit banner"}
+        {isSaving ? (
+          <LoaderCircle className="size-4 animate-spin" />
+        ) : (
+          <>
+            <Camera className="size-4" />
+            Edit banner
+          </>
+        )}
       </button>
 
       <input

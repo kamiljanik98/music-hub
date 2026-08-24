@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { MoreHorizontal, Pencil, Trash2, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -103,7 +103,11 @@ export function SongOwnerMenu({ song }: SongOwnerMenuProps) {
                 confirmDelete();
               }}
             >
-              {isDeleting ? "Deleting..." : "Delete track"}
+              {isDeleting ? (
+                <LoaderCircle className="size-4 animate-spin" />
+              ) : (
+                "Delete track"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

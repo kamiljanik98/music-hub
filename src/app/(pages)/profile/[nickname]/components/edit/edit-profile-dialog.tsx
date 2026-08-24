@@ -145,8 +145,8 @@ export function EditProfileDialog() {
             label="SoundCloud"
             placeholder="https://soundcloud.com/you"
           />
-          <Button variant="secondary" type="submit" disabled={isLoading}>
-            {isLoading ? "Saving..." : "Save changes"}
+          <Button variant="secondary" type="submit" loading={isLoading}>
+            Save changes
           </Button>
         </form>
       </DialogContent>
