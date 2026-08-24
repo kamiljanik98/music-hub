@@ -65,14 +65,14 @@ export default async function HomePage() {
       <Banner artists={artists ?? []} />
 
       {promo && promo.tracks.length > 0 && (
-        <section className="mx-auto w-full max-w-[var(--mh-content-max)]">
+        <section>
           <PromoBanner playlist={promo.playlist} tracks={promo.tracks} />
         </section>
       )}
 
       <InfoSection />
 
-      <section className="mx-auto w-full max-w-[var(--mh-content-max)]">
+      <section className="pt-8 md:pt-16">
         <Shelf title="Discover this week" />
       </section>
     </div>
