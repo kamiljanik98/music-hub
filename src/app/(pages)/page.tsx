@@ -61,7 +61,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="flex flex-col gap-24 pb-24 md:gap-[var(--mh-section-gap)] md:pb-32">
+    <div className="flex flex-col gap-24 pb-24 md:gap-42 md:pb-32">
       <Banner artists={artists ?? []} />
 
       {promo && promo.tracks.length > 0 && (
