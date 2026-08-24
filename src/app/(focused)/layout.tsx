@@ -20,7 +20,7 @@ export default function FocusedLayout({
         }}
       />
 
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-6 pt-32 pb-24">
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-6">
         {children}
       </main>
     </div>
