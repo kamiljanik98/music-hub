@@ -5,7 +5,7 @@ import { getPlaylistById } from "@/actions/playlists/get-playlist-by-id";
 import { createClient } from "@/lib/supabase/server";
 import { CopyLinkButton } from "@/components/social/copy-link-button";
 import { TrackList } from "./components/track-list";
-import { PlaylistOwnerMenu } from "@/components/playlists/playlist-owner-menu";
+import { PlaylistOwnerMenu } from "./components/playlist-owner-menu";
 
 type PlaylistPageProps = {
   params: Promise<{ id: string }>;

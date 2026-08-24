@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Song } from "@/types";
 import { getCoverUrl } from "@/lib/r2/public";
 
-import { TitleLink } from "../songs/title-link";
+import { TitleLink } from "@/components/songs/title-link";
 
 interface TrackInfoProps {
   song: Song;

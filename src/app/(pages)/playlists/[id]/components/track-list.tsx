@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useOnPlay } from "@/hooks/player/use-on-play";
-import { LikedRow } from "@/components/songs/liked-row";
+import { SongRow } from "@/components/songs/song-row";
 import { removeSongFromPlaylist } from "@/actions/playlists/remove-song-from-playlist";
 import type { PlaylistTrack } from "@/actions/playlists/get-playlist-by-id";
 
@@ -43,11 +43,11 @@ export function TrackList({ playlistId, tracks, isOwner }: TrackListProps) {
   }
 
   return (
-    <div className="flex w-full flex-col gap-2.5">
+    <div className="flex flex-col gap-2.5">
       {tracks.map((track) => (
         <div key={track.id} className="flex items-center gap-2">
           <div className="min-w-0 flex-1">
-            <LikedRow
+            <SongRow
               song={track}
               onPlay={onPlay}
               likesCount={track.likesCount}

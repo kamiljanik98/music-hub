@@ -1,6 +1,6 @@
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
 import { getFollowedUsers } from "@/actions/social/get-followed-users";
-import { FollowingCard } from "@/components/social/following-card";
+import { FollowingCard } from "./components/following-card";
 import { notFound } from "next/navigation";
 
 type FollowingPageProps = {

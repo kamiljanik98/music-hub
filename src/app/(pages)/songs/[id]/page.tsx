@@ -11,7 +11,7 @@ import { CopyLinkButton } from "@/components/social/copy-link-button";
 import { AddToPlaylistMenu } from "@/components/playlists/add-to-playlist-menu";
 import { Waveform } from "@/components/songs/waveform";
 import { SongOwnerMenu } from "@/components/songs/song-owner-menu";
-import { List } from "@/components/stems/list";
+import { StemList } from "./components/stem-list";
 
 type SongPageProps = {
   params: Promise<{ id: string }>;
@@ -93,7 +93,7 @@ export default async function SongPage({ params }: SongPageProps) {
 
       <Waveform songId={song.id} path={song.path} />
 
-      <List stems={song.stems ?? []} />
+      <StemList stems={song.stems ?? []} />
     </div>
   );
 }

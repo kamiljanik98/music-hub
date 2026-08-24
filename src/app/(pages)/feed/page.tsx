@@ -1,6 +1,6 @@
 import { getFollowedArtistsSongs } from "@/actions/songs/get-followed-artists-songs";
 import { getProSongs } from "@/actions/songs/get-pro-songs";
-import { ProfileList } from "@/components/social/profile-list";
+import { ProfileList } from "./components/profile-list";
 import { createClient } from "@/lib/supabase/server";
 import { FeedPosts } from "./components/feed-posts";
 import { AuthGate } from "@/components/auth/auth-gate";
@@ -71,7 +71,7 @@ export default async function FeedPage() {
         )}
       </div>
 
-      <aside className="sticky top-28 mt-10 hidden w-[320px] shrink-0 self-start lg:block">
+      <aside className="sticky top-28 mt-10 hidden w-[320px] shrink-0 lg:block">
         {suggestedUsersError ? (
           <p className="text-destructive">
             Failed to load your suggested artists list.

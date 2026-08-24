@@ -1,7 +1,7 @@
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
 import { getPlayHistory } from "@/actions/songs/get-play-history";
 import { createClient } from "@/lib/supabase/server";
-import { SongList } from "./components/song-list";
+import { SongRowList } from "@/components/songs/song-row-list";
 import { notFound } from "next/navigation";
 
 type HistoryPageProps = {
@@ -61,7 +61,7 @@ export default async function HistoryPage({ params }: HistoryPageProps) {
       </div>
 
       {songs.length ? (
-        <SongList songs={songs} />
+        <SongRowList songs={songs} />
       ) : (
         <p className="text-sm text-muted-foreground">
           Nothing played yet — press play on a track and it will show up here.

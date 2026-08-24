@@ -3,8 +3,8 @@
 import { useSyncExternalStore } from "react";
 import { LayoutList, Rows3 } from "lucide-react";
 import { useOnPlay } from "@/hooks/player/use-on-play";
-import { SongPost } from "@/components/songs/song-post";
-import { FeedRow } from "@/components/songs/feed-row";
+import { SongPost } from "./song-post";
+import { FeedRow } from "./feed-row";
 import { cn } from "@/lib/utils";
 import type { FeedSong } from "@/actions/songs/get-followed-artists-songs";
 
@@ -113,7 +113,7 @@ export function FeedPosts({ songs, eyebrow, note }: FeedPostsProps) {
       )}
 
       {density === "compact" ? (
-        <div className="flex w-full flex-col gap-2.5">
+        <div className="flex flex-col gap-2.5">
           {songs.map((song) => (
             <FeedRow
               key={song.id}
@@ -126,7 +126,7 @@ export function FeedPosts({ songs, eyebrow, note }: FeedPostsProps) {
           ))}
         </div>
       ) : (
-        <div className="flex w-full flex-col gap-5">
+        <div className="flex flex-col gap-5">
           {songs.map((song) => (
             <SongPost
               key={song.id}

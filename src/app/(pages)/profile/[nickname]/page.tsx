@@ -1,6 +1,6 @@
 import { getUserSongs } from "@/actions/songs/get-user-songs";
-import { TrackList } from "@/components/profile/track-list";
-import { EditProfileDialog } from "@/components/profile/edit/edit-profile-dialog";
+import { WaveformList } from "./components/waveform-list";
+import { EditProfileDialog } from "./components/edit/edit-profile-dialog";
 import { getAvatarUrl, getBannerUrl } from "@/lib/r2/public";
 import { createClient } from "@/lib/supabase/server";
 import Image from "next/image";
@@ -12,10 +12,10 @@ import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname"
 import { getFollowStatus } from "@/actions/social/get-follow-status";
 import { getFollowers } from "@/actions/social/get-followers";
 import { getFollowedUsers } from "@/actions/social/get-followed-users";
-import { SocialLinks } from "@/components/profile/social-links";
+import { SocialLinks } from "./components/social-links";
 import { ProfileBio } from "./components/profile-bio";
-import { EditableAvatar } from "@/components/profile/edit/editable-avatar";
-import { EditableBanner } from "@/components/profile/edit/editable-banner";
+import { EditableAvatar } from "./components/edit/editable-avatar";
+import { EditableBanner } from "./components/edit/editable-banner";
 import type { SocialLinks as SocialLinksValue } from "@/lib/validations/profile";
 
 type ProfilePageProps = {
@@ -149,9 +149,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
       <div className="mt-6 flex flex-wrap items-start justify-between gap-6">
         {profile.bio ? (
           <ProfileBio bio={profile.bio} />
-        ) : (
-          <div className="max-w-2xl" />
-        )}
+        ) : null}
 
         <SocialLinks links={profile.social_links as SocialLinksValue | null} />
       </div>
@@ -161,7 +159,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           Tracks
         </h2>
 
-        <TrackList songs={songs} isOwner={isOwnProfile} />
+        <WaveformList songs={songs} isOwner={isOwnProfile} />
       </section>
     </div>
   );

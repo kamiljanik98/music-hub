@@ -1,4 +1,4 @@
-import { Tabs } from "@/components/profile/tabs";
+import { ProfileNav } from "./components/profile-nav";
 
 type ProfileTabsLayoutProps = {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ export default async function ProfileTabsLayout({
 
   return (
     <div className="py-10">
-      <Tabs nickname={nickname} />
+      <ProfileNav nickname={nickname} />
       {children}
     </div>
   );

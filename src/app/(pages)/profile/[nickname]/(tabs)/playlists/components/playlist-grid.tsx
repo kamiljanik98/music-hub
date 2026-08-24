@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { PlaylistCard } from "@/components/playlists/playlist-card";
+import { PlaylistCard } from "./playlist-card";
 import { CreatePlaylistDialog } from "@/components/playlists/create-playlist-dialog";
 import type { PlaylistSummary } from "@/types";
 

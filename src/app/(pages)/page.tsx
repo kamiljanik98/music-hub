@@ -1,16 +1,16 @@
-import { Shelf } from "@/components/songs/shelf";
-import { PromoBanner } from "@/components/playlists/promo-banner";
+import { Shelf } from "./components/shelf";
+import { PromoBanner } from "./components/promo-banner";
 import { getPromoPlaylist } from "@/actions/playlists/get-promo-playlist";
-import { HeroHeadline } from "@/components/home/hero-headline";
-import { BannerCta } from "@/components/home/banner-cta";
-import { InfoSection } from "@/components/home/info-section";
-import { SocialProof } from "@/components/home/social-proof";
+import { HeroHeadline } from "./components/hero-headline";
+import { BannerCta } from "./components/banner-cta";
+import { InfoSection } from "./components/info-section";
+import { SocialProof } from "./components/social-proof";
 import { createClient } from "@/lib/supabase/server";
 import type { ProfileSummary } from "@/types";
 
 function Banner({ artists }: { artists: ProfileSummary[] }) {
   return (
-    <section className="mx-auto flex min-h-[calc(100vh-9rem)] max-w-[var(--mh-content-max)] flex-col items-center justify-center gap-8 pt-10 text-center md:gap-12 md:pt-14">
+    <section className="flex min-h-[calc(100vh-9rem)] flex-col items-center justify-center gap-8 pt-10 text-center md:gap-12 md:pt-14">
       <div className="flex items-center gap-2.5 rounded-[var(--mh-radius-pill)] border border-border bg-card px-[18px] py-2">
         <span className="mh-pulse-dot size-2 rounded-full bg-primary" />
         <span className="text-sm text-[#e5e5e5]">

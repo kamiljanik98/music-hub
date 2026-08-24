@@ -1,6 +1,6 @@
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
 import { getFollowers } from "@/actions/social/get-followers";
-import { ProfileGrid } from "@/components/social/profile-grid";
+import { ProfileGrid } from "./components/profile-grid";
 import { notFound } from "next/navigation";
 
 type FollowersPageProps = {

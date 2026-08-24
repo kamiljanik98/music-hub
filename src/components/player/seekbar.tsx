@@ -1,5 +1,7 @@
+"use client";
+
 import usePlayer from "@/hooks/player/use-player";
-import { Slider } from "../ui/slider";
+import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 import { formatDuration } from "@/lib/format/duration";
 
@@ -27,8 +29,7 @@ export function Seekbar() {
           if (activeId) requestSeek(activeId, value / 100);
           setScrubbing(null);
         }}
-        className="flex"
-      />
+              />
       <span className="w-10 shrink-0 text-right text-xs text-muted-foreground tabular-nums">
         {formatDuration(duration)}
       </span>

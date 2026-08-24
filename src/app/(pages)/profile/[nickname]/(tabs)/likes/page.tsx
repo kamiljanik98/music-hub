@@ -1,6 +1,6 @@
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
 import { getLikedSongs } from "@/actions/songs/get-liked-songs";
-import { SongList } from "./components/song-list";
+import { SongRowList } from "@/components/songs/song-row-list";
 import { notFound } from "next/navigation";
 
 type LikesPageProps = {
@@ -45,7 +45,7 @@ export default async function LikesPage({ params }: LikesPageProps) {
         </div>
       </div>
 
-      <SongList songs={songs} />
+      <SongRowList songs={songs} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
-import { ChangePasswordForm } from "@/components/profile/edit/change-password-form";
+import { ChangePasswordForm } from "../components/edit/change-password-form";
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 
