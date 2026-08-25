@@ -20,7 +20,7 @@ export const Speed = () => {
           type="button"
           onClick={() => setPlaybackRate(speed)}
           aria-pressed={playbackRate === speed}
-          className={`rounded-md px-2 py-1 text-xs transition-colors ${
+          className={`cursor-pointer rounded-md px-2 py-1 text-xs transition-colors ${
             playbackRate === speed
               ? "bg-white/10 text-foreground"
               : "text-muted-foreground hover:bg-white/5 hover:text-foreground"

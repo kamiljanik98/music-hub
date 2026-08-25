@@ -8,19 +8,6 @@
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-heading: var(--font-display);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -41,9 +28,6 @@
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 :root {
@@ -62,26 +46,11 @@
   --accent: rgba(255, 255, 255, 0.08);
   --accent-foreground: #fafafa;
   --destructive: #ef4444;
-  --destructive-foreground: #fafafa;
   --border: rgba(255, 255, 255, 0.09);
   --input: rgba(255, 255, 255, 0.09);
   --ring: #d6f24b;
-  --chart-1: #d4d4d4;
-  --chart-2: #a3a3a3;
-  --chart-3: #737373;
-  --chart-4: #525252;
-  --chart-5: #262626;
   --radius: 20px;
-  --sidebar: #171717;
-  --sidebar-foreground: #fafafa;
-  --sidebar-primary: #d6f24b;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: rgba(255, 255, 255, 0.08);
-  --sidebar-accent-foreground: #fafafa;
-  --sidebar-border: rgba(255, 255, 255, 0.09);
-  --sidebar-ring: #d6f24b;
 
-  --mh-lime: #d6f24b;
   --mh-ink: #0a0a0a;
   --mh-solid: #171717;
   --mh-text-lead: #d4d4d4;
@@ -92,7 +61,6 @@
   --mh-radius-pill: 800px;
   --mh-radius-card: 40px;
   --mh-content-max: 1280px;
-  --mh-section-gap: 160px;
 }
 
 @layer base {
@@ -104,7 +72,13 @@
   }
   html {
     scrollbar-gutter: stable;
+    scroll-behavior: smooth;
     @apply font-sans;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
@@ -118,62 +92,21 @@
   }
 }
 
+body[data-scroll-locked][data-scroll-locked] {
+  margin-right: 0 !important;
+}
+
+@utility mh-glass {
+  backdrop-filter: var(--mh-glass-blur);
+}
+
 @layer utilities {
   .bg-card {
     backdrop-filter: var(--mh-glass-blur);
-    -webkit-backdrop-filter: var(--mh-glass-blur);
   }
   .mh-scroll::-webkit-scrollbar {
     height: 0;
     width: 0;
-  }
-  .mh-atmosphere-a {
-    background: radial-gradient(
-      circle at 55% 45%,
-      rgba(168, 85, 247, 0.62) 0%,
-      rgba(236, 72, 153, 0.38) 45%,
-      rgba(10, 10, 10, 0) 100%
-    );
-    filter: blur(100px);
-    animation: mh-drift-a 48s ease-in-out infinite;
-    will-change: transform;
-  }
-  .mh-atmosphere-b {
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(214, 242, 75, 0.26) 0%,
-      rgba(124, 58, 237, 0.34) 50%,
-      rgba(10, 10, 10, 0) 100%
-    );
-    filter: blur(110px);
-    animation: mh-drift-b 64s ease-in-out infinite;
-    will-change: transform;
-  }
-
-  @keyframes mh-drift-a {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-    33% {
-      transform: translate3d(-10%, 7%, 0) scale(1.2);
-    }
-    66% {
-      transform: translate3d(7%, -5%, 0) scale(0.9);
-    }
-  }
-
-  @keyframes mh-drift-b {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-    40% {
-      transform: translate3d(12%, -8%, 0) scale(1.16);
-    }
-    75% {
-      transform: translate3d(-8%, 5%, 0) scale(0.92);
-    }
   }
 
   .mh-write-line {
@@ -224,10 +157,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mh-atmosphere-a,
-    .mh-atmosphere-b {
-      animation: none;
-    }
     .mh-write-line {
       animation: none;
       -webkit-mask-image: none;

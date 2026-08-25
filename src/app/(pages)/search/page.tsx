@@ -1,5 +1,5 @@
 import { getSearchedSongs } from "@/actions/songs/get-searched-songs";
-import { Content } from "@/components/search/content";
+import { SearchResults } from "./components/results";
 import { createClient } from "@/lib/supabase/server";
 
 const RESULT_LIMIT = 24;
@@ -13,7 +13,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { query } = await searchParams;
 
   if (!query?.trim()) {
-    return <Content songs={[]} users={[]} query={query} />;
+    return <SearchResults songs={[]} users={[]} query={query} />;
   }
 
   const supabase = await createClient();
@@ -37,5 +37,5 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     );
   }
 
-  return <Content songs={songs} users={users ?? []} query={query} />;
+  return <SearchResults songs={songs} users={users ?? []} query={query} />;
 }

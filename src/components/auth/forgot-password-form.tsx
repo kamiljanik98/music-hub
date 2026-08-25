@@ -8,8 +8,8 @@ import {
   forgotPasswordSchema,
 } from "@/lib/validations/auth";
 import useForgotPassword from "@/hooks/auth/use-forgot-password";
-import FormInput from "../form/form-input";
-import { Button } from "../ui/button";
+import FormInput from "@/components/form/form-input";
+import { Button } from "@/components/ui/button";
 import { authErrorMessage } from "@/lib/auth-error-message";
 
 const ForgotPasswordForm = () => {
@@ -49,7 +49,8 @@ const ForgotPasswordForm = () => {
       <Button
         className="text-sm bg-neutral-800 h-12"
         type="submit"
-        disabled={isLoading || success}
+        loading={isLoading}
+        disabled={success}
       >
         {success ? "Link sent" : "Send reset link"}
       </Button>

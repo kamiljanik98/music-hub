@@ -14,6 +14,14 @@ type ProfileDetails = Pick<
   | "social_links"
 >;
 
+const decodeNickname = (value: string) => {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+};
+
 export const getProfileByNickname = async (
   nickname: string,
 ): Promise<ActionResult<ProfileDetails | null>> => {
@@ -24,7 +32,7 @@ export const getProfileByNickname = async (
     .select(
       "id, nickname, avatar_url, banner_url, bio, created_at, social_links",
     )
-    .eq("nickname", nickname.toLowerCase())
+    .eq("nickname", decodeNickname(nickname).toLowerCase())
     .single();
 
   if (error) {

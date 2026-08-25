@@ -7,7 +7,9 @@ import { attachIsLiked } from "@/lib/attach-is-liked";
 
 const NEW_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
-export type SongWithFlags = Song & { isNew: boolean };
+const TODAY_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+type SongWithFlags = Song & { isNew: boolean; isToday: boolean };
 
 export function useGetSongs() {
   const [songs, setSongs] = useState<SongWithFlags[]>([]);
@@ -30,10 +32,15 @@ export function useGetSongs() {
 
       const now = Date.now();
       setSongs(
-        withLikes.map((song) => ({
-          ...song,
-          isNew: now - new Date(song.created_at).getTime() < NEW_WINDOW_MS,
-        })),
+        withLikes.map((song) => {
+          const age = now - new Date(song.created_at).getTime();
+
+          return {
+            ...song,
+            isNew: age < NEW_WINDOW_MS,
+            isToday: age < TODAY_WINDOW_MS,
+          };
+        }),
       );
       setError(error);
       setIsLoading(false);

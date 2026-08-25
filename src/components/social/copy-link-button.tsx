@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 
 type CopyLinkButtonProps = {
   path: string;
-  className?: string;
 };
 
-export function CopyLinkButton({ path, className }: CopyLinkButtonProps) {
+export function CopyLinkButton({ path }: CopyLinkButtonProps) {
   async function handleCopy(e: React.MouseEvent) {
     e.stopPropagation();
     const url = `${window.location.origin}${path}`;
@@ -27,7 +26,7 @@ export function CopyLinkButton({ path, className }: CopyLinkButtonProps) {
       size="icon-sm"
       onClick={handleCopy}
       aria-label="Copy link"
-      className={className}
+      className="p-2 hover:bg-muted hover:text-foreground"
     >
       <Link size={14} />
     </Button>

@@ -1,13 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Play } from "lucide-react";
 import { getCoverUrl, getAvatarUrl } from "@/lib/r2/public";
 import { formatSongMeta } from "@/lib/format/song-meta";
 import { LikeButton } from "@/components/social/like-button";
 import { getSongById } from "@/actions/songs/get-song-by-id";
+import { createClient } from "@/lib/supabase/server";
 import { CopyLinkButton } from "@/components/social/copy-link-button";
+import { AddToPlaylistMenu } from "@/components/playlists/add-to-playlist-menu";
 import { Waveform } from "@/components/songs/waveform";
-import { List } from "@/components/stems/list";
+import { SongOwnerMenu } from "@/components/songs/song-owner-menu";
+import { StemList } from "./components/stem-list";
 
 type SongPageProps = {
   params: Promise<{ id: string }>;
@@ -22,6 +26,13 @@ export default async function SongPage({ params }: SongPageProps) {
   }
 
   if (!song) notFound();
+
+  const supabase = await createClient();
+  const {
+    data: { user: currentUser },
+  } = await supabase.auth.getUser();
+
+  const isOwner = currentUser?.id === song.uploaded_by;
 
   const meta = formatSongMeta(song);
 
@@ -53,18 +64,36 @@ export default async function SongPage({ params }: SongPageProps) {
               />
               {song.profiles?.nickname ?? "Unknown"}
             </Link>
-            {meta && <p className="text-xs text-muted-foreground">{meta}</p>}
+            <p className="text-xs text-muted-foreground">
+              {meta || "No track details yet"}
+            </p>
           </div>
-          <div className="flex items-center gap-3">
-            <LikeButton songId={song.id} isLikedInitially={song.isLiked} />
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5">
+              <LikeButton songId={song.id} isLikedInitially={song.isLiked} />
+              <span className="text-sm text-muted-foreground">
+                {song.likesCount} {song.likesCount === 1 ? "like" : "likes"}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Play className="size-4" aria-hidden="true" />
+              {song.play_count} {song.play_count === 1 ? "play" : "plays"}
+            </div>
+            <AddToPlaylistMenu songId={song.id} />
             <CopyLinkButton path={`/songs/${song.id}`} />
           </div>
         </div>
+
+        {isOwner && (
+          <div className="self-start">
+            <SongOwnerMenu song={song} />
+          </div>
+        )}
       </div>
 
       <Waveform songId={song.id} path={song.path} />
 
-      <List stems={song.stems ?? []} />
+      <StemList stems={song.stems ?? []} />
     </div>
   );
 }

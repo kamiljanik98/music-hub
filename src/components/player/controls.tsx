@@ -136,6 +136,12 @@ export function Controls({ song }: ControlsProps) {
   }, [playbackRate, url]);
 
   useEffect(() => {
+    hasRecordedRef.current = false;
+
+    return clearPlayTimer;
+  }, [song.id, clearPlayTimer]);
+
+  useEffect(() => {
     if (seekTo === null || !audioRef.current || !duration) return;
     if (seekTo.songId !== activeId) {
       clearSeekRequest();
@@ -169,9 +175,17 @@ export function Controls({ song }: ControlsProps) {
       <audio
         ref={audioRef}
         className="hidden"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
+        onPlay={() => {
+          setIsPlaying(true);
+          startPlayTimer();
+        }}
+        onPause={() => {
+          setIsPlaying(false);
+          clearPlayTimer();
+        }}
         onEnded={() => {
+          clearPlayTimer();
+
           if (repeatMode === "one") {
             restart();
             return;
@@ -194,7 +208,7 @@ export function Controls({ song }: ControlsProps) {
 
       <button
         onClick={handlePrev}
-        className="text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
+        className="cursor-pointer text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
         aria-label="Previous"
       >
         <SkipBack className="size-4" fill="currentColor" />
@@ -203,7 +217,7 @@ export function Controls({ song }: ControlsProps) {
       <button
         onClick={togglePlay}
         className={cn(
-          "flex size-8 items-center justify-center rounded-full",
+          "flex size-8 cursor-pointer items-center justify-center rounded-full",
           "bg-primary text-primary-foreground transition-opacity hover:opacity-80",
         )}
         aria-label={isPlaying ? "Pause" : "Play"}
@@ -217,7 +231,7 @@ export function Controls({ song }: ControlsProps) {
 
       <button
         onClick={handleNext}
-        className="text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
+        className="cursor-pointer text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
         aria-label="Next"
       >
         <SkipForward className="size-4" fill="currentColor" />

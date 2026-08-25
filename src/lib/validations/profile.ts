@@ -21,7 +21,7 @@ const imageFile = z
     `Image must be at most ${MAX_IMAGE_SIZE_MB}MB`,
   );
 
-export const bioSchema = z
+const bioSchema = z
   .string()
   .refine(
     (value) => value.trim().split(/\s+/).filter(Boolean).length <= 150,
@@ -32,17 +32,16 @@ export const nicknameSchema = z
   .string()
   .min(3, "Nickname must be at least 3 characters")
   .max(32, "Nickname must be at most 32 characters")
-  .regex(
-    /^[a-zA-Z0-9_.!@#$%&-]+$/,
-    "Only letters, numbers, and !@#$%&_.- allowed",
-  );
+  .regex(/^[a-zA-Z0-9_.-]+$/, "Only letters, numbers, and _.- allowed");
 
 const socialUrl = z.url("Must be a valid URL").or(z.literal("")).optional();
 
-export const socialLinksSchema = z.object({
+const socialLinksSchema = z.object({
+  youtube: socialUrl,
   instagram: socialUrl,
-  twitch: socialUrl,
+  tiktok: socialUrl,
   spotify: socialUrl,
+  soundcloud: socialUrl,
 });
 
 export type SocialLinks = z.infer<typeof socialLinksSchema>;

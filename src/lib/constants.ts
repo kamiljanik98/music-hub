@@ -27,8 +27,8 @@ export const DASHED_BORDER = {
 } as const;
 
 export const IMAGE_PLACEHOLDER = {
-  COVER: "/cover-placeholder.jpg",
-  AVATAR: "/avatar-placeholder.jpg",
+  COVER: "/placeholders/cover-placeholder.jpg",
+  AVATAR: "/placeholders/avatar-placeholder.jpg",
 } as const;
 
 export const GENRES = [

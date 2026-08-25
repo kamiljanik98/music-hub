@@ -10,7 +10,7 @@ const inputVariants = cva(
         underline:
           "bg-transparent px-0 py-2 border-0 border-b border-input focus:border-ring/60",
         filled:
-          "rounded-[var(--radius-md)] border border-input bg-[rgba(0,0,0,0.3)] px-4 py-3 text-sm focus:border-ring/60",
+          "rounded-md border border-input bg-[rgba(0,0,0,0.3)] px-4 py-3 text-sm focus:border-ring/60",
       },
     },
     defaultVariants: {

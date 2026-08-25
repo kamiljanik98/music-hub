@@ -25,7 +25,6 @@ export const unfollowUser = async (
     return { error: new Error(error.message) };
   }
 
-  revalidatePath(`/profile/[nickname]/following`, "page");
   revalidatePath(`/profile/[nickname]/followers`, "page");
   revalidatePath(`/feed`);
   revalidatePath(`/profile/[nickname]`, "page");

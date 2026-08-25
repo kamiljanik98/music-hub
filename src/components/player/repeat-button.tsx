@@ -30,17 +30,17 @@ export function RepeatButton() {
             ? "Repeat all"
             : "Repeat one"
       }
-      className="text-neutral-400 transition-colors hover:text-white"
+      className="cursor-pointer text-neutral-400 transition-colors hover:text-white"
     >
       <span className="relative block h-5 w-5">
         {repeatMode === "one" ? (
-          <Repeat1 size={20} className={isActive ? "text-green-500" : ""} />
+          <Repeat1 size={20} className={isActive ? "text-primary" : ""} />
         ) : (
-          <Repeat size={20} className={isActive ? "text-green-500" : ""} />
+          <Repeat size={20} className={isActive ? "text-primary" : ""} />
         )}
 
         {repeatMode === "all" && (
-          <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-green-500" />
+          <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
         )}
       </span>
     </button>

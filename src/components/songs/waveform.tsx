@@ -7,10 +7,6 @@ import { useWaveform } from "@/hooks/songs/use-waveform";
 interface WaveformProps {
   songId: string;
   path: string;
-  height?: number;
-  barWidth?: number;
-  barGap?: number;
-  barRadius?: number;
   lazyMount?: boolean;
   onActivate?: (songId: string) => void;
 }
@@ -18,10 +14,6 @@ interface WaveformProps {
 export const Waveform = ({
   songId,
   path,
-  height = 72,
-  barWidth = 4,
-  barGap = 4,
-  barRadius = 4,
   lazyMount = false,
   onActivate,
 }: WaveformProps) => {
@@ -37,11 +29,11 @@ export const Waveform = ({
     useWaveform({
       songId,
       path,
-      height: height,
-      barWidth: barWidth,
-      barGap: barGap,
-      barRadius: barRadius,
-      lazyMount: lazyMount,
+      height: 72,
+      barWidth: 3,
+      barGap: 4,
+      barRadius: 4,
+      lazyMount,
       onActivate: () => activate(songId),
     });
 

@@ -6,11 +6,17 @@ import { useFollow } from "@/hooks/social/use-follow";
 type FollowButtonProps = {
   profileUserId: string;
   isFollowingInitially?: boolean;
+  size?: React.ComponentProps<typeof Button>["size"];
+  className?: string;
+  label?: string;
 };
 
 export function FollowButton({
   profileUserId,
   isFollowingInitially = false,
+  size = "sm",
+  className,
+  label,
 }: FollowButtonProps) {
   const { isFollowing, isLoading, toggle } = useFollow(
     profileUserId,
@@ -20,11 +26,12 @@ export function FollowButton({
   return (
     <Button
       variant={isFollowing ? "outline" : "default"}
-      size="sm"
+      size={size}
+      className={className}
       disabled={isLoading}
       onClick={toggle}
     >
-      {isFollowing ? "Following" : "Follow"}
+      {isFollowing ? (label ?? "Following") : "Follow"}
     </Button>
   );
 }

@@ -23,7 +23,6 @@ export const unlikeSong = async (songId: string): Promise<MutationResult> => {
     return { error: new Error(error.message) };
   }
 
-  revalidatePath(`/profile/[nickname]/likes`, "page");
   revalidatePath(`/search`);
   revalidatePath(`/songs/${songId}`);
   revalidatePath(`/profile/[nickname]`, "page");

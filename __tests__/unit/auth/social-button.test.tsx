@@ -17,7 +17,7 @@ describe("SocialButton", () => {
       <SocialButton provider="discord" onClick={vi.fn()} />
     );
     const img = container.querySelector("img");
-    expect(img).toHaveAttribute("src", "/discord.svg");
+    expect(img).toHaveAttribute("src", "/social/discord.svg");
     expect(img).toHaveAttribute("alt", "");
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });

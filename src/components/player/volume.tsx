@@ -25,10 +25,10 @@ export function Volume() {
     <div className="flex items-center justify-end gap-2">
       <button
         onClick={toggleMute}
-        className="text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
+        className="cursor-pointer text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
         aria-label={volume === 0 ? "Unmute" : "Mute"}
       >
-        <Icon className="size-4" />
+        <Icon className="size-5" />
       </button>
       <Slider
         value={[volume * 100]}

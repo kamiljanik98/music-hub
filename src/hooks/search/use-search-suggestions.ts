@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "./use-debounce";
 import { createClient } from "@/lib/supabase/client";
 
-export type SongSuggestion = {
+type SongSuggestion = {
   type: "song";
   id: string;
   title: string;
 };
 
-export type UserSuggestion = {
+type UserSuggestion = {
   type: "user";
   id: string;
   nickname: string | null;
 };
 
-export type SearchSuggestion = SongSuggestion | UserSuggestion;
+type SearchSuggestion = SongSuggestion | UserSuggestion;
 
 export const useSearchSuggestions = (query: string) => {
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);

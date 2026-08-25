@@ -66,7 +66,7 @@ const RegisterForm = () => {
         <Button
           className="text-sm bg-neutral-800 h-12"
           type="submit"
-          disabled={isLoading}
+          loading={isLoading}
         >
           Register
         </Button>

@@ -63,7 +63,7 @@ const LoginForm = () => {
       >
         Forgot password?
       </Button>
-      <Button type="submit" size="sm" className="w-full" disabled={isLoading}>
+      <Button type="submit" size="sm" className="w-full" loading={isLoading}>
         Sign in
       </Button>
       <SocialButton

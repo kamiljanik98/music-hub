@@ -1,7 +1,6 @@
 import { getUserSongs } from "@/actions/songs/get-user-songs";
-import { TrackList } from "@/components/profile/track-list";
-import { ProfileSongList } from "./components/profile-song-list";
-import { EditProfileDialog } from "@/components/profile/edit/edit-profile-dialog";
+import { WaveformList } from "./components/waveform-list";
+import { EditProfileDialog } from "./components/edit/edit-profile-dialog";
 import { getAvatarUrl, getBannerUrl } from "@/lib/r2/public";
 import { createClient } from "@/lib/supabase/server";
 import Image from "next/image";
@@ -9,15 +8,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CopyLinkButton } from "@/components/social/copy-link-button";
 import { FollowButton } from "@/components/social/follow-button";
-import { ProfileList } from "@/components/social/profile-list";
 import { getProfileByNickname } from "@/actions/profile/get-profile-by-nickname";
 import { getFollowStatus } from "@/actions/social/get-follow-status";
-import { getLikedSongs } from "@/actions/songs/get-liked-songs";
-import { getSuggestedUsers } from "@/actions/social/get-suggested-users";
 import { getFollowers } from "@/actions/social/get-followers";
 import { getFollowedUsers } from "@/actions/social/get-followed-users";
-import { SocialLinks } from "@/components/profile/social-links";
+import { SocialLinks } from "./components/social-links";
 import { ProfileBio } from "./components/profile-bio";
+import { EditableAvatar } from "./components/edit/editable-avatar";
+import { EditableBanner } from "./components/edit/editable-banner";
 import type { SocialLinks as SocialLinksValue } from "@/lib/validations/profile";
 
 type ProfilePageProps = {
@@ -48,13 +46,11 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   const [
     { data: songs },
-    likedSongs,
     { data: isFollowing },
     { data: followers },
     { data: following },
   ] = await Promise.all([
     getUserSongs(profile.id),
-    getLikedSongs(profile.id),
     isOwnProfile
       ? Promise.resolve({ data: false, error: null })
       : getFollowStatus(profile.id),
@@ -62,28 +58,30 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     getFollowedUsers(profile.id),
   ]);
 
-  const { data: users, error: suggestedUsersError } = await getSuggestedUsers(
-    profile.id,
-  );
-
   const bannerUrl = getBannerUrl(profile.banner_url);
 
   return (
     <div className="pb-16">
-      {/* Banner */}
-      <div className="relative left-1/2 -mt-24 h-60 w-screen -translate-x-1/2 overflow-hidden bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))] md:h-72">
-        {bannerUrl && (
-          <Image
-            src={bannerUrl}
-            alt={`${profile.nickname ?? "User"} banner`}
-            fill
-            sizes="(max-width: 1280px) 100vw, 1280px"
-            className="object-cover"
-            priority
+      <div className="relative left-1/2 -mt-24 h-72 w-screen -translate-x-1/2 overflow-hidden bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))] md:h-96">
+        {isOwnProfile ? (
+          <EditableBanner
+            bannerUrl={bannerUrl}
+            nickname={profile.nickname ?? "User"}
           />
+        ) : (
+          bannerUrl && (
+            <Image
+              src={bannerUrl}
+              alt={`${profile.nickname ?? "User"} banner`}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+            />
+          )
         )}
 
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0)_0%,rgba(10,10,10,0.55)_55%,var(--mh-ink)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0)_0%,rgba(10,10,10,0.55)_55%,var(--mh-ink)_100%)]" />
 
         <div className="absolute right-6 bottom-4 z-10 flex items-center gap-3">
           {isOwnProfile ? (
@@ -101,15 +99,21 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         </div>
       </div>
 
-      {/* Identity */}
       <header className="relative -mt-14 flex flex-wrap items-end gap-x-6 gap-y-4">
-        <Image
-          src={getAvatarUrl(profile.avatar_url)}
-          alt={profile.nickname ?? "User Avatar"}
-          width={112}
-          height={112}
-          className="size-28 shrink-0 rounded-full object-cover ring-4 ring-[var(--mh-ink)]"
-        />
+        {isOwnProfile ? (
+          <EditableAvatar
+            avatarPath={profile.avatar_url}
+            nickname={profile.nickname ?? "User Avatar"}
+          />
+        ) : (
+          <Image
+            src={getAvatarUrl(profile.avatar_url)}
+            alt={profile.nickname ?? "User Avatar"}
+            width={112}
+            height={112}
+            className="size-20 shrink-0 rounded-full object-cover ring-4 ring-[var(--mh-ink)] md:size-28"
+          />
+        )}
 
         <div className="min-w-0 flex-1 pb-1">
           <h1 className="font-display text-4xl uppercase leading-none tracking-[0.02em] text-foreground md:text-5xl">
@@ -142,58 +146,21 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         </div>
       </header>
 
-      {/* Bio + social */}
       <div className="mt-6 flex flex-wrap items-start justify-between gap-6">
         {profile.bio ? (
           <ProfileBio bio={profile.bio} />
-        ) : (
-          <div className="max-w-2xl" />
-        )}
+        ) : null}
 
         <SocialLinks links={profile.social_links as SocialLinksValue | null} />
       </div>
 
-      <div className="mt-12 grid grid-cols-[minmax(0,1fr)_22rem] gap-8">
-        {/* Tracks */}
-        <section className="min-w-0 border-t border-white/10 pt-8">
-          <h2 className="mb-5 font-display text-sm uppercase tracking-[0.18em] text-[var(--mh-text-meta)]">
-            Tracks
-          </h2>
+      <section className="mt-12 min-w-0 border-t border-white/10 pt-8">
+        <h2 className="mb-5 font-display text-sm uppercase tracking-[0.18em] text-[var(--mh-text-meta)]">
+          Tracks
+        </h2>
 
-          <TrackList songs={songs} isOwner={isOwnProfile} />
-        </section>
-
-        <aside className="flex flex-col gap-8">
-          {/* Likes */}
-          {likedSongs.error ? (
-            <section className="border-t border-white/10 pt-8">
-              <p className="text-sm text-destructive">
-                Failed to fetch liked songs
-              </p>
-            </section>
-          ) : (
-            likedSongs.data.length > 0 && (
-              <section className="border-t border-white/10 pt-8">
-                <ProfileSongList
-                  songs={likedSongs.data}
-                  nickname={profile.nickname ?? nickname}
-                />
-              </section>
-            )
-          )}
-
-          {/* Suggested */}
-          <section className="border-t border-white/10 pt-8">
-            {suggestedUsersError ? (
-              <p className="text-sm text-destructive">
-                Failed to fetch suggested users
-              </p>
-            ) : (
-              <ProfileList title="Suggested Users for You" users={users} />
-            )}
-          </section>
-        </aside>
-      </div>
+        <WaveformList songs={songs} isOwner={isOwnProfile} />
+      </section>
     </div>
   );
 }

@@ -32,7 +32,7 @@ export default async function UploadSuccessPage({
   const coverUrl = getCoverUrl(song.image_path);
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+    <div className="flex flex-1 items-center justify-center">
       <div className="w-full max-w-sm flex flex-col gap-4">
         <img
           src={coverUrl}

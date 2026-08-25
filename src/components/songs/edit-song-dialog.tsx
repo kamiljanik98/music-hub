@@ -130,8 +130,8 @@ export function EditSongDialog({
             placeholder="Anything worth knowing about this track"
             rows={4}
           />
-          <Button variant="secondary" type="submit" disabled={isPending}>
-            {isPending ? "Saving..." : "Save changes"}
+          <Button variant="secondary" type="submit" loading={isPending}>
+            Save changes
           </Button>
         </form>
       </DialogContent>

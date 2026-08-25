@@ -1,11 +1,16 @@
-import { Shelf } from "@/components/songs/shelf";
-import { HeroHeadline } from "@/components/home/hero-headline";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Shelf } from "./components/shelf";
+import { PromoBanner } from "./components/promo-banner";
+import { getPromoPlaylist } from "@/actions/playlists/get-promo-playlist";
+import { HeroHeadline } from "./components/hero-headline";
+import { BannerCta } from "./components/banner-cta";
+import { InfoSection } from "./components/info-section";
+import { SocialProof } from "./components/social-proof";
+import { createClient } from "@/lib/supabase/server";
+import type { ProfileSummary } from "@/types";
 
-function Banner() {
+function Banner({ artists }: { artists: ProfileSummary[] }) {
   return (
-    <section className="mx-auto flex max-w-[var(--mh-content-max)] flex-col items-center gap-8 pt-12 pb-28 text-center md:pt-20 md:pb-[160px]">
+    <section className="flex min-h-[calc(100vh-9rem)] flex-col items-center justify-center gap-8 pt-10 text-center md:gap-12 md:pt-14">
       <div className="flex items-center gap-2.5 rounded-[var(--mh-radius-pill)] border border-border bg-card px-[18px] py-2">
         <span className="mh-pulse-dot size-2 rounded-full bg-primary" />
         <span className="text-sm text-[#e5e5e5]">
@@ -15,19 +20,17 @@ function Banner() {
 
       <HeroHeadline />
 
-      <p className="max-w-[600px] text-xl leading-relaxed text-muted-foreground">
+      <p className="max-w-[520px] text-base leading-relaxed text-muted-foreground md:text-lg">
         Rough mixes, live sets and finished records, posted by the artists the
         day they finish them.
       </p>
 
-      <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-        <Button asChild size="lg">
-          <Link href="/search">Start listening free</Link>
-        </Button>
-        <Button asChild size="lg" variant="outline">
-          <Link href="/upload">I make music</Link>
-        </Button>
-      </div>
+      <BannerCta />
+
+      <SocialProof
+        artists={artists}
+        label="92,000 artists and a few million ears already here"
+      />
 
       <style>{`
         @keyframes mh-pulse {
@@ -46,10 +49,30 @@ function Banner() {
 }
 
 export default async function HomePage() {
+  const supabase = await createClient();
+
+  const [{ data: promo }, { data: artists }] = await Promise.all([
+    getPromoPlaylist(),
+    supabase
+      .from("profiles")
+      .select("id, nickname, avatar_url")
+      .not("avatar_url", "is", null)
+      .limit(3),
+  ]);
+
   return (
-    <div>
-      <Banner />
-      <section className="mx-auto max-w-[var(--mh-content-max)] py-10">
+    <div className="flex flex-col gap-24 pb-24 md:gap-42 md:pb-32">
+      <Banner artists={artists ?? []} />
+
+      {promo && promo.tracks.length > 0 && (
+        <section>
+          <PromoBanner playlist={promo.playlist} tracks={promo.tracks} />
+        </section>
+      )}
+
+      <InfoSection />
+
+      <section className="pt-8 md:pt-16">
         <Shelf title="Discover this week" />
       </section>
     </div>
