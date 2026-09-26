@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database.types";
 
 const SUPABASE_URL = "http://localhost:54321";
-const SUPABASE_KEY = process.env.NEXT_SUPABASE_PUBLISHABLE_KEY!;
+const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
 const MAILPIT_URL = "http://localhost:54324";
 const APP_URL = "http://localhost:3000";
 

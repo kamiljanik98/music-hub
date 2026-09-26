@@ -3,8 +3,8 @@ import { createBrowserClient } from "@supabase/ssr";
 import type { Database } from "@/types/database.types";
 
 const supabase = createBrowserClient<Database>(
-  process.env.NEXT_SUPABASE_URL!,
-  process.env.NEXT_SUPABASE_PUBLISHABLE_KEY!,
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
 );
 
 describe("Supabase client connection", () => {
