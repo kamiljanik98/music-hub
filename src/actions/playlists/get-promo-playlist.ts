@@ -12,7 +12,7 @@ export const getPromoPlaylist = async (): Promise<
 > => {
   const supabase = await createClient();
 
-  const promoId = process.env.NEXT_PUBLIC_PROMO_PLAYLIST_ID;
+  const promoId = process.env.NEXT_PROMO_PLAYLIST_ID;
 
   if (promoId) return getPlaylistById(promoId);
 
