@@ -9,8 +9,8 @@ describe("R2 environment variables", () => {
     "R2_BUCKET_STEMS",
     "R2_BUCKET_COVERS",
     "R2_BUCKET_AVATARS",
-    "NEXT_R2_COVERS_URL",
-    "NEXT_R2_AVATARS_URL",
+    "NEXT_PUBLIC_R2_COVERS_URL",
+    "NEXT_PUBLIC_R2_AVATARS_URL",
   ];
 
   it.each(required)("%s id defined and non-empty", (key) => {

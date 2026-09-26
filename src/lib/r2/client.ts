@@ -20,6 +20,6 @@ export const BUCKETS = {
 
 export type Bucket = keyof typeof BUCKETS;
 
-export const R2_COVERS_URL = process.env.NEXT_R2_COVERS_URL!;
-export const R2_AVATARS_URL = process.env.NEXT_R2_AVATARS_URL!;
-export const R2_BANNERS_URL = process.env.NEXT_R2_BANNERS_URL!;
+export const R2_COVERS_URL = process.env.NEXT_PUBLIC_R2_COVERS_URL!;
+export const R2_AVATARS_URL = process.env.NEXT_PUBLIC_R2_AVATARS_URL!;
+export const R2_BANNERS_URL = process.env.NEXT_PUBLIC_R2_BANNERS_URL!;
