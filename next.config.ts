@@ -6,23 +6,24 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "6mb",
     },
   },
+
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: new URL(process.env.NEXT_PUBLIC_R2_AVATARS_URL!).hostname,
+        hostname: "pub-bdfe3dcb9ba24b7aa40161c8c9549b03.r2.dev",
         pathname: "/**",
         search: "",
       },
       {
         protocol: "https",
-        hostname: new URL(process.env.NEXT_PUBLIC_R2_COVERS_URL!).hostname,
+        hostname: "pub-ae08b2c1be684bfd8ba00d8f73202b73.r2.dev",
         pathname: "/**",
         search: "",
       },
       {
         protocol: "https",
-        hostname: new URL(process.env.NEXT_PUBLIC_R2_BANNERS_URL!).hostname,
+        hostname: "pub-ff23e057c6dd40d0b5b7f4ec34428b1a.r2.dev",
         pathname: "/**",
         search: "",
       },
