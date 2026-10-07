@@ -30,6 +30,7 @@ const useRegister = () => {
       password,
       options: {
         data: { nickname },
+        emailRedirectTo: `${window.location.origin}/auth/confirmed`,
       },
     });
     setIsLoading(false);
