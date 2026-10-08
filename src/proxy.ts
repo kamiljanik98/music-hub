@@ -1,5 +1,5 @@
 import { type NextRequest } from "next/server";
-import { PROTECTED_PATHS, updateSession } from "@/lib/supabase/proxy";
+import { updateSession } from "@/lib/supabase/proxy";
 
 export async function proxy(request: NextRequest) {
   return await updateSession(request);
