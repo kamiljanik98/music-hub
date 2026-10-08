@@ -20,13 +20,5 @@
     "hooks": "@/hooks"
   },
   "menuColor": "default",
-  "menuAccent": "subtle",
-  "registries": {
-    "@shadcnio": {
-      "url": "https://www.shadcn.io/r/{name}.json",
-      "params": {
-        "token": "${SHADCN_REGISTRY_TOKEN}"
-      }
-    }
-  }
+  "menuAccent": "subtle"
 }
