@@ -1,10 +1,10 @@
 import { type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/proxy";
+import { PROTECTED_PATHS, updateSession } from "@/lib/supabase/proxy";
 
 export async function proxy(request: NextRequest) {
   return await updateSession(request);
 }
 
 export const config = {
-  matcher: ["/upload", "/auth/update-password", "/auth/confirmed"],
+  matcher: PROTECTED_PATHS,
 };

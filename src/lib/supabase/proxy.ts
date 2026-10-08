@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { Database } from "@/types/database.types";
 
-const PROTECTED_PATHS = ["/upload", "/auth/update-password", "/auth/confirmed"];
+export const PROTECTED_PATHS = ["/upload"];
 
 function isProtectedPath(pathname: string): boolean {
   return PROTECTED_PATHS.some(
