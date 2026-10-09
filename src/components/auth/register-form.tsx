@@ -25,10 +25,15 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (values: RegisterFormValues) => {
-    const { error } = await register(values);
+    const { data, error } = await register(values);
 
     if (error) {
       toast.error(authErrorMessage(error));
+      return;
+    }
+
+    if (data?.user?.identities?.length === 0) {
+      toast.error("An account with this email may already exist.");
       return;
     }
 
