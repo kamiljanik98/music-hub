@@ -108,10 +108,7 @@ export function Audio({ song }: { song: Song }) {
   }, [loadError, setIsPlaying]);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio || !url) return;
-
-    audio.src = url;
+    if (!url) return;
     attemptPlay();
   }, [url, attemptPlay]);
 
@@ -169,6 +166,7 @@ export function Audio({ song }: { song: Song }) {
   return (
     <audio
       ref={audioRef}
+      src={url || undefined}
       className="hidden"
       onPlay={() => {
         setIsPlaying(true);
@@ -190,8 +188,14 @@ export function Audio({ song }: { song: Song }) {
         handleNext();
       }}
       onError={(e) => {
+        const audio = e.currentTarget;
+
+        if (!audio.currentSrc && !audio.getAttribute("src")) {
+          return;
+        }
+
         setIsPlaying(false);
-        const message = mediaErrorMessage(e.currentTarget.error);
+        const message = mediaErrorMessage(audio.error);
         if (message) toast.error(message);
       }}
       onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}

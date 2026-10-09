@@ -1,6 +1,6 @@
 import { Toaster } from "sonner";
 import Navbar from "@/components/common/navbar";
-import AuthModal from "@/components/auth/auth-dialog";
+import AuthDialog from "@/components/auth/auth-dialog";
 import { Bar } from "@/components/player/bar";
 import { UserProvider } from "@/components/providers/user-provider";
 import Footer from "@/components/common/footer";
@@ -27,7 +27,7 @@ export default function PagesLayout({
       <div className="relative z-10 mx-auto flex w-full max-w-[var(--mh-content-max)] flex-1 flex-col px-4 pt-8">
         <UserProvider />
 
-        <AuthModal />
+        <AuthDialog />
 
         <main className="flex-1">{children}</main>
       </div>

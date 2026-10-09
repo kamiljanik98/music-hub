@@ -4,7 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
-import { Disc3, FileMusic, Search, Upload, X } from "lucide-react";
+import {
+  AlarmCheckIcon,
+  Bell,
+  Disc3,
+  FileMusic,
+  Search,
+  Upload,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useAuthModal from "@/hooks/auth/use-auth-dialog";
 import useUser from "@/hooks/profile/use-user";
@@ -52,7 +60,12 @@ export default function Navbar() {
                   href="/"
                   className="flex shrink-0 items-center gap-2.5 rounded-full"
                 >
-                  <Image src="/brand/logo.svg" alt="App logo" width={28} height={28} />
+                  <Image
+                    src="/brand/logo.svg"
+                    alt="App logo"
+                    width={28}
+                    height={28}
+                  />
 
                   <p className="hidden font-display text-base uppercase tracking-[0.1em] text-foreground sm:block">
                     MusicHub

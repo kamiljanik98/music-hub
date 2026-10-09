@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Anton } from "next/font/google";
 import "./globals.css";
+import { NewsButton } from "@/components/common/news-button";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
     >
       <body className="relative flex min-h-screen flex-col overflow-x-clip bg-background text-foreground">
         {children}
+        <NewsButton />
       </body>
     </html>
   );

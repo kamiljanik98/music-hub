@@ -71,7 +71,8 @@ export default async function FeedPage() {
         )}
       </div>
 
-      <aside className="sticky top-28 mt-10 hidden w-[320px] shrink-0 lg:block">
+      <aside className="sticky top-28 hidden w-[320px] shrink-0 lg:block">
+        {" "}
         {suggestedUsersError ? (
           <p className="text-destructive">
             Failed to load your suggested artists list.

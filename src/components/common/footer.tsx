@@ -24,31 +24,31 @@ const Footer = () => {
         <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 font-mono text-[9px] tracking-wide text-muted-foreground">
           <nav className="flex flex-wrap gap-x-5 gap-y-2">
             <a
-              href="/terms"
+              href="/coming-soon?page=terms"
               className="transition-colors hover:text-foreground"
             >
               Terms
             </a>
             <a
-              href="/privacy"
+              href="/coming-soon?page=privacy"
               className="transition-colors hover:text-foreground"
             >
               Privacy
             </a>
             <a
-              href="/cookies"
+              href="/coming-soon?page=cookies"
               className="transition-colors hover:text-foreground"
             >
               Cookies
             </a>
             <a
-              href="/copyright"
+              href="/coming-soon?page=copyright"
               className="transition-colors hover:text-foreground"
             >
               Copyright
             </a>
             <a
-              href="/feedback"
+              href="/coming-soon?page=feedback"
               className="transition-colors hover:text-foreground"
             >
               Feedback
