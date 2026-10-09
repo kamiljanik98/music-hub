@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Gauge } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { useGetSongById } from "@/hooks/songs/use-get-song-by-id";
 import usePlayer from "@/hooks/player/use-player";
-import { cn } from "@/lib/utils";
 
 import { TrackInfo } from "./track-info";
 import { Controls } from "./controls";
@@ -14,6 +12,11 @@ import { Volume } from "./volume";
 import { Seekbar } from "./seekbar";
 import { RepeatButton } from "./repeat-button";
 import { Speed } from "./speed";
+import { Gauge } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { CompactView } from "./view/compact";
+import { ExpandedView } from "./view/expanded";
+import { Audio } from "./audio";
 
 export const Bar = () => {
   const activeId = usePlayer((state) => state.activeId);
@@ -27,9 +30,21 @@ export const Bar = () => {
 
   return (
     <>
+      <Audio song={song} />
+
       <div aria-hidden="true" className="h-[116px] shrink-0" />
 
-      <div className="fixed inset-x-4 bottom-4 z-40 mx-auto max-w-[var(--mh-content-max)] rounded-lg border border-white/12 bg-[rgba(23,23,23,0.72)] mh-glass">
+      {/* Mobile */}
+      <div className="md:hidden">
+        {isExpanded ? (
+          <ExpandedView song={song} onClose={() => setIsExpanded(false)} />
+        ) : (
+          <CompactView song={song} onExpand={() => setIsExpanded(true)} />
+        )}
+      </div>
+
+      {/* Desktop */}
+      <div className="fixed inset-x-4 bottom-4 z-40 mx-auto hidden max-w-[var(--mh-content-max)] rounded-lg border border-white/12 bg-[rgba(23,23,23,0.72)] mh-glass md:block">
         <div className="relative w-full px-3 py-2.5">
           <div
             className={cn(
@@ -53,7 +68,7 @@ export const Bar = () => {
             <TrackInfo song={song} />
 
             <div className="flex items-center gap-2 md:contents">
-              <Controls song={song} />
+              <Controls />
 
               <div className="flex items-center justify-end gap-2 md:gap-4">
                 <button
