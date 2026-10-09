@@ -12,7 +12,10 @@ export function Seekbar() {
   const requestSeek = usePlayer((state) => state.requestSeek);
   const [scrubbing, setScrubbing] = useState<number | null>(null);
 
-  const shown = scrubbing ?? progress * 100;
+  const shown =
+    scrubbing !== null && Math.abs(progress * 100 - scrubbing) >= 1
+      ? scrubbing
+      : progress * 100;
 
   return (
     <div className="flex items-center gap-2">
@@ -26,10 +29,12 @@ export function Seekbar() {
         disabled={!duration || !activeId}
         onValueChange={([value]) => setScrubbing(value)}
         onValueCommit={([value]) => {
-          if (activeId) requestSeek(activeId, value / 100);
-          setScrubbing(null);
+          if (activeId === null) return;
+
+          setScrubbing(value);
+          requestSeek(activeId, value / 100);
         }}
-              />
+      />
       <span className="w-10 shrink-0 text-right text-xs text-muted-foreground tabular-nums">
         {formatDuration(duration)}
       </span>
