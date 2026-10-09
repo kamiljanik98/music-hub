@@ -12,6 +12,13 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
+vi.mock("@/hooks/auth/use-discord-login", () => ({
+  default: () => ({
+    discordLogin: vi.fn(),
+    isSocialLoading: false,
+  }),
+}));
+
 vi.mock("sonner", () => ({
   toast: { success: vi.fn(), error: vi.fn() },
 }));
