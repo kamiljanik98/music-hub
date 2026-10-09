@@ -74,6 +74,10 @@ export function Controls({ song }: ControlsProps) {
 
   const attemptPlay = useCallback(() => {
     audioRef.current?.play().catch((error: unknown) => {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
+
       setIsPlaying(false);
       const message = playErrorMessage(error);
       if (message) toast.error(message);
