@@ -4,6 +4,7 @@ import AuthDialog from "@/components/auth/auth-dialog";
 import { Bar } from "@/components/player/bar";
 import { UserProvider } from "@/components/providers/user-provider";
 import Footer from "@/components/common/footer";
+import { NewsButton } from "@/components/common/news-button";
 
 export default function PagesLayout({
   children,
@@ -31,9 +32,10 @@ export default function PagesLayout({
 
         <main className="flex-1">{children}</main>
       </div>
+      <NewsButton />
+      <Bar />
 
       <Footer />
-      <Bar />
     </div>
   );
 }
