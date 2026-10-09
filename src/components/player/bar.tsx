@@ -31,10 +31,7 @@ export const Bar = () => {
   return (
     <>
       <Audio song={song} />
-
-      <div aria-hidden="true" className="h-[116px] shrink-0" />
-
-      {/* Mobile */}
+      <div aria-hidden="true" className="h-[116px] shrink-0" />|{" "}
       <div className="md:hidden">
         {isExpanded ? (
           <ExpandedView song={song} onClose={() => setIsExpanded(false)} />
@@ -42,8 +39,6 @@ export const Bar = () => {
           <CompactView song={song} onExpand={() => setIsExpanded(true)} />
         )}
       </div>
-
-      {/* Desktop */}
       <div className="fixed inset-x-4 bottom-4 z-40 mx-auto hidden max-w-[var(--mh-content-max)] rounded-lg border border-white/12 bg-[rgba(23,23,23,0.72)] mh-glass md:block">
         <div className="relative w-full px-3 py-2.5">
           <div
