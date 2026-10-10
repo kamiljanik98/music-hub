@@ -54,8 +54,8 @@
   --mh-ink: #0a0a0a;
   --mh-solid: #171717;
   --mh-text-lead: #d4d4d4;
-  --mh-text-meta: #737373;
-  --mh-text-mono: #525252;
+  --mh-text-meta: #a3a3a3;
+  --mh-text-mono: #8a8a8a;
   --mh-glass-hover: rgba(255, 255, 255, 0.07);
   --mh-glass-blur: blur(24px) saturate(1.4);
   --mh-radius-pill: 800px;
