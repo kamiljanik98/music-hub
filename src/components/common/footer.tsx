@@ -55,7 +55,7 @@ const Footer = () => {
             </a>
           </nav>
 
-          <span className="text-muted-foreground/60">
+          <span className="text-muted-foreground">
             © {new Date().getFullYear()} MUSICHUB
           </span>
         </div>
