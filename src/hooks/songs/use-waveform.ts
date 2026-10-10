@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import WaveSurfer from "wavesurfer.js";
+import type WaveSurfer from "wavesurfer.js";
 import usePlayer from "@/hooks/player/use-player";
 import { resolveSongUrl } from "@/actions/songs/resolve-song-url";
 
@@ -61,15 +61,17 @@ export function useWaveform({
     if (!isVisible || !containerRef.current) return;
 
     let cancelled = false;
+    let instance: WaveSurfer | null = null;
 
     const init = async () => {
-      const { url, error } = await resolveSongUrl(path);
+      const [{ default: WaveSurfer }, { url, error }] = await Promise.all([
+        import("wavesurfer.js"),
+        resolveSongUrl(path),
+      ]);
 
-      if (cancelled || !containerRef.current || error || !url) {
-        return;
-      }
+      if (cancelled || !containerRef.current || error || !url) return;
 
-      wavesurferRef.current = WaveSurfer.create({
+      instance = WaveSurfer.create({
         container: containerRef.current,
         url,
         waveColor: "rgba(255, 255, 255, 0.54)",
@@ -82,17 +84,21 @@ export function useWaveform({
         interact: false,
       });
 
-      wavesurferRef.current.setPlaybackRate(playbackRate);
+      wavesurferRef.current = instance;
+      instance.setPlaybackRate(playbackRate);
     };
 
-    init();
+    void init();
 
     return () => {
       cancelled = true;
-      wavesurferRef.current?.destroy();
-      wavesurferRef.current = null;
+      instance?.destroy();
+
+      if (wavesurferRef.current === instance) {
+        wavesurferRef.current = null;
+      }
     };
-  }, [isVisible, path, height, barWidth, barGap, barRadius, playbackRate]);
+  }, [isVisible, path, height, barWidth, barGap, barRadius]);
 
   useEffect(() => {
     wavesurferRef.current?.setPlaybackRate(playbackRate);
