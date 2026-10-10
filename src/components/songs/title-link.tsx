@@ -11,7 +11,7 @@ export const TitleLink = ({ songId, title, className }: TitleLinkProps) => {
     <Link
       href={`/songs/${songId}`}
       className={cn(
-        "truncate text-foreground transition-colors hover:text-primary hover:underline",
+        "inline-flex min-h-6 items-center truncate text-foreground transition-colors hover:text-primary hover:underline",
         className,
       )}
     >

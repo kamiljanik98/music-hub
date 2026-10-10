@@ -66,7 +66,7 @@ export const ShelfCard = ({
 
           <Link
             href={`/profile/${song.profiles?.nickname ?? ""}`}
-            className="flex w-fit items-center gap-1.5"
+            className="flex min-h-6 w-fit items-center gap-1.5"
           >
             <Image
               src={getAvatarUrl(song.profiles?.avatar_url ?? null)}
