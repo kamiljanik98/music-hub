@@ -76,7 +76,7 @@ export const Shelf = ({ title }: ShelfProps) => {
     return (
       <div>
         {header}
-        <div className="h-48 animate-pulse rounded-md bg-neutral-800" />
+        <div className="min-h-[320px] animate-pulse rounded-md bg-neutral-800" />{" "}
       </div>
     );
   }
