@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Anton } from "next/font/google";
 import "./globals.css";
 
@@ -15,8 +15,18 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: "MusicHub",
-  description: "Share your sounds with the world",
+  title: "Music Hub",
+  description: "Publish and listen to original music.",
+  applicationName: "Music Hub",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#09090b",
 };
 
 export default function RootLayout({
