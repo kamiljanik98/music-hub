@@ -31,7 +31,7 @@ export const Bar = () => {
   return (
     <>
       <Audio song={song} />
-      <div aria-hidden="true" className="h-[116px] shrink-0" />|{" "}
+      {/* <div aria-hidden="true" className="h-[116px] shrink-0" />|{" "} */}
       <div className="md:hidden">
         {isExpanded ? (
           <ExpandedView song={song} onClose={() => setIsExpanded(false)} />

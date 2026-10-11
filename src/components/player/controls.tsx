@@ -35,39 +35,40 @@ export function Controls() {
   };
 
   return (
-    <div className="flex items-center justify-center gap-6">
+    <div className="flex items-center justify-center gap-4 sm:gap-6">
       <button
         type="button"
         onClick={handlePrev}
-        className="cursor-pointer text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
+        className="flex size-11 cursor-pointer items-center justify-center text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground sm:size-auto"
         aria-label="Previous"
       >
-        <SkipBack className="size-4" fill="currentColor" />
+        <SkipBack className="size-5 sm:size-4" fill="currentColor" />
       </button>
 
       <button
         type="button"
         onClick={requestPlayPause}
         className={cn(
-          "flex size-8 cursor-pointer items-center justify-center rounded-full",
+          "flex size-12 cursor-pointer items-center justify-center rounded-full",
           "bg-primary text-primary-foreground transition-opacity hover:opacity-80",
+          "sm:size-8",
         )}
         aria-label={isPlaying ? "Pause" : "Play"}
       >
         {isPlaying ? (
-          <Pause className="size-4" fill="currentColor" />
+          <Pause className="size-5 sm:size-4" fill="currentColor" />
         ) : (
-          <Play className="ml-0.5 size-4" fill="currentColor" />
+          <Play className="ml-0.5 size-5 sm:size-4" fill="currentColor" />
         )}
       </button>
 
       <button
         type="button"
         onClick={handleNext}
-        className="cursor-pointer text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground"
+        className="flex size-11 cursor-pointer items-center justify-center text-neutral-300 transition-opacity hover:opacity-80 hover:text-foreground sm:size-auto"
         aria-label="Next"
       >
-        <SkipForward className="size-4" fill="currentColor" />
+        <SkipForward className="size-5 sm:size-4" fill="currentColor" />
       </button>
     </div>
   );

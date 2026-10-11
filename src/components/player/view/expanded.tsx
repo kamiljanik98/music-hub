@@ -1,16 +1,22 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ChevronDown, Info } from "lucide-react";
 
+import { LikeButton } from "@/components/social/like-button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { getSongMeta } from "@/lib/format/song-meta";
+import { getAvatarUrl, getCoverUrl } from "@/lib/r2/public";
 import { Song } from "@/types";
-import { getCoverUrl } from "@/lib/r2/public";
 
-import { TrackInfo } from "../track-info";
 import { Controls } from "../controls";
-import { Volume } from "../volume";
-import { Seekbar } from "../seekbar";
 import { RepeatButton } from "../repeat-button";
-import { Speed } from "../speed";
+import { Seekbar } from "../seekbar";
+import { AddToPlaylistMenu } from "@/components/playlists/add-to-playlist-menu";
 
 type ExpandedViewProps = {
   song: Song;
@@ -18,62 +24,149 @@ type ExpandedViewProps = {
 };
 
 export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
+  const meta = getSongMeta(song);
+
+  const hasMeta =
+    meta.description ||
+    meta.bpm != null ||
+    meta.scale ||
+    meta.genre ||
+    meta.tags?.length ||
+    meta.createdAt ||
+    meta.plays != null;
+
   return (
     <section
       aria-label="Full player"
-      className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background px-6 pb-8 pt-4 md:hidden"
+      className="fixed inset-0 z-50 flex min-w-0 flex-col overflow-hidden overscroll-none touch-none bg-background px-8 pb-6 pt-4 md:hidden"
     >
-      <header className="flex items-center justify-between">
+      <header className="-mx-4 flex w-[calc(100%+2rem)] shrink-0 items-center justify-between gap-2">
         <button
           type="button"
           onClick={onClose}
-          className="flex size-11 items-center justify-center rounded-full transition-colors hover:bg-muted"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-muted"
           aria-label="Close full player"
         >
           <ChevronDown className="size-6" />
         </button>
 
-        <div className="text-center">
+        <div className="min-w-0 text-center">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Now playing
           </p>
           <p className="mt-0.5 text-xs text-foreground/80">Music Hub</p>
         </div>
 
-        <div className="size-11" />
+        <div className="size-11 shrink-0" />
       </header>
 
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-8 py-8">
-        <div className="relative mx-auto aspect-square w-full max-w-[min(80vw,360px)]">
-          <div className="absolute inset-4 rounded-2xl bg-primary/10 blur-2xl" />
+      <div className="mx-auto flex w-full min-w-0 max-w-md flex-1 flex-col justify-center gap-6 py-6">
+        <div className="w-full">
+          <div className="mb-4 flex justify-end">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  aria-label="Song information"
+                  className="flex h-11 shrink-0 items-center justify-center gap-2 rounded-full px-0 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                >
+                  <Info className="size-7" />
+                  <span className="text-sm">Details</span>
+                </button>
+              </PopoverTrigger>
 
-          <div className="relative size-full overflow-hidden rounded-2xl bg-muted shadow-2xl">
-            {song.image_path ? (
-              <img
-                src={getCoverUrl(song.image_path)}
-                alt={`Cover of ${song.title}`}
-                className="size-full object-cover"
-              />
-            ) : (
-              <div className="flex size-full items-center justify-center text-muted-foreground">
-                No cover available
-              </div>
-            )}
+              <PopoverContent side="bottom" align="start" className="ml-3 w-64">
+                {hasMeta ? (
+                  <div className="flex flex-col gap-0.5 text-xs">
+                    {meta.description && <p>{meta.description}</p>}
+                    {meta.bpm != null && <p>BPM: {meta.bpm}</p>}
+                    {meta.scale && <p>Scale: {meta.scale}</p>}
+                    {meta.genre && <p>Genre: {meta.genre}</p>}
+                    {meta.tags?.length ? (
+                      <p>Tags: {meta.tags.join(", ")}</p>
+                    ) : null}
+                    {meta.createdAt && (
+                      <p>
+                        Uploaded:{" "}
+                        {new Date(meta.createdAt).toLocaleDateString()}
+                      </p>
+                    )}
+                    {meta.plays != null && <p>Plays: {meta.plays}</p>}
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    No track details yet
+                  </p>
+                )}
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          <div className="relative mb-6 aspect-square w-full">
+            <div className="absolute inset-4 rounded-2xl bg-primary/10 blur-2xl" />
+
+            <div className="relative size-full overflow-hidden rounded-2xl bg-muted shadow-2xl">
+              {song.image_path ? (
+                <img
+                  src={getCoverUrl(song.image_path)}
+                  alt={`Cover of ${song.title}`}
+                  className="size-full object-cover"
+                />
+              ) : (
+                <div className="flex size-full items-center justify-center text-muted-foreground">
+                  No cover available
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        <TrackInfo song={song} />
+        <div className="flex min-w-0 items-center justify-between gap-4">
+          <div className="flex min-w-0 flex-col gap-1">
+            <Link
+              href={`/songs/${song.id}`}
+              className="truncate text-xl font-semibold text-foreground transition-colors hover:text-primary"
+            >
+              {song.title}
+            </Link>
 
-        <div className="space-y-3">
+            <div className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+              <img
+                src={getAvatarUrl(song.profiles?.avatar_url ?? null)}
+                alt=""
+                className="size-6 shrink-0 rounded-full object-cover"
+              />
+              {song.profiles?.nickname ? (
+                <Link
+                  href={`/profile/${song.profiles.nickname}`}
+                  className="truncate transition-colors hover:text-foreground"
+                >
+                  {song.profiles.nickname}
+                </Link>
+              ) : (
+                <span className="truncate">Unknown</span>
+              )}
+            </div>
+          </div>
+
+          <div className="mr-[-14px] shrink-0 [&_button]:size-12 [&_button_svg]:size-6">
+            <LikeButton songId={song.id} isLikedInitially={song.isLiked} />
+          </div>
+        </div>
+
+        <div className="mb-6 min-w-0 py-2 [&_[role=slider]]:size-5">
           <Seekbar />
         </div>
 
-        <Controls />
-
-        <div className="flex items-center justify-center gap-8 border-t border-border/60 pt-5">
-          <Speed />
-          <Volume />
-          <RepeatButton />
+        <div className="flex w-full flex-col items-center gap-8">
+          <Controls />
+          <div className="flex w-full items-center justify-center gap-6">
+            <RepeatButton className="relative size-12 [&_svg]:size-8" />
+            <AddToPlaylistMenu
+              songId={song.id}
+              className="relative size-12 [&_svg]:size-8"
+            />
+          </div>
         </div>
       </div>
     </section>

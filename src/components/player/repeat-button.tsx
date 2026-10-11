@@ -1,9 +1,15 @@
 "use client";
 
-import usePlayer from "@/hooks/player/use-player";
 import { Repeat, Repeat1 } from "lucide-react";
 
-export function RepeatButton() {
+import usePlayer from "@/hooks/player/use-player";
+import { cn } from "@/lib/utils";
+
+type RepeatButtonProps = {
+  className?: string;
+};
+
+export function RepeatButton({ className }: RepeatButtonProps) {
   const repeatMode = usePlayer((state) => state.repeatMode);
   const setRepeatMode = usePlayer((state) => state.setRepeatMode);
 
@@ -18,6 +24,7 @@ export function RepeatButton() {
   };
 
   const isActive = repeatMode !== "off";
+  const Icon = repeatMode === "one" ? Repeat1 : Repeat;
 
   return (
     <button
@@ -30,19 +37,16 @@ export function RepeatButton() {
             ? "Repeat all"
             : "Repeat one"
       }
-      className="cursor-pointer text-neutral-400 transition-colors hover:text-white"
+      className={cn(
+        "inline-flex shrink-0 cursor-pointer items-center justify-center text-neutral-400 transition-colors hover:text-white",
+        className,
+      )}
     >
-      <span className="relative block h-5 w-5">
-        {repeatMode === "one" ? (
-          <Repeat1 size={20} className={isActive ? "text-primary" : ""} />
-        ) : (
-          <Repeat size={20} className={isActive ? "text-primary" : ""} />
-        )}
+      <Icon className={cn("size-5", isActive && "text-primary")} />
 
-        {repeatMode === "all" && (
-          <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
-        )}
-      </span>
+      {repeatMode === "all" && (
+        <span className="absolute bottom-0 left-1/2 size-1 -translate-x-1/2 rounded-full bg-primary" />
+      )}
     </button>
   );
 }
