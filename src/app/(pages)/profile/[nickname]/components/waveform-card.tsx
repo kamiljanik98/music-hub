@@ -25,18 +25,18 @@ export const WaveformCard = ({
   const meta = formatSongMeta(song);
 
   return (
-    <div className="group/item flex flex-col gap-4 rounded-lg sm:flex-row sm:gap-6">
-      <Image
-        src={getCoverUrl(song.image_path)}
-        alt={song.title}
-        width={128}
-        height={128}
-        className="size-24 shrink-0 rounded-md object-cover sm:size-38"
-      />
+    <div className="group/item flex flex-col gap-3 rounded-lg">
+      <div className="flex min-w-0 gap-3 sm:gap-6">
+        <Image
+          src={getCoverUrl(song.image_path)}
+          alt={song.title}
+          width={128}
+          height={128}
+          className="size-24 shrink-0 rounded-md object-cover sm:size-38"
+        />
 
-      <div className="flex min-w-0 flex-1 flex-col gap-2.5">
-        <div className="flex justify-between">
-          <span>
+        <div className="flex min-w-0 flex-1 flex-col items-start gap-2">
+          <div className="min-w-0">
             <TitleLink
               songId={song.id}
               title={song.title}
@@ -52,8 +52,9 @@ export const WaveformCard = ({
                 No tracks details
               </p>
             )}
-          </span>
-          <div className="flex items-center gap-2">
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
             <Actions
               songId={song.id}
               isLikedInitially={isLikedInitially}
@@ -62,16 +63,18 @@ export const WaveformCard = ({
             />
           </div>
         </div>
-        <SongWaveform
-          songId={song.id}
-          path={song.path}
-          onActivate={onPlay}
-          lazyMount
-        />
-        <p className="font-mono text-[11px] text-[var(--mh-text-mono)]">
-          posted {formatRelativeTime(song.created_at)}
-        </p>
       </div>
+
+      <SongWaveform
+        songId={song.id}
+        path={song.path}
+        onActivate={onPlay}
+        lazyMount
+      />
+
+      <p className="font-mono text-[11px] text-[var(--mh-text-mono)]">
+        posted {formatRelativeTime(song.created_at)}
+      </p>
     </div>
   );
 };

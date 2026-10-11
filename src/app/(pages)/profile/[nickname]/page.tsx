@@ -17,16 +17,21 @@ import { ProfileBio } from "./components/profile-bio";
 import { EditableAvatar } from "./components/edit/editable-avatar";
 import { EditableBanner } from "./components/edit/editable-banner";
 import type { SocialLinks as SocialLinksValue } from "@/lib/validations/profile";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 type ProfilePageProps = {
   params: Promise<{ nickname: string }>;
 };
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
-  const { nickname } = await params;
+  const { nickname: routeNickname } = await params;
 
   const { data: profile, error: profileError } =
-    await getProfileByNickname(nickname);
+    await getProfileByNickname(routeNickname);
 
   const supabase = await createClient();
 
@@ -61,7 +66,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const bannerUrl = getBannerUrl(profile.banner_url);
 
   return (
-    <div className="pb-16">
+    <div className="min-w-0 pb-16">
       <div className="relative left-1/2 -mt-24 h-72 w-screen -translate-x-1/2 overflow-hidden bg-[linear-gradient(120deg,rgba(168,85,247,0.35),rgba(214,242,75,0.22))] md:h-96">
         {isOwnProfile ? (
           <EditableBanner
@@ -82,24 +87,9 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         )}
 
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0)_0%,rgba(10,10,10,0.55)_55%,var(--mh-ink)_100%)]" />
-
-        <div className="absolute right-6 bottom-4 z-10 flex items-center gap-3">
-          {isOwnProfile ? (
-            <EditProfileDialog />
-          ) : (
-            <>
-              <FollowButton
-                profileUserId={profile.id}
-                isFollowingInitially={isFollowing}
-              />
-
-              <CopyLinkButton path={`/profile/${profile.nickname}`} />
-            </>
-          )}
-        </div>
       </div>
 
-      <header className="relative -mt-14 flex flex-wrap items-end gap-x-6 gap-y-4">
+      <header className="relative -mt-14 flex min-w-0 flex-wrap items-end gap-x-6 gap-y-4">
         {isOwnProfile ? (
           <EditableAvatar
             avatarPath={profile.avatar_url}
@@ -117,7 +107,19 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
         <div className="min-w-0 flex-1 pb-1">
           <h1 className="font-display text-4xl uppercase leading-none tracking-[0.02em] text-foreground md:text-5xl">
-            {profile.nickname}
+            {(profile.nickname ?? "User").length > 15 ? (
+              <Popover>
+                <PopoverTrigger className="cursor-pointer text-left">
+                  {(profile.nickname ?? "User").slice(0, 10)}...
+                </PopoverTrigger>
+
+                <PopoverContent className="w-fit max-w-[calc(100vw-2rem)] break-all p-3 text-sm">
+                  {profile.nickname ?? "User"}
+                </PopoverContent>
+              </Popover>
+            ) : (
+              (profile.nickname ?? "User")
+            )}
           </h1>
 
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.12em] text-[var(--mh-text-mono)]">
@@ -146,12 +148,26 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         </div>
       </header>
 
-      <div className="mt-6 flex flex-wrap items-start justify-between gap-6">
-        {profile.bio ? (
-          <ProfileBio bio={profile.bio} />
-        ) : null}
+      <div className="mt-6 flex w-full min-w-0 flex-wrap items-start justify-between gap-4">
+        {profile.bio ? <ProfileBio bio={profile.bio} /> : null}
 
-        <SocialLinks links={profile.social_links as SocialLinksValue | null} />
+        <div className="flex min-w-0 flex-col items-start gap-3">
+          <SocialLinks
+            links={profile.social_links as SocialLinksValue | null}
+          />
+
+          {isOwnProfile ? (
+            <EditProfileDialog />
+          ) : (
+            <div className="flex flex-wrap items-center gap-3">
+              <FollowButton
+                profileUserId={profile.id}
+                isFollowingInitially={isFollowing}
+              />
+              <CopyLinkButton path={`/profile/${profile.nickname}`} />
+            </div>
+          )}
+        </div>
       </div>
 
       <section className="mt-12 min-w-0 border-t border-white/10 pt-8">

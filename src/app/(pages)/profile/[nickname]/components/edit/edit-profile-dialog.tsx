@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -22,6 +21,8 @@ import {
 } from "@/lib/validations/profile";
 import useUser from "@/hooks/profile/use-user";
 import type { SocialLinks } from "@/lib/validations/profile";
+import { useRouter } from "next/navigation";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export function EditProfileDialog() {
   const [open, setOpen] = useState(false);
@@ -29,6 +30,7 @@ export function EditProfileDialog() {
   const { update, isLoading } = useUpdateProfile();
 
   const storedLinks = (user?.social_links ?? null) as SocialLinks | null;
+  const router = useRouter();
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -62,6 +64,7 @@ export function EditProfileDialog() {
     } else {
       toast.success("Profile updated");
       setOpen(false);
+      router.replace(`/profile/${values.nickname}`);
     }
   }
 
@@ -92,10 +95,11 @@ export function EditProfileDialog() {
           Edit profile
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md">
-        <DialogHeader>
+
+      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-sm overflow-y-auto p-4 pt-14 sm:max-w-md sm:p-6 sm:pt-14">
+        <VisuallyHidden>
           <DialogTitle>Edit profile</DialogTitle>
-        </DialogHeader>
+        </VisuallyHidden>
 
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -107,6 +111,7 @@ export function EditProfileDialog() {
             label="Nickname"
             placeholder="Nickname"
           />
+
           <FormTextarea
             name="bio"
             control={form.control}
@@ -115,37 +120,48 @@ export function EditProfileDialog() {
             maxWords={150}
             rows={4}
           />
+
           <FormInput
             name="socialLinks.youtube"
             control={form.control}
             label="YouTube"
             placeholder="https://youtube.com/@you"
           />
+
           <FormInput
             name="socialLinks.instagram"
             control={form.control}
             label="Instagram"
             placeholder="https://instagram.com/you"
           />
+
           <FormInput
             name="socialLinks.tiktok"
             control={form.control}
             label="TikTok"
             placeholder="https://tiktok.com/@you"
           />
+
           <FormInput
             name="socialLinks.spotify"
             control={form.control}
             label="Spotify"
             placeholder="https://open.spotify.com/artist/..."
           />
+
           <FormInput
             name="socialLinks.soundcloud"
             control={form.control}
             label="SoundCloud"
             placeholder="https://soundcloud.com/you"
           />
-          <Button variant="secondary" type="submit" loading={isLoading}>
+
+          <Button
+            variant="secondary"
+            className="mt-4 bg-primary text-background"
+            type="submit"
+            loading={isLoading}
+          >
             Save changes
           </Button>
         </form>
