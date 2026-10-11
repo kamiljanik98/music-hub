@@ -73,11 +73,11 @@ export function CreatePlaylistDialog({
         onOpenChange(next);
       }}
     >
-      <DialogContent className="max-w-md">
+      <DialogContent className="w-[calc(100%-2rem)] max-w-sm">
+        {" "}
         <DialogHeader>
           <DialogTitle>New playlist</DialogTitle>
         </DialogHeader>
-
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"

@@ -28,7 +28,7 @@ export function CopyLinkButton({ path }: CopyLinkButtonProps) {
       aria-label="Copy link"
       className="p-2 hover:bg-muted hover:text-foreground"
     >
-      <Link size={14} />
+      <Link className="size-5" />
     </Button>
   );
 }

@@ -28,7 +28,7 @@ export function LikeButton({
       aria-label={isLiked ? "Unlike" : "Like"}
       className="p-2 hover:bg-muted hover:text-foreground"
     >
-      <Heart className={cn("size-4", isLiked && "fill-primary text-primary")} />
+      <Heart className={cn("size-5", isLiked && "fill-primary text-primary")} />
     </Button>
   );
 }

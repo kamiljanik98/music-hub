@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { ListPlus, Plus } from "lucide-react";
 import { toast } from "sonner";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,13 +14,18 @@ import {
 import { addSongToPlaylist } from "@/actions/playlists/add-song-to-playlist";
 import { useMyPlaylists } from "@/hooks/playlists/use-my-playlists";
 import { useRequireAuth } from "@/hooks/auth/use-require-auth";
+import { cn } from "@/lib/utils";
 import { CreatePlaylistDialog } from "./create-playlist-dialog";
 
 type AddToPlaylistMenuProps = {
   songId: string;
+  className?: string;
 };
 
-export function AddToPlaylistMenu({ songId }: AddToPlaylistMenuProps) {
+export function AddToPlaylistMenu({
+  songId,
+  className,
+}: AddToPlaylistMenuProps) {
   const { playlists, isLoading, load } = useMyPlaylists();
   const requireAuth = useRequireAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -51,9 +57,12 @@ export function AddToPlaylistMenu({ songId }: AddToPlaylistMenuProps) {
       <DropdownMenu modal={false} open={isOpen} onOpenChange={handleOpenChange}>
         <DropdownMenuTrigger
           aria-label="Add to playlist"
-          className="flex cursor-pointer items-center justify-center rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className={cn(
+            "flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+            className,
+          )}
         >
-          <ListPlus className="size-4" />
+          <ListPlus className="size-5" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="w-auto min-w-52">

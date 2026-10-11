@@ -20,7 +20,7 @@ export const ProfileRow = ({
   const hasCounts = followerCount !== undefined || trackCount !== undefined;
 
   return (
-    <div className="flex items-center gap-3 rounded-md p-2">
+    <div className="flex items-center gap-3 rounded-md py-2 ">
       <Link href={`/profile/${user.nickname}`} className="shrink-0">
         <Image
           src={getAvatarUrl(user.avatar_url)}
@@ -52,7 +52,6 @@ export const ProfileRow = ({
       <FollowButton
         profileUserId={user.id}
         isFollowingInitially={isFollowing}
-        size="xs"
       />
     </div>
   );
