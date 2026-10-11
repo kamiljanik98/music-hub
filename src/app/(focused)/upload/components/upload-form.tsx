@@ -86,7 +86,7 @@ export default function UploadForm({ step, onStepChange }: UploadFormProps) {
 
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-1 flex-col justify-center gap-4"
+        className="flex flex-1 flex-col justify-start gap-4"
       >
         {step === 1 && (
           <AudioStep control={form.control} onFileDrop={onAudioDrop} />

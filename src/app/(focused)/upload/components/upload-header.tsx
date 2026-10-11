@@ -20,13 +20,19 @@ export const UploadHeader = ({
   const audioInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="fixed inset-x-0 top-0 z-20 border-b border-white/12 bg-[rgba(15,15,15,0.85)] px-6 py-4 mh-glass">
-      <div className="mx-auto flex w-full max-w-4xl items-center justify-between">
-        <p className="text-sm font-semibold text-foreground">
+    <div className="fixed inset-x-0 top-0 z-20 border-b border-white/12 bg-[rgba(15,15,15,0.85)] px-4 py-4 sm:px-6 mh-glass">
+      <div className="relative mx-auto flex w-full max-w-4xl items-center justify-between gap-3">
+        <p className="shrink-0 text-sm font-semibold text-foreground">
           {step === 1 ? "Upload" : "Track Info"}
         </p>
 
-        <div className="flex items-center gap-3">
+        {step === 2 && fileName && (
+          <p className="absolute left-1/2 max-w-[40%] -translate-x-1/2 truncate text-center text-xs text-muted-foreground">
+            {fileName}
+          </p>
+        )}
+
+        <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
           {step === 2 && (
             <>
               <input
@@ -38,14 +44,9 @@ export const UploadHeader = ({
                   const file = e.target.files?.[0];
                   if (!file) return;
                   onAudioReplace(file);
+                  e.currentTarget.value = "";
                 }}
               />
-
-              {fileName && (
-                <p className="max-w-xs truncate text-xs text-muted-foreground">
-                  {fileName}
-                </p>
-              )}
 
               <Button
                 type="button"

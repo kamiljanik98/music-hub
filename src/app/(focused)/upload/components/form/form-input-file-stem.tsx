@@ -21,9 +21,10 @@ const FormInputFileStem = <T extends FieldValues>({
         const file = field.value as File | undefined;
 
         return (
-          <Field data-invalid={fieldState.invalid}>
+          <Field data-invalid={fieldState.invalid} className="min-w-0">
             {label && <FieldLabel>{label}</FieldLabel>}
-            <div className={cn("flex items-center gap-2 min-w-0", className)}>
+
+            <div className={cn("flex min-w-0 items-center gap-2", className)}>
               <input
                 type="file"
                 accept={accept ? Object.keys(accept).join(",") : undefined}
@@ -32,18 +33,20 @@ const FormInputFileStem = <T extends FieldValues>({
                   if (selected) field.onChange(selected);
                 }}
                 aria-invalid={fieldState.invalid}
-                className="flex-1 text-xs text-neutral-400 file:mr-2 file:rounded-md file:border-0 file:bg-muted file:px-2 file:py-1 file:text-xs file:text-foreground"
+                className="w-0 min-w-0 flex-1 text-xs text-neutral-400 file:mr-2 file:max-w-full file:rounded-md file:border-0 file:bg-muted file:px-2 file:py-1 file:text-xs file:text-foreground"
               />
+
               {file && (
                 <button
                   type="button"
                   onClick={() => field.onChange(undefined)}
-                  className="shrink-0 text-neutral-500 hover:text-destructive transition-colors"
+                  className="shrink-0 text-neutral-500 transition-colors hover:text-destructive"
                 >
                   <XIcon size={14} />
                 </button>
               )}
             </div>
+
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
         );

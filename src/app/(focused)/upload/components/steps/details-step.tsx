@@ -14,7 +14,8 @@ type DetailsStepProps = {
 
 export const DetailsStep = ({ control }: DetailsStepProps) => {
   return (
-    <div className="flex h-full min-h-0 flex-col gap-4">
+    <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pb-28">
+      {" "}
       <div className="flex justify-center">
         <div className="w-72">
           <FormInputFileImage
@@ -26,7 +27,6 @@ export const DetailsStep = ({ control }: DetailsStepProps) => {
           />
         </div>
       </div>
-
       <div className="flex flex-col gap-3">
         <FormInput
           name="title"
@@ -72,7 +72,6 @@ export const DetailsStep = ({ control }: DetailsStepProps) => {
           placeholder="Tracks with descriptions tend to get more plays and engagements."
         />
       </div>
-
       <StemsField control={control} />
     </div>
   );
