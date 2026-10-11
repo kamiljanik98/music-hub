@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.variable} ${anton.variable} antialiased`}
     >
-      <body className="relative flex min-h-screen flex-col overflow-x-clip bg-background text-foreground">
+      <body className="relative flex min-h-screen flex-col bg-background text-foreground">
         {children}
       </body>
     </html>
