@@ -17,7 +17,7 @@ export function NewsButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 hidden md:block">
+    <div className="fixed bottom-5 right-5 z-50 hidden min-[1575px]:block">
       {isOpen && (
         <section
           aria-label="Music Hub updates and community"
@@ -84,7 +84,7 @@ export function NewsButton() {
 
             <div className="mt-8 grid grid-cols-2 gap-3">
               <a
-                href="https://www.patreon.com/YOUR_USERNAME"
+                href="https://www.patreon.com/c/itzjukka98"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex min-w-0 items-center justify-center gap-2 rounded-lg bg-primary px-3 py-3 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90"
