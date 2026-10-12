@@ -13,9 +13,13 @@ export const likeSong = async (songId: string): Promise<MutationResult> => {
 
   if (authError || !user) return { error: new Error("Not authenticated") };
 
-  const { error } = await supabase
-    .from("likes")
-    .insert({ user_id: user.id, song_id: songId });
+  const { error } = await supabase.from("likes").upsert(
+    { user_id: user.id, song_id: songId },
+    {
+      onConflict: "user_id,song_id",
+      ignoreDuplicates: true,
+    },
+  );
 
   if (error) {
     return { error: new Error(error.message) };
