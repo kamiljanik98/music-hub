@@ -31,12 +31,12 @@ export const UserProfileButton = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="flex size-11.25 shrink-0 cursor-pointer items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+      <DropdownMenuTrigger className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
         <Image
           src={getAvatarUrl(user.avatar_url)}
           alt={user.nickname ?? "User avatar"}
-          width={40}
-          height={40}
+          width={36}
+          height={36}
           className="size-full rounded-full object-cover"
         />
       </DropdownMenuTrigger>

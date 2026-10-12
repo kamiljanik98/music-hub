@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronDown, Info } from "lucide-react";
-
+import Image from "next/image";
 import { LikeButton } from "@/components/social/like-button";
 import {
   Popover,
@@ -38,7 +38,7 @@ export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
   return (
     <section
       aria-label="Full player"
-      className="fixed inset-0 z-50 flex min-w-0 flex-col overflow-hidden overscroll-none touch-none bg-background px-8 pb-6 pt-4 md:hidden"
+      className="fixed inset-0 z-50 flex h-dvh min-w-0 flex-col overflow-y-auto overscroll-none bg-background px-8 pb-6 pt-4 touch-none md:hidden"
     >
       <header className="-mx-4 flex w-[calc(100%+2rem)] shrink-0 items-center justify-between gap-2">
         <button
@@ -113,9 +113,13 @@ export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
                   className="size-full object-cover"
                 />
               ) : (
-                <div className="flex size-full items-center justify-center text-muted-foreground">
-                  No cover available
-                </div>
+                <Image
+                  src="/placeholders/cover-placeholder.jpg"
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, 320px"
+                  className="object-cover"
+                />
               )}
             </div>
           </div>
@@ -158,15 +162,13 @@ export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
           <Seekbar />
         </div>
 
-        <div className="flex w-full flex-col items-center gap-8">
+        <div className="flex w-full items-center justify-center gap-6">
+          <RepeatButton className="size-12 [&_svg]:size-8" />
           <Controls />
-          <div className="flex w-full items-center justify-center gap-6">
-            <RepeatButton className="relative size-12 [&_svg]:size-8" />
-            <AddToPlaylistMenu
-              songId={song.id}
-              className="relative size-12 [&_svg]:size-8"
-            />
-          </div>
+          <AddToPlaylistMenu
+            songId={song.id}
+            className="size-12 [&_svg]:size-8"
+          />
         </div>
       </div>
     </section>

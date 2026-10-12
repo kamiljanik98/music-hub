@@ -70,7 +70,7 @@ export const SongRow = ({
             alt={song.profiles?.nickname ?? "Unknown"}
             width={16}
             height={16}
-            className="rounded-full"
+            className="size-4 shrink-0 rounded-full object-cover"
           />
 
           <p className="truncate text-sm">
