@@ -5,6 +5,7 @@ import Link from "next/link";
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ACCEPTED_AUDIO } from "@/lib/constants";
+import { truncate } from "@/lib/format/truncate";
 
 type UploadHeaderProps = {
   step: 1 | 2;
@@ -28,7 +29,7 @@ export const UploadHeader = ({
 
         {step === 2 && fileName && (
           <p className="absolute left-1/2 max-w-[40%] -translate-x-1/2 truncate text-center text-xs text-muted-foreground">
-            {fileName}
+            {truncate(fileName, 15)}
           </p>
         )}
 

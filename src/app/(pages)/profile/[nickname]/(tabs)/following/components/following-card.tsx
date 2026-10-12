@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FollowButton } from "@/components/social/follow-button";
 import { getAvatarUrl } from "@/lib/r2/public";
 import { ProfileSummary } from "@/types";
+import { truncate } from "@/lib/format/truncate";
 
 type FollowingCardProps = {
   user: ProfileSummary;
@@ -34,7 +35,7 @@ export const FollowingCard = ({
           href={`/profile/${user.nickname}`}
           className="truncate text-lg font-semibold text-foreground transition-colors hover:text-primary hover:underline"
         >
-          {user.nickname}
+          {truncate(user.nickname ?? "Unknown", 25)}
         </Link>
 
         {hasCounts && (

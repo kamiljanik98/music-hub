@@ -8,6 +8,7 @@ import { formatRelativeTime } from "@/lib/format/relative-time";
 import { TitleLink } from "@/components/songs/title-link";
 import { Actions } from "@/components/songs/actions";
 import { Song } from "@/types";
+import { truncate } from "@/lib/format/truncate";
 
 type ShelfCardProps = {
   song: Song;
@@ -60,7 +61,7 @@ export const ShelfCard = ({
         <div className="flex flex-col gap-0.5">
           <TitleLink
             songId={song.id}
-            title={song.title}
+            title={truncate(song.title, 20)}
             className="text-sm font-semibold"
           />
 
@@ -73,11 +74,11 @@ export const ShelfCard = ({
               alt={song.profiles?.nickname ?? "Unknown"}
               width={16}
               height={16}
-              className="rounded-full"
+              className="size-5 shrink-0 rounded-full object-cover"
             />
 
             <span className="truncate text-xs text-[var(--mh-text-meta)] transition-colors hover:text-foreground">
-              {song.profiles?.nickname ?? "Unknown"}
+              {truncate(song.profiles?.nickname ?? "Unknown", 12)}
             </span>
           </Link>
         </div>
