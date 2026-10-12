@@ -8,13 +8,14 @@ import { getCoverUrl } from "@/lib/r2/public";
 import { cn } from "@/lib/utils";
 import { useLike } from "@/hooks/social/use-like";
 import { TitleLink } from "@/components/songs/title-link";
+import { truncate } from "@/lib/format/truncate";
 
 interface TrackInfoProps {
   song: Song;
 }
 
 export function TrackInfo({ song }: TrackInfoProps) {
-  const nickname = song.profiles?.nickname;
+  const nickname = truncate(song.profiles?.nickname ?? "Unknown", 25);
   const { isLiked, toggle } = useLike(song.id, song.isLiked ?? false);
 
   return (
