@@ -17,6 +17,7 @@ import { Controls } from "../controls";
 import { RepeatButton } from "../repeat-button";
 import { Seekbar } from "../seekbar";
 import { AddToPlaylistMenu } from "@/components/playlists/add-to-playlist-menu";
+import { useRouter } from "next/navigation";
 
 type ExpandedViewProps = {
   song: Song;
@@ -24,7 +25,13 @@ type ExpandedViewProps = {
 };
 
 export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
+  const router = useRouter();
   const meta = getSongMeta(song);
+
+  const navigateTo = (href: string) => {
+    onClose();
+    router.push(href);
+  };
 
   const hasMeta =
     meta.description ||
@@ -38,12 +45,15 @@ export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
   return (
     <section
       aria-label="Full player"
-      className="fixed inset-0 z-50 flex h-dvh min-w-0 flex-col overflow-y-auto overscroll-none bg-background px-8 pb-6 pt-4 touch-none md:hidden"
+      className="fixed inset-0 z-50 flex h-dvh min-w-0 flex-col overflow-y-auto overscroll-none bg-background px-8 pb-6 pt-4 md:hidden"
     >
       <header className="-mx-4 flex w-[calc(100%+2rem)] shrink-0 items-center justify-between gap-2">
         <button
           type="button"
-          onClick={onClose}
+          onClick={(event) => {
+            event.stopPropagation();
+            onClose();
+          }}
           className="flex size-11 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-muted"
           aria-label="Close full player"
         >
@@ -127,12 +137,13 @@ export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
 
         <div className="flex min-w-0 items-center justify-between gap-4">
           <div className="flex min-w-0 flex-col gap-1">
-            <Link
-              href={`/songs/${song.id}`}
+            <button
+              type="button"
+              onClick={() => navigateTo(`/songs/${song.id}`)}
               className="truncate text-xl font-semibold text-foreground transition-colors hover:text-primary"
             >
               {song.title}
-            </Link>
+            </button>
 
             <div className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
               <img
@@ -141,12 +152,15 @@ export const ExpandedView = ({ song, onClose }: ExpandedViewProps) => {
                 className="size-6 shrink-0 rounded-full object-cover"
               />
               {song.profiles?.nickname ? (
-                <Link
-                  href={`/profile/${song.profiles.nickname}`}
-                  className="truncate transition-colors hover:text-foreground"
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigateTo(`/profile/${song.profiles!.nickname}`)
+                  }
+                  className="truncate text-left transition-colors hover:text-foreground"
                 >
                   {song.profiles.nickname}
-                </Link>
+                </button>
               ) : (
                 <span className="truncate">Unknown</span>
               )}
