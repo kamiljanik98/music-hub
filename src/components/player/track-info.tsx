@@ -7,7 +7,6 @@ import type { Song } from "@/types";
 import { getCoverUrl } from "@/lib/r2/public";
 import { cn } from "@/lib/utils";
 import { useLike } from "@/hooks/social/use-like";
-
 import { TitleLink } from "@/components/songs/title-link";
 
 interface TrackInfoProps {
@@ -30,12 +29,15 @@ export function TrackInfo({ song }: TrackInfoProps) {
         />
         <button
           type="button"
-          onClick={toggle}
+          onClick={(event) => {
+            event.stopPropagation();
+            toggle();
+          }}
           aria-label={isLiked ? "Unlike" : "Like"}
           aria-pressed={isLiked}
           className={cn(
-            "absolute inset-0 flex items-center justify-center rounded-sm bg-black/55 opacity-0 transition-opacity duration-200 outline-none",
-            "group-hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-ring",
+            "absolute inset-0 flex items-center justify-center rounded-sm bg-black/55 opacity-100 transition-opacity duration-200 outline-none md:opacity-0",
+            "md:group-hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-ring",
             isLiked && "opacity-100",
           )}
         >
@@ -47,21 +49,25 @@ export function TrackInfo({ song }: TrackInfoProps) {
           />
         </button>
       </div>
+
       <div className="flex min-w-0 flex-col">
         <TitleLink
           songId={song.id}
           title={song.title}
-          className="text-sm font-medium"
+          className="pointer-events-none text-sm font-medium md:pointer-events-auto"
         />
+
         {nickname ? (
           <Link
             href={`/profile/${nickname}`}
-            className="truncate text-xs text-muted-foreground transition-colors hover:text-primary hover:underline"
+            className="pointer-events-none truncate text-xs text-muted-foreground transition-colors hover:text-primary hover:underline md:pointer-events-auto"
           >
             {nickname}
           </Link>
         ) : (
-          <span className="truncate text-xs text-muted-foreground">Unknown</span>
+          <span className="truncate text-xs text-muted-foreground">
+            Unknown
+          </span>
         )}
       </div>
     </div>
