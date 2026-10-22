@@ -51,6 +51,7 @@ src/app/test
 
 # markdown files
 
+/PROJECT-MAP.md
 /TODO.md
 /MILESTONES.md
 /CLAUDE.md

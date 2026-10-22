@@ -25,9 +25,8 @@ Handler exceptions. See [`docs/reference/`](./docs/reference) and
 
 ## Contributing
 
-1. Read [`PROJECT-MAP.md`](./PROJECT-MAP.md) for the lay of the land and
-   [`docs/reference/CONVENTIONS.md`](./docs/reference/CONVENTIONS.md) before
-   writing code.
+1. Read [`docs/reference/`](./docs/reference) — especially
+   [`CONVENTIONS.md`](./docs/reference/CONVENTIONS.md) — before writing code.
 2. Architectural decisions are recorded as ADRs in [`docs/adr/`](./docs/adr) —
    add one when you make a decision worth remembering. **Code carries no
    explanatory comments**; the "why" belongs in docs.
