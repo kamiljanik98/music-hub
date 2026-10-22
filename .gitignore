@@ -51,8 +51,6 @@ src/app/test
 
 # markdown files
 
-/docs/
-/README.md
 /TODO.md
 /MILESTONES.md
 /CLAUDE.md
